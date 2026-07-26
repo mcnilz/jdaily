@@ -16,9 +16,9 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 26. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | `GOV-008` – Entwicklungsübergabepaket mit Designreferenzen; Status `In Review` |
-| Nächste menschliche Aktion | ZIP, Referenzauswahl und Abgrenzungen anhand der untenstehenden Punkte abnehmen oder Feedback geben |
-| Nächster Paketkandidat danach | `GOV-005` steht wieder auf `Ready` und wird erst nach Abnahme von `GOV-008` erneut vorgeschlagen |
+| Aktiver Arbeitsauftrag | `FND-001` – Solution-Skelett erzeugen; Status `Proposed` |
+| Nächste menschliche Aktion | Ziel, Scope, Risiken, Prüfplan und spätere Abnahmepunkte bestätigen oder Änderungsfeedback geben |
+| Nächster Paketkandidat danach | `FND-002` wird erst nach Umsetzung und menschlicher Abnahme von `FND-001` vorgeschlagen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | bisher Dokumentation; noch keine Solution und kein ausführbarer Produktionscode |
@@ -29,35 +29,25 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 | Backlog-ID | Status | Verantwortlich | Aktueller Teilschritt | Nächste konkrete Aktion | Schreibbereich | Letzter Prüfstand |
 |---|---|---|---|---|---|---|
-| `GOV-008` | `In Review` | Codex | Vollständiges Übergabepaket ist erstellt und technisch geprüft | Menschliche Abnahme oder konkretes Feedback abwarten | `design-references/`, `jdaily-development-handover.zip`, Statusdokumente | 9 Markdown-Dateien und 8 lesbare PNGs; ZIP-Integrität, Pfade und Auswahl geprüft |
+| `FND-001` | `Proposed` | Codex | Arbeitsumfang zur Startbestätigung vorgelegt | Menschliche Bestätigung oder Änderungsfeedback abwarten | neues Solution- und Projektgerüst; Statusdokumente | Abhängigkeit `GOV-005` erfüllt; noch keine Umsetzung |
 
 ## Aktuelle menschliche Abnahme
 
-### `GOV-008` – Entwicklungsübergabepaket mit Designreferenzen erstellen
-
-Bitte prüfen:
-
-- Lassen sich die acht verbindlichen Projekt-Markdowns direkt in `D:\jdaily` entpacken?
-- Enthält `design-references/` genau Board Current, Board Replay, Board Settings, Site Setup, UiCatalog, `TicketCard`, `CollapsedColumnCell` und `ReviewTrack` mit verständlichen Namen?
-- Macht `design-references/README.md` klar, dass die PNGs keine Spezifikation, Pixelquelle, Golden Masters oder auslieferbaren Produkt-Assets sind?
-- Fehlen die frühen dunklen, doppelten, fachlich widersprüchlichen und beschädigten Varianten?
-- Ist dieser Umfang als vollständiger Entwicklungsübergabestand geeignet?
-
-Bei Zustimmung wird `GOV-008` auf `Done` gesetzt und aus den aktiven Positionen entfernt. `GOV-005` bleibt bis zu einem neuen Vorschlag auf `Ready`.
+Keine; `FND-001` wartet auf Startbestätigung, nicht auf Abnahme.
 
 ## Offene Blocker und Entscheidungen
 
-- Es besteht kein technischer Blocker; `GOV-008` wartet regulär auf menschliche Abnahme.
-- Das lokale Windows-Laufwerk `D:` ist nicht in diese Umgebung eingebunden, weshalb das geprüfte ZIP manuell nach `D:\jdaily` entpackt werden muss.
+- Es besteht kein technischer Blocker.
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
-- `GOV-005` steht während dieses bestätigten Übergabepakets wieder auf `Ready` und wird nicht parallel umgesetzt.
+- `FND-001` ist vorgeschlagen und darf erst nach ausdrücklicher Startbestätigung umgesetzt werden.
 
 ## Letzter Prüfstand
 
 - `GOV-007` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen, auf `Done` gesetzt und im G2-Gate nachgeführt.
-- `GOV-008` wurde durch die direkte menschliche Anweisung bestätigt, umgesetzt und auf `In Review` gesetzt; Backlog und Active State stimmen überein.
-- Neun Markdown-Dateien und acht PNGs wurden inventarisiert; alle PNGs sind lesbar und das ZIP bestand den vollständigen Integritätstest.
-- Es wurden keine Build- oder Testbefehle ausgeführt, weil noch keine Solution existiert und die letzte Änderung ausschließlich Dokumentation betraf.
+- `GOV-008` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt.
+- Neun Markdown-Dateien und acht PNGs wurden für das Übergabepaket inventarisiert; alle PNGs waren lesbar und das ZIP bestand vor der Abnahme den vollständigen Integritätstest. Das temporäre ZIP wurde anschließend auf ausdrücklichen Wunsch gelöscht und wird nicht erneut angelegt.
+- `GOV-005` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt; die beiden Vorlagen unter `docs/templates/` sind in den G2-Nachweisen verlinkt.
+- Es wurden keine Build- oder Testbefehle ausgeführt, weil noch keine Solution existiert und `GOV-005` ausschließlich Markdown betrifft.
 - Die Lizenzgrenze, die ausnahmslose FluentAssertions-Sperre, die Readiness-Gates und der Human-in-the-loop-Flow sind in den maßgeblichen Dokumenten verankert.
 
 ## Wiedereinstieg in einem neuen Kontext

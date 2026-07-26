@@ -89,7 +89,8 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 
 - Testname und Commit/PR: _offen_
 - Architekturtest: _offen_
-- Glossar/Feature-Notiz: [DDD-Glossar](domain-glossary.md)
+- Glossar: [DDD-Glossar](domain-glossary.md)
+- Arbeitsformate: [Feature-Notiz-Vorlage](docs/templates/feature-note-template.md) und [ADR-Vorlage](docs/templates/adr-template.md)
 
 ## G3 – UiCatalog-first
 

@@ -107,10 +107,10 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | GOV-002 | P0 | Done | DDD-Glossar erstellen | Begriffe, Invarianten und Abgrenzungen einschließlich `BoardOrdinal`, `JiraRank` und `SwimlaneHeader` sind festgehalten. | GOV-001 |
 | GOV-003 | P0 | Done | UI-Design-Spezifikation und Readiness-Gate erstellen | UiCatalog-first, visuelle Verträge und Start-Gates sind überprüfbar. | GOV-001 |
 | GOV-004 | P0 | Done | Priorisiertes Product Backlog erstellen | MVP-Schnitt, Reihenfolge, Abhängigkeiten und Akzeptanzkriterien sind dokumentiert. | GOV-001–003 |
-| GOV-005 | P0 | Ready | ADR- und Feature-Notiz-Format anlegen | Eine kleine Vorlage hält Fragestellung, Entscheidung, Alternativen, Konsequenzen und Nachweise fest. | GOV-004 |
+| GOV-005 | P0 | Done | ADR- und Feature-Notiz-Format anlegen | [ADR-Vorlage](docs/templates/adr-template.md) und [Feature-Notiz-Vorlage](docs/templates/feature-note-template.md) halten Fragestellung, Entscheidung, Alternativen, Konsequenzen und Nachweise kompakt fest. Menschlich abgenommen am 26. Juli 2026. | GOV-004 |
 | GOV-006 | P0 | Done | Operativen Active State etablieren | Vorgeschlagene, laufende, zur Abnahme stehende und blockierte Items, nächster Kandidat, Schreibbereiche und Prüfstand sind kompakt sichtbar; Backlog und Readiness bleiben maßgeblich. | GOV-004 |
 | GOV-007 | P0 | Done | Agent-Mensch-Arbeitsflow etablieren | Nächstes Paket benötigt Startbestätigung; der Agent organisiert Umsetzung, Tests und Review; die Vorstellung enthält konkrete Abnahmehinweise und Retrospektive; nur der Mensch erlaubt `Done`, sonst läuft das Paket erneut durch den Zyklus. Menschlich abgenommen am 26. Juli 2026. | GOV-006 |
-| GOV-008 | P0 | In Review | Entwicklungsübergabepaket mit Designreferenzen erstellen | Alle verbindlichen Markdown-Dateien und genau acht ausgewählte, fachlich benannte Konzept-PNGs liegen in einem geprüften Windows-ZIP; eine README grenzt die Bilder von Spezifikation, Golden Masters und Produkt-Assets ab. | GOV-006–007 |
+| GOV-008 | P0 | Done | Entwicklungsübergabepaket mit Designreferenzen erstellen | Alle verbindlichen Markdown-Dateien und genau acht ausgewählte, fachlich benannte Konzept-PNGs lagen in einem geprüften Windows-ZIP; eine README grenzt die Bilder von Spezifikation, Golden Masters und Produkt-Assets ab. Menschlich abgenommen am 26. Juli 2026; das temporäre ZIP wurde anschließend bewusst gelöscht. | GOV-006–007 |
 
 ## E01 – Repository, Toolchain und Qualitätsgrenzen
 
@@ -118,7 +118,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
-| FND-001 | P0 | Planned | Solution-Skelett erzeugen | `JiraBoard.sln` enthält App, UI, UiCatalog, Tests, AOT-SmokeTests und VisualTests mit expliziter F#-Dateireihenfolge. | GOV-005 |
+| FND-001 | P0 | Proposed | Solution-Skelett erzeugen | `JiraBoard.sln` enthält App, UI, UiCatalog, Tests, AOT-SmokeTests und VisualTests mit expliziter F#-Dateireihenfolge. | GOV-005 |
 | FND-002 | P0 | Planned | .NET-, Paket- und Avalonia-Free-Versionen festsetzen | `global.json`, Central Package Management, .NET 10, Avalonia `11.3.18` und FuncUI/Elmish `1.6.0` sind exakt gepinnt; nur geprüfte Avalonia-Free-/OSS-Pakete, keine Preview-Pakete. | FND-001 |
 | FND-003 | P0 | Planned | TDD-Harness einrichten | Stabiles xUnit, eingebaute `Assert`-APIs und kleine F#-Testhelper funktionieren; erster Test schlägt vor Produktionscode fehl. | FND-001–002 |
 | FND-004 | P0 | Planned | FluentAssertions-Sperre automatisieren | Direkte, transitive, Paketdatei-, Namespace-, Alias- und Wrapper-Treffer beenden CI; negative Kontrolltests belegen die Sperre. | FND-002–003 |
