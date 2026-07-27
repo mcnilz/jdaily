@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="Avalonia" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.Controls.ColorPicker" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.Controls.DataGrid" Version="11.3.13" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.FuncUI" Version="1.6.0" />
+    <PackageVersion Include="Avalonia.FuncUI.Elmish" Version="1.6.0" />
+    <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.Skia" Version="11.3.18" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.18" />
+    <PackageVersion Include="Verify.Avalonia" Version="1.4.0" />
+  </ItemGroup>
+</Project>

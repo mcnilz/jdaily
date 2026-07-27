@@ -37,7 +37,7 @@ The active-state file is the operational re-entry point, but it is not a specifi
 
 ## Non-negotiable rules
 
-- Use .NET 10, F#, Avalonia `11.3.18`, Avalonia.FuncUI/Elmish `1.6.0`.
+- Use .NET 10, F#, Avalonia `11.3.18` (`Avalonia.Controls.DataGrid` stays on the last published Avalonia-11 version `11.3.13`), Avalonia.FuncUI/Elmish `1.6.0`.
 - **Avalonia Free only:** use only the MIT-licensed Avalonia framework and explicitly approved, commercially usable OSS packages. Avalonia Community, Plus, Pro, Enterprise, Accelerate, premium controls/tools, trials, subscriptions, portal requirements and license keys are forbidden without exception.
 - Never add or require `AvaloniaUILicenseKey`, `AVALONIA_TOOLS_LICENSE_KEY` or `ACCELERATE_LICENSE_KEY`. Unknown direct or transitive `Avalonia*`/AvaloniaUI packages fail until their exact version and license are approved and allowlisted.
 - Check every direct/transitive production, test, build, analysis and packaging dependency plus fonts, icons and assets. Pre-approved licenses are MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, 0BSD, OFL-1.1 for fonts and CC0-1.0 for assets; every other or unclear license requires documented review and explicit owner approval.

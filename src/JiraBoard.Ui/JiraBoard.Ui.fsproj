@@ -6,5 +6,10 @@
   <ItemGroup>
     <Compile Include="AssemblyMarker.fs" />
   </ItemGroup>
-</Project>
 
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" />
+    <PackageReference Include="Avalonia.FuncUI" />
+  </ItemGroup>
+</Project>

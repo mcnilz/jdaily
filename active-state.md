@@ -17,29 +17,27 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Stand | 27. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | keine offene Abnahme; nächster Arbeitsauftrag wird vor Umsetzung vorgeschlagen |
-| Nächster Paketkandidat danach | `FND-002` steht auf `Ready` und ist der nächste zulässige Vorschlag |
+| Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
+| Nächster Paketkandidat danach | `FND-003` – TDD-Harness einrichten |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sechs minimalen F#-Projekten; noch keine Drittanbieterpakete, Tests oder Produktoberfläche |
+| Repositoryzustand | `JiraBoard.slnx` mit sechs minimalen F#-Projekten; FND-002-Paket-, Lock-, Lizenz- und AOT-Baseline ist menschlich abgenommen, fachliche Tests und Produktoberfläche fehlen weiterhin |
 
 ## Aktive Arbeitspositionen
 
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
-| Backlog-ID | Status | Verantwortlich | Aktueller Teilschritt | Nächste konkrete Aktion | Schreibbereich | Letzter Prüfstand |
-|---|---|---|---|---|---|---|
-| – | – | – | – | – | – | – |
+Keine.
 
 ## Aktuelle menschliche Abnahme
 
-Keine.
+`FND-002` wurde am 27. Juli 2026 für das fertiggestellte `In Review`-Paket ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt.
 
 ## Offene Blocker und Entscheidungen
 
-- Es besteht kein technischer Blocker.
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
-- `FND-002` steht nach erfüllter Abhängigkeit auf `Ready` und muss vor der Umsetzung als nächster Arbeitsauftrag vorgeschlagen und bestätigt werden.
+- Der frühere DataGrid-Blocker ist durch die ausdrückliche Freigabe von `11.3.13` und die synchronisierte Vertragskorrektur aufgelöst.
+- `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
 
@@ -50,7 +48,8 @@ Keine.
 - Für `FND-001` sind die sechs Projekte nach offizieller SDK-Migration in `JiraBoard.slnx` enthalten; Restore, Release-Build und der derzeit noch leere Testlauf sind grün.
 - `AGENTS.md` erklärt den NuGet-Eskalationsweg ohne reale lokale Pfade; Skill-Commits vor der Abnahme sind verboten, während ein klares eigenständiges `Abgenommen` den Commit des danach synchronisierten Paketstands automatisch autorisiert.
 - Der zweiachsige Review des ungestagten Flow-Diffs gegen Commit `74eca91` meldet nach Angleichung des operativen Pflegeabschnitts keine verbleibenden Befunde; HEAD und Index sind unverändert.
-- `FND-001` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen und auf `Done` gesetzt.
+- `FND-001` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und als Commit `9730c9e` automatisch gespeichert.
+- `FND-002` wurde am 27. Juli 2026 nach grüner vollständiger Suite und befundfreiem Standards-/Spec-Review ausdrücklich menschlich abgenommen und auf `Done` gesetzt; Lockgraph und Allowlist decken exakt 31 Paare ab, die reproduzierbaren Notices sind in App und Publishes hashgleich.
 - Die Lizenzgrenze, die ausnahmslose FluentAssertions-Sperre, die Readiness-Gates und der Human-in-the-loop-Flow sind in den maßgeblichen Dokumenten verankert.
 
 ## Wiedereinstieg in einem neuen Kontext

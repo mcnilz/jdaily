@@ -11,5 +11,10 @@
   <ItemGroup>
     <ProjectReference Include="..\JiraBoard.Ui\JiraBoard.Ui.fsproj" />
   </ItemGroup>
-</Project>
 
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.FuncUI.Elmish" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+  </ItemGroup>
+</Project>

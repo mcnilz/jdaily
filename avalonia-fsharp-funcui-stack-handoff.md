@@ -783,7 +783,7 @@ Aktuell bestehen keine offenen Produktentscheidungen aus dem bisherigen Grill-wi
 
 ### Versionsregel
 
-Alle Avalonia-Pakete müssen explizit auf `11.3.18` festgesetzt werden. FuncUI 1.6.0 gehört zum Avalonia-11.3-Zweig. Avalonia 12 benötigt FuncUI 2, das derzeit nur als Preview verfügbar ist.
+Alle Avalonia-Pakete müssen explizit auf `11.3.18` festgesetzt werden, mit genau einer versionsbedingten Ausnahme: `Avalonia.Controls.DataGrid` bleibt auf der letzten veröffentlichten Avalonia-11-Version `11.3.13`. FuncUI 1.6.0 gehört zum Avalonia-11.3-Zweig. Avalonia 12 benötigt FuncUI 2, das derzeit nur als Preview verfügbar ist. Die DataGrid-Ausnahme wurde am 27. Juli 2026 ausdrücklich vom Eigentümer freigegeben, weil eine Version `11.3.18` nicht veröffentlicht wurde und die offene FuncUI-Abhängigkeit sonst auf Avalonia 12 auflöst.
 
 Ohne ausdrückliche Freigabe gilt daher:
 
@@ -1518,7 +1518,7 @@ Die zentrale Paketkonfiguration muss mindestens diese Versionen festsetzen:
   <PackageReference Include="Avalonia.Themes.Fluent"
                     Version="11.3.18" />
   <PackageReference Include="Avalonia.Controls.DataGrid"
-                    Version="11.3.18" />
+                    Version="11.3.13" />
   <PackageReference Include="Avalonia.FuncUI"
                     Version="1.6.0" />
   <PackageReference Include="Avalonia.FuncUI.Elmish"
@@ -1526,7 +1526,7 @@ Die zentrale Paketkonfiguration muss mindestens diese Versionen festsetzen:
 </ItemGroup>
 ```
 
-Die explizite DataGrid-Version verhindert eine unkontrollierte Auflösung der offenen FuncUI-Abhängigkeit auf eine inkompatible Avalonia-Hauptversion.
+Die explizite DataGrid-Version verhindert eine unkontrollierte Auflösung der offenen FuncUI-Abhängigkeit auf eine inkompatible Avalonia-Hauptversion. `11.3.13` ist die letzte veröffentlichte Avalonia-11-Version des inzwischen separat versionierten DataGrid-Pakets; alle übrigen Avalonia-Pakete bleiben auf `11.3.18`.
 
 Für `JiraBoard.VisualTests` werden zusätzlich festgesetzt:
 
@@ -1543,7 +1543,7 @@ Für `JiraBoard.VisualTests` werden zusätzlich festgesetzt:
 </ItemGroup>
 ```
 
-`Verify.Avalonia` 1.4.0 ist für Avalonia 11.3 geeignet. Version 1.4.1 darf in diesem Stack nicht verwendet werden, weil sie mindestens Avalonia 12.1 referenziert. Auch transitive Avalonia-Testabhängigkeiten müssen durch Central Package Management auf `11.3.18` begrenzt bleiben. Die Visual-Test-Pakete sind test-only und dürfen nicht in die veröffentlichte oder AOT-kompilierte Produktanwendung einfließen.
+`Verify.Avalonia` 1.4.0 ist für Avalonia 11.3 geeignet. Version 1.4.1 darf in diesem Stack nicht verwendet werden, weil sie mindestens Avalonia 12.1 referenziert. Auch transitive Avalonia-Testabhängigkeiten müssen durch Central Package Management auf `11.3.18` beziehungsweise für `Avalonia.Controls.DataGrid` auf `11.3.13` begrenzt bleiben. Die Visual-Test-Pakete sind test-only und dürfen nicht in die veröffentlichte oder AOT-kompilierte Produktanwendung einfließen.
 
 Für `JiraBoard.Tests` wird eine stabile xUnit-Version zentral festgesetzt. Eine xUnit-v4-Preview darf nicht eingeführt werden, um alle Tests zwangsweise AOT-fähig zu machen. `JiraBoard.AotSmokeTests` erhält keinerlei Test-SDK-, Runner-, Headless-, Verify- oder Fluent-Assertions-Pakete. Central Package Management und eine CI-Abhängigkeitsprüfung müssen sicherstellen, dass `FluentAssertions` weder direkt noch transitiv im Solution-Graphen vorhanden ist. Dieselbe Prüfung erzwingt das vollständige Lizenzinventar und die Avalonia-Free-Allowlist, verbietet Community-/Plus-/Pro-/Enterprise-/Accelerate-Abhängigkeiten und weist nach, dass weder Projekt noch CI einen Avalonia-Lizenzschlüssel kennen.
 
@@ -1913,7 +1913,7 @@ Der Agent vermeidet eine pauschale Bitte wie „Bitte prüfen“. Die Abnahmehin
 
 - Die Anwendung enthält keine WebView und kein XAML.
 - Sie targetet `net10.0`.
-- Sie verwendet ausschließlich Avalonia 11.3.18 und FuncUI/Elmish 1.6.0.
+- Sie verwendet Avalonia 11.3.18, die ausdrücklich freigegebene DataGrid-Ausnahme 11.3.13 und FuncUI/Elmish 1.6.0.
 - sie verwendet ausschließlich Avalonia Free/MIT und freigegebene permissive OSS-Abhängigkeiten; Community, Plus, Pro, Enterprise, Accelerate, Premium-Pakete, unbekannte Lizenzen und Avalonia-Lizenzschlüsselmarker fehlen im vollständigen Graphen und Repository.
 - mindestens ein fachliches Vertical Slice ist nachweisbar test-first im Red-Green-Refactor-Zyklus entstanden; bei jedem tatsächlichen Bugfix entsteht zuerst ein Reproduktionstest.
 - Architekturtests verhindern Referenzen der Domain auf Avalonia, Jira-DTOs, HTTP, SQLite und Credential-Store-Implementierungen.
