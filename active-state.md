@@ -18,20 +18,20 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `FND-006` – GitHub-Actions-CI erstellen (`FND-005` ist zurückgestellt) |
+| Nächster Paketkandidat danach | `DOM-002` – Issue-Hierarchie klassifizieren |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sechs F#-Projekten; FND-004 und der pragmatische Repository-Scanner mit kombinierter Negativkontrolle sind menschlich abgenommen; `FND-005` ist auf `Blocked` mit Abhängigkeit von `DOM-001` gesetzt, weil die Domain-Grenzprüfung erst mit dem ersten Domainprojekt greifen kann |
+| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; neu ist das erste Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`). `DOM-001` ist menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
 
 ## Aktive Arbeitspositionen
 
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
-- `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001`, das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) mit umsetzt.
+- `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001` (menschlich abgenommen), das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) inhaltlich mit umsetzt; das Item bleibt zur Nachverfolgung offen.
 
 ## Aktuelle menschliche Abnahme
 
-Die `FND-005`-Zurückstellung (reine Planungs-/Dokumentationsänderung) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert; FND-005 bleibt als Item `Blocked` mit Abhängigkeit von `DOM-001`, die abgenommene Entscheidung ist die Verschiebung der Grenzprüfung nach `DOM-001`.
+`DOM-001` (Starke Identitäten und `BoardContext`; setzt zugleich die zurückgestellte `FND-005`-Grenzprüfung um) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Die `FND-005`-Zurückstellung (reine Planungs-/Dokumentationsänderung) wurde am
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `DOM-001` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu: Domainprojekt `JiraBoard.Domain` (`Identifiers.fs` mit `SiteId`/`ProjectId`/`BoardId`/`SprintId`/`IssueId`/`IssueKey`, `Board.fs` mit `SprintScope` und `BoardContext` inkl. `SiteId`), nur `FSharp.Core` referenziert; in `JiraBoard.slnx` als innerste Schicht aufgenommen. Zugleich die zurückgestellte `FND-005`-Grenze umgesetzt: statischer, reflexionsfreier [`DomainBoundaryTests`](tests/JiraBoard.Tests/DomainBoundaryTests.fs) liest das Domain-Dependency-Lock (direkt + transitiv) und schlägt bei verbotenen Referenzen fehl. TDD-Rot war bewiesen (Tests kompilierten vor dem Domainprojekt nicht); die Negativkontrolle (temporäre Avalonia-Referenz) machte den Grenztest rot, der bereinigte Stand ist grün. `dotnet restore`/`build -c Release`/`test -c Release --no-build` aus bereinigtem Zustand: 0 Fehler/0 Warnungen, 9/9 Tests grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 
 - Die `FND-005`-Zurückstellung wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` akzeptiert. Es ist eine reine Planungs-/Dokumentationsänderung an `product-backlog.md`, `implementation-readiness-checklist.md`, `avalonia-fsharp-funcui-stack-handoff.md` und `active-state.md` ohne Produktionscode; daher kein Build/Test erforderlich. FND-005 bleibt als Item `Blocked` mit Abhängigkeit von `DOM-001`.
 

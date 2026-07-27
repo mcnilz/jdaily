@@ -8,7 +8,13 @@
     <Compile Include="AssemblyMarker.fs" />
     <Compile Include="TestSupport.fs" />
     <Compile Include="HarnessTests.fs" />
+    <Compile Include="DomainIdentityTests.fs" />
+    <Compile Include="DomainBoundaryTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\JiraBoard.Domain\JiraBoard.Domain.fsproj" />
   </ItemGroup>
 </Project>
