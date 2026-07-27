@@ -16,8 +16,8 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 27. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | 'UI-001' – Design Tokens als F#-Code (Done, abgenommen) |
-| Nächste menschliche Aktion | UI-001 abgenommen und committet; nächstes eligibles Arbeitspaket auswählen/bestätigen |
+| Aktiver Arbeitsauftrag | 'FND-006' – GitHub-Actions-CI erstellen (Done, menschlich abgenommen am 27. Juli 2026) |
+| Nächste menschliche Aktion | Nächstes eligibles P0-Item bestätigen (Vorschlag folgt separat) |
 | Nächster Paketkandidat danach | 'DOM-009' – Fixture-Sicherheitsprüfung automatisieren (P0; 'DOM-007' ist P1) |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |

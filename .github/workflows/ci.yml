@@ -1,0 +1,72 @@
+name: CI
+
+# FND-006: continuous integration on a clean checkout. Every job below is a
+# hard gate; there is no `continue-on-error`, so a single failure fails the run.
+# The workflow reproduces exactly the local validation steps (restore, Release
+# build with warnings-as-errors, tests) and the repository quality scanners
+# (forbidden-assertion block and secret/license-key markers), each with its
+# negative control so the gates provably fail on a violation.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: "true"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "true"
+
+jobs:
+  build-and-verify:
+    name: Build, test and gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (clean)
+        uses: actions/checkout@v4
+
+      # The SDK version is pinned by global.json (rollForward: disable), so the
+      # runner must provide exactly that .NET 10 SDK.
+      - name: Set up .NET (pinned by global.json)
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore (locked mode)
+        run: dotnet restore JiraBoard.slnx --locked-mode
+
+      - name: Build (Release, warnings as errors)
+        run: dotnet build JiraBoard.slnx -c Release --no-restore -warnaserror -p:TreatWarningsAsErrors=true
+
+      - name: Test (Release, no rebuild)
+        run: dotnet test JiraBoard.slnx -c Release --no-build
+
+      # Package/license gate: the forbidden assertion library must not appear
+      # in package declarations, lockfiles, restored assets, source, scripts or
+      # workflows.
+      - name: Forbidden-assertion block
+        shell: pwsh
+        run: ./eng/check-fluent-assertions.ps1
+
+      - name: Forbidden-assertion block negative control
+        shell: pwsh
+        run: ./eng/tests/check-fluent-assertions.Tests.ps1
+
+      # Secret scan: forbidden Avalonia/Accelerate license-key markers must not
+      # appear on a clean checkout outside the explicit policy documents.
+      - name: Secret-marker scan
+        shell: pwsh
+        run: ./eng/check-secret-markers.ps1
+
+      - name: Secret-marker scan negative control
+        shell: pwsh
+        run: ./eng/tests/check-secret-markers.Tests.ps1
