@@ -23,3 +23,11 @@ type IssueId = IssueId of string
 /// Readable key such as `APP-142`. It is displayed and can serve as a last
 /// deterministic emergency fallback, but never replaces `IssueId`.
 type IssueKey = IssueKey of string
+
+/// Stable identity of a Jira workflow status. The status name is representation
+/// only; mapping and identity use this stable id (see domain-glossary.md).
+type StatusId = StatusId of string
+
+/// Stable identity of a normalized board event. A timestamp alone is not an
+/// event identity (see domain-glossary.md).
+type BoardEventId = BoardEventId of string

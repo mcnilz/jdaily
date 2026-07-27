@@ -9,6 +9,7 @@
     <Compile Include="BoardOrder.fs" />
     <Compile Include="Board.fs" />
     <Compile Include="SprintProjection.fs" />
+    <Compile Include="BoardEvents.fs" />
     <PackageReference Include="FSharp.Core" />
   </ItemGroup>
 </Project>

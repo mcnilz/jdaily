@@ -18,6 +18,8 @@ The active-state file is the operational re-entry point, but it is not a specifi
 
 **`active-state.md` must always describe the actual current project state.** Read it first whenever starting or resuming work.
 
+- To save tokens, prefer the helper script `eng/active-state.ps1` for reading and updating the snapshot instead of loading or rewriting the whole file: `pwsh eng/active-state.ps1` prints the compact snapshot plus active work positions, `pwsh eng/active-state.ps1 -Field "<Feld>"` reads a single snapshot field, and `pwsh eng/active-state.ps1 -Set -Field "<Feld>" -Value "<Wert>"` replaces exactly that one snapshot line (preserving UTF-8-without-BOM and the existing line endings). Use single quotes around values so backticks around item IDs are passed through literally. Larger section edits (active work positions, acceptance checklists) remain deliberate manual edits.
+
 - Select the next eligible `Ready` backlog item, move it to `Proposed`, present goal, scope, risks, validation plan and later human acceptance points, and wait for explicit human confirmation. A direct human instruction to implement a concrete scoped item counts as its confirmation.
 - Only after confirmation, move the item to `In Progress` and record owner, current substep, next concrete action and exclusive write scope in `active-state.md`.
 - After every coherent result, synchronize the active entry, affected backlog status and readiness checkboxes.

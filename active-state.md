@@ -18,10 +18,10 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `DOM-005` – Boardereignismodell erstellen |
+| Nächster Paketkandidat danach | `DOM-006` – Ereignisreihenfolge deterministisch machen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich die pure Multi-Sprint-Scope-Projektion. `DOM-001`, `DOM-002`, `DOM-003` und `DOM-004` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
+| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich das normalisierte Boardereignismodell. `DOM-001`, `DOM-002`, `DOM-003`, `DOM-004` und `DOM-005` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`DOM-004` (Multi-Sprint-Scope projizieren) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
+`DOM-005` (Boardereignismodell erstellen) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und – einschließlich des Hilfsskripts `eng/active-state.ps1` – automatisch committet. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `DOM-005` (Boardereignismodell erstellen) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu im Domainprojekt: [`BoardEvents.fs`](src/JiraBoard.Domain/BoardEvents.fs) mit `BoardEventSource` (`JiraHistory of itemIndex`/`JiraComment`/`DevelopmentInformation`), `LabelChange` (`LabelAdded`/`LabelRemoved`), `BoardEventKind` (`StatusChanged of fromStatus * toStatus`, `AssigneeChanged of assignee option`, `LabelChanged`, `CommentAdded`, `CommitLinked of commitHash`) und dem Record `BoardEvent` (`EventId`, `IssueId`, `OccurredAtUtc: DateTimeOffset`, `Source`, `Kind`); das Modell ist normalisiert, ohne rohe Jira-Changelog-Items, mit `StatusChanged` als beobachtetem Ergebnis. [`Identifiers.fs`](src/JiraBoard.Domain/Identifiers.fs) trägt zusätzlich die starken Identitäten `StatusId` und `BoardEventId`. Verhaltenstests [`BoardEventTests.fs`](tests/JiraBoard.Tests/BoardEventTests.fs) belegen Status-Übergang, Konstruier-/Unterscheidbarkeit aller Arten, Assignee inkl. `None`, Label add/remove, Quelle und `BoardEventId`-Identität. TDD-Rot war bewiesen (63 Kompilierfehler wegen fehlender Ereignistypen). `dotnet build -c Release` (gesamte `JiraBoard.slnx`) 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` 37/37 grün (29 bisher + 8 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert. Mitcommittet wurde auf ausdrücklichen Wunsch das token-sparende Hilfsskript [`eng/active-state.ps1`](eng/active-state.ps1) samt Verweis in `AGENTS.md`.
 
 - `DOM-004` (Multi-Sprint-Scope projizieren) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu im Domainprojekt: [`SprintProjection.fs`](src/JiraBoard.Domain/SprintProjection.fs) mit dem Eingabetyp `SprintBoardIssue` (`IssueId`, `Position: BoardPosition`, `Sprints: Set<SprintId>`) und der puren, auto-geöffneten Funktion `projectSprintScope : SprintScope -> SprintBoardIssue list -> SprintBoardIssue list`. Die Projektion bildet zuerst die globale `resolveBoardOrder` über die unveränderten `BoardPosition`-Werte, filtert dann per `stableSubsequence` nach Scope (`AllActiveSprints`: nicht-leere Sprintmenge; `ActiveSprint sprintId`: Menge enthält `sprintId`) und entfernt Duplikate nach `IssueId` reihenfolgeerhaltend; die Ausgabe ist damit immer eine stabile Teilfolge der globalen `ResolvedBoardOrder` und nie eine Verkettung einzelner Sprintantworten (Glossar Z. 78, Entscheidung Z. 168). Verhaltenstests [`SprintProjectionTests.fs`](tests/JiraBoard.Tests/SprintProjectionTests.fs) belegen Dedup eines Multi-Sprint-Issues auf eine globale Position, stabile Teilfolge trotz abweichender Eingabereihenfolge, exakten Einzelsprint-Filter sowie die Randfälle (leere Eingabe, Sprint ohne Issues, Issue ohne Sprintzugehörigkeit). `dotnet build -c Release` (gesamte `JiraBoard.slnx`) 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` 29/29 grün (21 bisher + 8 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 
