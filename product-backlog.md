@@ -118,7 +118,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
-| FND-001 | P0 | In Review | Solution-Skelett erzeugen | `JiraBoard.sln` enthält App, UI, UiCatalog, Tests, AOT-SmokeTests und VisualTests mit expliziter F#-Dateireihenfolge. | GOV-005 |
+| FND-001 | P0 | In Review | Solution-Skelett erzeugen | `JiraBoard.slnx` enthält App, UI, UiCatalog, Tests, AOT-SmokeTests und VisualTests mit expliziter F#-Dateireihenfolge. | GOV-005 |
 | FND-002 | P0 | Planned | .NET-, Paket- und Avalonia-Free-Versionen festsetzen | `global.json`, Central Package Management, .NET 10, Avalonia `11.3.18` und FuncUI/Elmish `1.6.0` sind exakt gepinnt; nur geprüfte Avalonia-Free-/OSS-Pakete, keine Preview-Pakete. | FND-001 |
 | FND-003 | P0 | Planned | TDD-Harness einrichten | Stabiles xUnit, eingebaute `Assert`-APIs und kleine F#-Testhelper funktionieren; erster Test schlägt vor Produktionscode fehl. | FND-001–002 |
 | FND-004 | P0 | Planned | FluentAssertions-Sperre automatisieren | Direkte, transitive, Paketdatei-, Namespace-, Alias- und Wrapper-Treffer beenden CI; negative Kontrolltests belegen die Sperre. | FND-002–003 |

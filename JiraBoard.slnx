@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/JiraBoard.App/JiraBoard.App.fsproj" />
+  <Project Path="src/JiraBoard.Ui/JiraBoard.Ui.fsproj" />
+  <Project Path="src/JiraBoard.UiCatalog/JiraBoard.UiCatalog.fsproj" />
+  <Project Path="tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj" />
+  <Project Path="tests/JiraBoard.Tests/JiraBoard.Tests.fsproj" />
+  <Project Path="tests/JiraBoard.VisualTests/JiraBoard.VisualTests.fsproj" />
+</Solution>

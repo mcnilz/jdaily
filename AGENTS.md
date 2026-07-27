@@ -87,6 +87,12 @@ dotnet build -c Release
 dotnet test -c Release --no-build
 ```
 
+### Codex sandbox and NuGet locks
+
+If restore or build inside the Codex sandbox reports denied access to the user-level `NuGet.Config` or cannot access a NuGet lock below `D:\packages\nuget-scratch`, treat that first as a sandbox permission problem, not as a stale project lock. Re-run the identical `rtk dotnet restore JiraBoard.slnx` or build command with the required sandbox escalation (`require_escalated`) so NuGet can read the existing user configuration and global scratch area.
+
+Do not delete the global lock file, overwrite the user-level `NuGet.Config`, commit a repository-local workaround configuration or redirect package sources merely to bypass this sandbox error. Only investigate a genuinely stale lock after the same command also fails with normal user access and no other NuGet process is active.
+
 Also run headless visual tests for UI changes and self-contained/Native-AOT smoke tests for dependency, serialization, persistence, wiring or publishing changes. Never update Golden Masters automatically.
 
 When handing off, update `active-state.md` first, move completed implementation to `In Review`, then report changed behavior, tests run, remaining warnings, deferred decisions, exact human acceptance checks and the agent retrospective. Only explicit human acceptance permits `Done`.

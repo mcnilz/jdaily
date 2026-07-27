@@ -891,7 +891,7 @@ FuncUI ermöglicht eine vollständig programmatische, deklarative F#-UI ohne XAM
 Die Solution trennt auslieferbare App, wiederverwendbare UI, den visuellen Katalog und Tests:
 
 ```text
-JiraBoard.sln
+JiraBoard.slnx
 |-- JiraBoard.App
 |-- JiraBoard.Ui
 |-- JiraBoard.UiCatalog
