@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <Compile Include="AssemblyMarker.fs" />
+    <Compile Include="DesignTokens.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,6 +17,21 @@
           "xunit.v3.mtp-v1": "[3.2.2]"
         }
       },
+      "Avalonia.BuildServices": {
+        "type": "Transitive",
+        "resolved": "11.3.2",
+        "contentHash": "qHDToxto1e3hci5YqbG9n0Ty8mlp3zBUN5wT66wKqaDVzXyQ0do3EnRILd4Ke9jpvsktaPpgE0YjEk7hornryQ=="
+      },
+      "Avalonia.Remote.Protocol": {
+        "type": "Transitive",
+        "resolved": "11.3.18",
+        "contentHash": "vw+6ZfgTuu72dA9aVWn6u56t2nrBd5MoMU0wo/qI9XJAl/c0oYYphIvwLvJP1JorubQY4UE3d0ac8ULBhrGBiA=="
+      },
+      "MicroCom.Runtime": {
+        "type": "Transitive",
+        "resolved": "0.11.0",
+        "contentHash": "MEnrZ3UIiH40hjzMDsxrTyi8dtqB5ziv3iBeeU4bXsL/7NLSal9F1lZKpK+tfBRnUoDSdtcW3KufE4yhATOMCA=="
+      },
       "Microsoft.ApplicationInsights": {
         "type": "Transitive",
         "resolved": "2.23.0",
@@ -133,6 +148,45 @@
         "type": "Project",
         "dependencies": {
           "FSharp.Core": "[6.0.0, )"
+        }
+      },
+      "jiraboard.ui": {
+        "type": "Project",
+        "dependencies": {
+          "Avalonia": "[11.3.18, )",
+          "Avalonia.Controls.DataGrid": "[11.3.13, )",
+          "Avalonia.FuncUI": "[1.6.0, )"
+        }
+      },
+      "Avalonia": {
+        "type": "CentralTransitive",
+        "requested": "[11.3.18, )",
+        "resolved": "11.3.18",
+        "contentHash": "2C4UxhWUObWGgYKWic1x5BMMWGJP6SElb91WeOxs+X/iR26rtkqpxFFwwo50FXS9AyYnHfk8QKXDEfe7oT/kZA==",
+        "dependencies": {
+          "Avalonia.BuildServices": "11.3.2",
+          "Avalonia.Remote.Protocol": "11.3.18",
+          "MicroCom.Runtime": "0.11.0"
+        }
+      },
+      "Avalonia.Controls.DataGrid": {
+        "type": "CentralTransitive",
+        "requested": "[11.3.13, )",
+        "resolved": "11.3.13",
+        "contentHash": "Omfzm3l5ZJQHe1dCuvvadV3LkGmCzImnfOKtoXcDH632jDSwMKRGJ7S+uZRhmu7aBzRxL7PrpIfo4wdDGuzmWA==",
+        "dependencies": {
+          "Avalonia": "11.3.13"
+        }
+      },
+      "Avalonia.FuncUI": {
+        "type": "CentralTransitive",
+        "requested": "[1.6.0, )",
+        "resolved": "1.6.0",
+        "contentHash": "Azsz5G55W+yl0O7sGm3wVpkMxWDYb/d4ywIL9ptrkD/iBSb2jqQTaa2noyCMTrnjmSyXcyOndJmdr5LOWve/3Q==",
+        "dependencies": {
+          "Avalonia": "11.3.0",
+          "Avalonia.Controls.DataGrid": "11.3.0",
+          "FSharp.Core": "6.0.0"
         }
       }
     }
