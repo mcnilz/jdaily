@@ -18,10 +18,10 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `DOM-002` – Issue-Hierarchie klassifizieren |
+| Nächster Paketkandidat danach | `DOM-003` – Boardreihenfolge modellieren |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; neu ist das erste Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`). `DOM-001` ist menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
+| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich die Issue-Hierarchie-Klassifizierung. `DOM-001` und `DOM-002` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`DOM-001` (Starke Identitäten und `BoardContext`; setzt zugleich die zurückgestellte `FND-005`-Grenzprüfung um) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
+`DOM-002` (Issue-Hierarchie klassifizieren) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert, auf `Done` gesetzt und einschließlich der ausdrücklich gewünschten `.gitignore`-Anpassung committet. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `DOM-002` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und einschließlich der ausdrücklich gewünschten `.gitignore`-Anpassung automatisch committet. Neu im Domainprojekt: [`IssueHierarchy.fs`](src/JiraBoard.Domain/IssueHierarchy.fs) mit `IssueType` (`Id`, `Name`, `HierarchyLevel`, `IsSubtask`), `WorkItemLevel` (`ParentLevel`/`StandardLevel`/`SubtaskLevel`) und der puren, auto-geöffneten `classify`-Funktion; das Level entsteht ausschließlich aus Metadaten (Subtask-Kennzeichen dominiert, danach `HierarchyLevel > 0` -> Parent, sonst Standard), nie aus dem Typnamen. Verhaltenstests [`IssueHierarchyTests.fs`](tests/JiraBoard.Tests/IssueHierarchyTests.fs) belegen unter anderem, dass Story, Bug, Task und ein Custom Standard-Typ dieselbe Standard-Swimlane-Regel ergeben. TDD-Rot war bewiesen (31 Kompilierfehler vor der Umsetzung). `dotnet build -c Release` -> 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` -> 14/14 grün (9 bisher + 5 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket -> Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 
 - `DOM-001` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu: Domainprojekt `JiraBoard.Domain` (`Identifiers.fs` mit `SiteId`/`ProjectId`/`BoardId`/`SprintId`/`IssueId`/`IssueKey`, `Board.fs` mit `SprintScope` und `BoardContext` inkl. `SiteId`), nur `FSharp.Core` referenziert; in `JiraBoard.slnx` als innerste Schicht aufgenommen. Zugleich die zurückgestellte `FND-005`-Grenze umgesetzt: statischer, reflexionsfreier [`DomainBoundaryTests`](tests/JiraBoard.Tests/DomainBoundaryTests.fs) liest das Domain-Dependency-Lock (direkt + transitiv) und schlägt bei verbotenen Referenzen fehl. TDD-Rot war bewiesen (Tests kompilierten vor dem Domainprojekt nicht); die Negativkontrolle (temporäre Avalonia-Referenz) machte den Grenztest rot, der bereinigte Stand ist grün. `dotnet restore`/`build -c Release`/`test -c Release --no-build` aus bereinigtem Zustand: 0 Fehler/0 Warnungen, 9/9 Tests grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 

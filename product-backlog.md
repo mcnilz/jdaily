@@ -135,7 +135,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
 | DOM-001 | P0 | Done | Starke Identitäten und `BoardContext` modellieren | Site, Projekt, Board, Sprint und Issue verwenden unterschiedliche Typen; Namen sind keine Identität. Zusammen mit dem ersten Domainprojekt wird die Architekturgrenze aus `FND-005` umgesetzt: ein Test/eine Regel verhindert Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen. Menschlich abgenommen am 27. Juli 2026. | FND-003 |
-| DOM-002 | P0 | Planned | Issue-Hierarchie klassifizieren | Parent-, Standard- und Subtask-Level entstehen aus Metadaten; Story, Bug, Task und Custom Standard ergeben dieselbe Swimlane-Regel. | DOM-001 |
+| DOM-002 | P0 | Done | Issue-Hierarchie klassifizieren | Parent-, Standard- und Subtask-Level entstehen aus Metadaten; Story, Bug, Task und Custom Standard ergeben dieselbe Swimlane-Regel. Menschlich abgenommen am 27. Juli 2026. | DOM-001 |
 | DOM-003 | P0 | Planned | Boardreihenfolge modellieren | `JiraRank`, `BoardOrdinal`, `ResolvedBoardOrder` und stabile Teilfolgen sind pure, getestete Verträge. | DOM-001 |
 | DOM-004 | P0 | Planned | Multi-Sprint-Scope projizieren | Alle aktiven Sprints deduplizieren nach `IssueId` und erhalten die globale Boardreihenfolge; einzelner Sprint filtert exakt. | DOM-001, DOM-003 |
 | DOM-005 | P0 | Planned | Boardereignismodell erstellen | Status, Assignee, Labels, Kommentare und optionale Commits werden als normalisierte `BoardEvent`-Werte modelliert. | DOM-001 |
