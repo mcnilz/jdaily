@@ -122,8 +122,8 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | FND-002 | P0 | Done | .NET-, Paket- und Avalonia-Free-Versionen festsetzen | `global.json`, Central Package Management, .NET 10, Avalonia `11.3.18`, die am 27. Juli 2026 ausdrücklich freigegebene DataGrid-Ausnahme `11.3.13` und FuncUI/Elmish `1.6.0` sind exakt gepinnt; nur geprüfte Avalonia-Free-/OSS-Pakete, keine Preview-Pakete. Die nativen SkiaSharp-/HarfBuzzSharp-Unterlizenzen sind am 27. Juli 2026 verwendungsspezifisch in [ADR-001](docs/adr/ADR-001-native-skiasharp-license-exception.md) freigegeben; vollständige Lizenztexte und Attributionen werden mit der Anwendung ausgeliefert. Menschlich abgenommen am 27. Juli 2026. | FND-001 |
 | FND-003 | P0 | Done | TDD-Harness einrichten | Stabiles xUnit, eingebaute `Assert`-APIs und kleine F#-Testhelper funktionieren; ein Harness-Test schlägt vor der zugehörigen Testhelper-Implementierung fehl und läuft danach grün. Der erste fachliche Domain-/Update-Test folgt nach `FND-005` und weiterhin vor seinem Produktionscode. Menschlich abgenommen am 27. Juli 2026. | FND-001–002 |
 | FND-004 | P0 | Done | FluentAssertions-Sperre automatisieren | Direkte, transitive, Paketdatei-, Namespace-, Alias- und Wrapper-Treffer beenden den [Repository-Scanner](eng/check-fluent-assertions.ps1) mit Hard Fail; die [kombinierte Negativkontrolle](eng/tests/check-fluent-assertions.Tests.ps1) belegt Paketgraph, Source und generische Wrapper. Die GitHub-Actions-Verdrahtung folgt in `FND-006`. Menschlich abgenommen am 27. Juli 2026. | FND-002–003 |
-| FND-005 | P0 | Planned | Architekturgrenzen testen | Tests verhindern Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen. | FND-001–003 |
-| FND-006 | P0 | Planned | GitHub-Actions-CI erstellen | Restore, Release-Build, Tests, Format-/Warnungscheck, Paket-/Lizenzprüfung und Secret-Scan laufen auf sauberem Checkout. | FND-002–005 |
+| FND-005 | P0 | Blocked | Architekturgrenzen testen | Tests verhindern Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen. Zurückgestellt: Die Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt, weil vor dem Domainprojekt keine Domainassembly zum Schützen existiert. | DOM-001 |
+| FND-006 | P0 | Planned | GitHub-Actions-CI erstellen | Restore, Release-Build, Tests, Format-/Warnungscheck, Paket-/Lizenzprüfung und Secret-Scan laufen auf sauberem Checkout. | FND-002–004 |
 | FND-007 | P2 | Planned | GitHub Actions lokal mit `act` prüfen | Unter Windows 11 mit Docker Desktop lässt sich der Linux-kompatible Kernworkflow vor Push ausführen; Unterschiede zu GitHub-hosted Runnern sind dokumentiert, GitHub Actions bleibt maßgeblich. | FND-006 |
 | FND-008 | P0 | Planned | AOT-Smoke-Runner anlegen | Gewöhnliches F#-Executable registriert Checks statisch, lässt sich publishen und liefert bei Fehlern Exit-Code ungleich null. | FND-001–003 |
 | FND-009 | P0 | Planned | Lizenz-, Avalonia-Free- und Dependency-Gate etablieren | Vollständiger Graph plus Fonts/Assets besitzt Lizenzinventar und Allowlist; Community/Plus/Pro/Enterprise/Accelerate, Premium-Pakete, Schlüsselmarker, unbekannte Lizenzen und nicht allowlistete Transitiva blockieren CI; `THIRD-PARTY-NOTICES.txt` und negative Kontrolltests sind reproduzierbar. | FND-002, FND-006 |
@@ -134,7 +134,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
-| DOM-001 | P0 | Planned | Starke Identitäten und `BoardContext` modellieren | Site, Projekt, Board, Sprint und Issue verwenden unterschiedliche Typen; Namen sind keine Identität. | FND-003, FND-005 |
+| DOM-001 | P0 | Planned | Starke Identitäten und `BoardContext` modellieren | Site, Projekt, Board, Sprint und Issue verwenden unterschiedliche Typen; Namen sind keine Identität. Zusammen mit dem ersten Domainprojekt wird die Architekturgrenze aus `FND-005` umgesetzt: ein Test/eine Regel verhindert Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen. | FND-003 |
 | DOM-002 | P0 | Planned | Issue-Hierarchie klassifizieren | Parent-, Standard- und Subtask-Level entstehen aus Metadaten; Story, Bug, Task und Custom Standard ergeben dieselbe Swimlane-Regel. | DOM-001 |
 | DOM-003 | P0 | Planned | Boardreihenfolge modellieren | `JiraRank`, `BoardOrdinal`, `ResolvedBoardOrder` und stabile Teilfolgen sind pure, getestete Verträge. | DOM-001 |
 | DOM-004 | P0 | Planned | Multi-Sprint-Scope projizieren | Alle aktiven Sprints deduplizieren nach `IssueId` und erhalten die globale Boardreihenfolge; einzelner Sprint filtert exakt. | DOM-001, DOM-003 |
@@ -296,8 +296,8 @@ Diese Items bleiben sichtbar, werden aber nicht in den MVP hineingezogen:
 Der erste Umsetzungsauftrag umfasst ausschließlich:
 
 1. `GOV-005`;
-2. `FND-001` bis `FND-005`;
-3. danach einen ersten fehlschlagenden Domain-Test aus `DOM-001` oder `DOM-002`.
+2. `FND-001` bis `FND-004`;
+3. danach `DOM-001`, das zugleich die zurückgestellte Architekturgrenze aus `FND-005` umsetzt und mit einem ersten fehlschlagenden Domain-Test aus `DOM-001` oder `DOM-002` beginnt.
 
 Er beginnt noch nicht mit Live-Jira, Credential-Eingabe oder der Produktoberfläche. Der erste ausführbare UI-Host bleibt `JiraBoard.UiCatalog`.
 

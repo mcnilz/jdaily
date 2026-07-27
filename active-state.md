@@ -18,28 +18,31 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `FND-005` – Architekturgrenzen testen |
+| Nächster Paketkandidat danach | `FND-006` – GitHub-Actions-CI erstellen (`FND-005` ist zurückgestellt) |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sechs F#-Projekten; FND-004 und der pragmatische Repository-Scanner mit kombinierter Negativkontrolle sind menschlich abgenommen; FND-005 ist der nächste Paketkandidat |
+| Repositoryzustand | `JiraBoard.slnx` mit sechs F#-Projekten; FND-004 und der pragmatische Repository-Scanner mit kombinierter Negativkontrolle sind menschlich abgenommen; `FND-005` ist auf `Blocked` mit Abhängigkeit von `DOM-001` gesetzt, weil die Domain-Grenzprüfung erst mit dem ersten Domainprojekt greifen kann |
 
 ## Aktive Arbeitspositionen
 
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
-Keine.
+- `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001`, das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) mit umsetzt.
 
 ## Aktuelle menschliche Abnahme
 
-`FND-004` wurde am 27. Juli 2026 für das fertiggestellte pragmatische `In Review`-Paket ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt.
+Die `FND-005`-Zurückstellung (reine Planungs-/Dokumentationsänderung) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert; FND-005 bleibt als Item `Blocked` mit Abhängigkeit von `DOM-001`, die abgenommene Entscheidung ist die Verschiebung der Grenzprüfung nach `DOM-001`.
 
 ## Offene Blocker und Entscheidungen
 
+- `FND-005` (Architekturgrenzen testen) ist auf ausdrückliche menschliche Entscheidung vom 27. Juli 2026 zurückgestellt und auf `Blocked` mit neuer Abhängigkeit von `DOM-001` gesetzt; die Zurückstellung wurde am 27. Juli 2026 ausdrücklich abgenommen. Die Domain-Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt; Backlog, Readiness-G2 und der technische Handoff wurden entsprechend nachgezogen.
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
 - Der frühere DataGrid-Blocker ist durch die ausdrückliche Freigabe von `11.3.13` und die synchronisierte Vertragskorrektur aufgelöst.
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- Die `FND-005`-Zurückstellung wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` akzeptiert. Es ist eine reine Planungs-/Dokumentationsänderung an `product-backlog.md`, `implementation-readiness-checklist.md`, `avalonia-fsharp-funcui-stack-handoff.md` und `active-state.md` ohne Produktionscode; daher kein Build/Test erforderlich. FND-005 bleibt als Item `Blocked` mit Abhängigkeit von `DOM-001`.
 
 - `FND-004` wurde nach Feedback auf einen 58-zeiligen Scanner und eine 49-zeilige kombinierte Negativkontrolle reduziert, am 27. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt; es existiert bewusst kein lokaler MSBuild-Hook. Direkte, transitive, Lock-/Assets-, Alias-, Workflow- und generische Wrapper-Fixtures liefern Exit-Code 1 und werden wieder entfernt; der echte Repository-Scan ist grün. Restore und Release-Build liefen mit 0 Fehlern/0 Warnungen, xUnit mit 1/1 Test grün, und der wiederholte Standards-/Spec-Review meldet keine verbleibenden Befunde. Die GitHub-Actions-Verdrahtung bleibt bei `FND-006`.
 - `FND-003` wurde nach der bestätigten Vertragskorrektur und Feedbackumsetzung am 27. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt: xUnit `3.2.2`, Microsoft Testing Platform, eingebautes `Assert` und `TestResult.assertOk` sind grün; der Harness-Test war vor der Helper-Implementierung rot. Restore und Release-Build liefen mit 0 Fehlern/0 Warnungen, die Suite mit 1/1 Test grün, Lockgraph und Allowlist stimmen mit 47/47 Paaren überein, der Notice-Hash ist reproduzierbar, und der erneute Standards-/Spec-Review meldet keinen blockierenden Befund. `.gitignore` ignoriert `.idea/` nachweislich.

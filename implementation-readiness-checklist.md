@@ -71,8 +71,8 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 
 - [x] Fachliche Begriffe und Invarianten im verbindlichen [DDD-Glossar](domain-glossary.md) festhalten und mit Handover sowie UI-Spezifikation abgleichen.
 - [x] verbindlichen Agent-Mensch-Arbeitsflow mit Startbestätigung, organisierter Umsetzung/Test/Review-Phase, konkreter Abnahmevorstellung und Feedback-Loop dokumentieren und ausdrücklich menschlich abnehmen; Nachweis: `GOV-007`, abgenommen am 26. Juli 2026.
-- [ ] Domain-, Feature-, Jira-Adapter-, UI- und Infrastrukturgrenzen in einem kleinen Dependency-Test oder einer gleichwertigen automatischen Regel schützen.
-- [ ] Sicherstellen, dass Domaincode keine Referenz auf Avalonia, Jira-DTOs, HTTP, SQLite oder Credential-Store-Implementierungen besitzt.
+- [ ] Domain-, Feature-, Jira-Adapter-, UI- und Infrastrukturgrenzen in einem kleinen Dependency-Test oder einer gleichwertigen automatischen Regel schützen. Diese Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` umgesetzt; das zurückgestellte `FND-005` besitzt vor dem Domainprojekt keine Domainassembly zum Schützen.
+- [ ] Sicherstellen, dass Domaincode keine Referenz auf Avalonia, Jira-DTOs, HTTP, SQLite oder Credential-Store-Implementierungen besitzt (Nachweis über die Grenzprüfung in `DOM-001`).
 - [ ] Jira-DTOs und explizite Mapping-Funktionen als Anti-Corruption-Layer vorsehen.
 - [ ] `JiraRank` und `BoardOrdinal` als explizite Ordnungsinformationen modellieren; Reihenfolge darf nicht als zufällige Collection-Eigenschaft behandelt werden.
 - [ ] injizierbare Ports für Uhr, Scheduler, ID-Erzeugung, Jira-Zugriff, Persistenz und Credential-Zugriff definieren, sobald sie fachlich benötigt werden.
@@ -88,7 +88,7 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 ### Nachweis
 
 - Testname und Commit/PR: _offen_
-- Architekturtest: _offen_
+- Architekturtest: _offen; wird zusammen mit dem ersten Domainprojekt in `DOM-001` umgesetzt (das eigenständige `FND-005` ist bis dahin zurückgestellt)._
 - Glossar: [DDD-Glossar](domain-glossary.md)
 - Arbeitsformate: [Feature-Notiz-Vorlage](docs/templates/feature-note-template.md) und [ADR-Vorlage](docs/templates/adr-template.md)
 

@@ -902,7 +902,7 @@ JiraBoard.slnx
 
 `JiraBoard.UiCatalog` referenziert `JiraBoard.Ui`; die Produktanwendung, VisualTests und AOT-Smoke-Tests tun dasselbe. Dadurch werden immer die echten Produktionskomponenten geprüft. `JiraBoard.UiCatalog` und die Testprojekte sind Entwicklungswerkzeuge und werden nicht mit dem normalen Endbenutzerpaket ausgeliefert.
 
-Die Abhängigkeitsrichtung ist verbindlich: Domain- und Featurekern liegen innen, Jira- und Infrastrukturadapter außen, `JiraBoard.Ui` projiziert getesteten Zustand und `JiraBoard.App` verdrahtet nur Ports, Hosts und Navigation. Ein Architekturtest schützt insbesondere, dass die Domain keine Referenzen auf UI-, Jira- oder Infrastrukturassemblies erhält.
+Die Abhängigkeitsrichtung ist verbindlich: Domain- und Featurekern liegen innen, Jira- und Infrastrukturadapter außen, `JiraBoard.Ui` projiziert getesteten Zustand und `JiraBoard.App` verdrahtet nur Ports, Hosts und Navigation. Ein Architekturtest schützt insbesondere, dass die Domain keine Referenzen auf UI-, Jira- oder Infrastrukturassemblies erhält. Dieser Architekturtest wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt; das eigenständige Backlog-Item `FND-005` ist bis dahin zurückgestellt, weil vor dem Domainprojekt keine Domainassembly zum Schützen existiert.
 
 `JiraBoard.AotSmokeTests` ist bewusst kein Test-Runner-Projekt, sondern ein kleines, gewöhnliches F#-Executable mit einem expliziten Register kritischer Checks. Es wird pro Zielplattform mit Native AOT veröffentlicht und anschließend ausgeführt. Die breite Testabdeckung bleibt in den normalen JIT-Testprojekten.
 
@@ -1799,7 +1799,7 @@ Der Agent vermeidet eine pauschale Bitte wie „Bitte prüfen“. Die Abnahmehin
 ### Meilenstein 1: Technischer Spike
 
 - TDD-Harness mit einem zuerst fehlschlagenden Harness-Test vor der zugehörigen Testhelper-Implementierung einrichten.
-- Nach Abschluss der Fundament- und Architekturgrenzen bis einschließlich `FND-005` die ersten fehlschlagenden Domain-/Update-Tests weiterhin vor dem jeweils zugehörigen Produktionscode anlegen.
+- Nach Abschluss der Fundamentitems und mit dem ersten Domainprojekt in `DOM-001`, das die zurückgestellte Architekturgrenze aus `FND-005` mit umsetzt, die ersten fehlschlagenden Domain-/Update-Tests weiterhin vor dem jeweils zugehörigen Produktionscode anlegen.
 - Domainmodule und die Anti-Corruption-Grenze zu Jira als Abhängigkeitsrichtung festlegen.
 - minimalen F#-/FuncUI-/Elmish-UiCatalog ohne XAML als ersten UI-Host erstellen und unter Windows starten.
 - `JiraBoard.App` nur als leeren Composition-/Packaging-Host anlegen; noch keine Produktoberfläche darin implementieren.
