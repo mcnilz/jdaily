@@ -16,9 +16,9 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 27. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `DOM-006` – Ereignisreihenfolge deterministisch machen |
+| Aktiver Arbeitsauftrag | Kein aktives Arbeitspaket. `DOM-006` menschlich abgenommen (`Done`) am 27. Juli 2026 und committet. |
+| Nächste menschliche Aktion | Nächstes Arbeitspaket bestätigen (`DOM-008` – Repräsentative Jira-Fixtures, P0) |
+| Nächster Paketkandidat danach | `DOM-008` – Repräsentative Jira-Fixtures aufbauen (P0; `DOM-007` ist P1) |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich das normalisierte Boardereignismodell. `DOM-001`, `DOM-002`, `DOM-003`, `DOM-004` und `DOM-005` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |

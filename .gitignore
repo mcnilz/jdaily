@@ -2,4 +2,5 @@
 **/obj/
 .idea/
 .tmp/
+.junie/plans/
 JiraBoard.sln.DotSettings.user

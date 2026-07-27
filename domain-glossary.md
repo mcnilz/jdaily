@@ -163,6 +163,7 @@ Diese Bereiche sind Feature- und Sprachgrenzen eines modularen Monolithen. Konkr
 Bereits ausdrücklich entschieden:
 
 - `2026-07-20`: Bei fehlendem oder gleichem Jira-Rank gilt `BoardOrdinal` vor dem Issue-Key. Der Issue-Key ist nur der letzte technische Notanker.
+- `2026-07-27` (`DOM-006`): Die deterministische Ereignisreihenfolge (`orderBoardEvents`) vergleicht zuerst den UTC-Zeitpunkt als Instant (offset-unabhängig), danach das `BoardOrdinal` des Issues (Issues ohne Ordinal danach), dann die feste Ereignisart-Ordnung `StatusChanged`, `AssigneeChanged`, `LabelChanged`, `CommentAdded`, `CommitLinked`, dann die Quellreihenfolge (`JiraHistory` nach Item-Index, dann `JiraComment`, dann `DevelopmentInformation`) und zuletzt die `BoardEventId`. Der lesbare Issue-Key ist nicht Teil des Schlüssels, damit die Reihenfolge kultur-invariant bleibt.
 - `2026-07-20`: Die neutrale Komponente heißt `SwimlaneHeader`; `StorySwimlaneHeader` ist wegen Bug, Task und Custom Standard Issues nicht mehr zulässig.
 - Parent-/Epic-Issues erscheinen nur als `ParentContext` im Issue-Modal, niemals als Swimlane oder Boardkarte.
 - `AllActiveSprints` ist eine stabile Teilfolge der globalen Jira-Boardreihenfolge, keine Verkettung einzelner Sprintantworten.

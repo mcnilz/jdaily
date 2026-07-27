@@ -13,6 +13,7 @@
     <Compile Include="BoardOrderTests.fs" />
     <Compile Include="SprintProjectionTests.fs" />
     <Compile Include="BoardEventTests.fs" />
+    <Compile Include="BoardEventOrderTests.fs" />
     <Compile Include="DomainBoundaryTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />

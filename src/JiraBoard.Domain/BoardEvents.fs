@@ -44,3 +44,55 @@ type BoardEvent =
       OccurredAtUtc: System.DateTimeOffset
       Source: BoardEventSource
       Kind: BoardEventKind }
+
+/// Pure, deterministic ordering of normalized board events. Auto-opened with the
+/// namespace so the functions are available wherever the domain is opened.
+[<AutoOpen>]
+module BoardEventOrder =
+    /// The fixed rank of an event kind. It is a deliberate, documented order
+    /// (Status, Assignee, Label, Comment, Commit) so that events sharing the
+    /// same instant, issue and source still sort deterministically and never
+    /// depend on culture or input order.
+    let private kindRank (kind: BoardEventKind) =
+        match kind with
+        | StatusChanged _ -> 0
+        | AssigneeChanged _ -> 1
+        | LabelChanged _ -> 2
+        | CommentAdded -> 3
+        | CommitLinked _ -> 4
+
+    /// The fixed rank of an event source. History entries keep their changelog
+    /// item index so duplicate deliveries stay distinguishable, then comments,
+    /// then Development Information.
+    let private sourceRank (source: BoardEventSource) =
+        match source with
+        | JiraHistory itemIndex -> (0, itemIndex)
+        | JiraComment -> (1, 0)
+        | DevelopmentInformation -> (2, 0)
+
+    /// The deterministic ordering key of a single event. `ordinalOf` resolves an
+    /// issue's captured `BoardOrdinal`; issues without one sort after those that
+    /// have it, mirroring the board-order cascade so `BoardOrdinal` always wins
+    /// before the last `BoardEventId` anchor is ever needed. The timestamp is
+    /// compared as a UTC instant, so an equal moment in a different offset is
+    /// treated as equal in time. The readable issue key is intentionally not
+    /// part of this key, keeping ordering culture-invariant.
+    let private orderKey (ordinalOf: IssueId -> BoardOrdinal option) (event: BoardEvent) =
+        let instant = event.OccurredAtUtc.UtcTicks
+
+        let ordinalKey =
+            match ordinalOf event.IssueId with
+            | Some(BoardOrdinal ordinal) -> (0L, ordinal)
+            | None -> (1L, 0L)
+
+        let (BoardEventId eventId) = event.EventId
+        (instant, ordinalKey, kindRank event.Kind, sourceRank event.Source, eventId)
+
+    /// Orders board events into their deterministic replay sequence. The sort is
+    /// stable and depends only on the events and the resolved `BoardOrdinal`, so
+    /// the same input yields the same sequence regardless of the incoming order
+    /// or the current culture. The cascade is: UTC instant, then issue
+    /// `BoardOrdinal`, then a fixed event-kind order, then the source order
+    /// (`JiraHistory` item index first), and finally the `BoardEventId`.
+    let orderBoardEvents (ordinalOf: IssueId -> BoardOrdinal option) (events: BoardEvent list) : BoardEvent list =
+        events |> List.sortBy (orderKey ordinalOf)
