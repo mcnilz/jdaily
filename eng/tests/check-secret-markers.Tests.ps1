@@ -4,8 +4,8 @@ param()
 $ErrorActionPreference = "Stop"
 
 $repositoryRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$checker = Join-Path $repositoryRoot "eng\check-secret-markers.ps1"
-$fixture = Join-Path $repositoryRoot ".tmp\fnd-006-secret-control-$([Guid]::NewGuid().ToString('N'))"
+$checker = Join-Path $repositoryRoot "eng" "check-secret-markers.ps1"
+$fixture = Join-Path $repositoryRoot ".tmp" "fnd-006-secret-control-$([Guid]::NewGuid().ToString('N'))"
 $utf8 = [Text.UTF8Encoding]::new($false)
 
 $markers = @{
@@ -38,7 +38,7 @@ try {
     }
 
     # A clean fixture without any marker must pass.
-    $cleanFixture = Join-Path $repositoryRoot ".tmp\fnd-006-secret-clean-$([Guid]::NewGuid().ToString('N'))"
+    $cleanFixture = Join-Path $repositoryRoot ".tmp" "fnd-006-secret-clean-$([Guid]::NewGuid().ToString('N'))"
     [IO.Directory]::CreateDirectory($cleanFixture) | Out-Null
     try {
         [IO.File]::WriteAllText((Join-Path $cleanFixture "clean.props"), "<X>no markers here</X>", $utf8)
