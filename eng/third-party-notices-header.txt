@@ -1,7 +1,7 @@
 JiraBoard third-party notices
 =============================
 
-Distribution baseline: FND-002, 27 July 2026
+Distribution baseline: FND-002–003, 27 July 2026
 
 This file is shipped next to the JiraBoard executable and embedded into
 JiraBoard.App for an in-application license view. It covers the exact restored
@@ -44,6 +44,15 @@ Microsoft.NET.ILLink.Tasks 10.0.10 (build only)
 runtime.win-x64.Microsoft.DotNet.ILCompiler 10.0.10 (build only)
 Copyright Microsoft Corporation. All rights reserved.
 
+Microsoft.ApplicationInsights 2.23.0 (test only)
+Microsoft.Bcl.AsyncInterfaces 6.0.0 (test only)
+Microsoft.Testing.Extensions.Telemetry 1.9.1 (test only)
+Microsoft.Testing.Extensions.TrxReport.Abstractions 1.9.1 (test only)
+Microsoft.Testing.Platform 1.9.1 (test only)
+Microsoft.Testing.Platform.MSBuild 1.9.1 (test only)
+Microsoft.Win32.Registry 5.0.0 (test only)
+Copyright Microsoft Corporation. All rights reserved.
+
 SkiaSharp 2.88.9
 SkiaSharp.NativeAssets.* 2.88.9
 Copyright Microsoft Corporation. All rights reserved.
@@ -54,6 +63,10 @@ Copyright Tom Deseyn
 Apache-2.0 package:
 Elmish 4.3.0
 Copyright 2016-2020 Elmish contributors
+
+xunit.analyzers 1.27.0 (test only)
+xunit.v3 and transitive xunit.v3.* packages 3.2.2 (test only)
+Copyright .NET Foundation and Contributors
 
 BSD-3-Clause package:
 Avalonia.Angle.Windows.Natives 2.1.25547.20250602

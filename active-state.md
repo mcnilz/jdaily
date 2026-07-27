@@ -18,10 +18,10 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `FND-003` – TDD-Harness einrichten |
+| Nächster Paketkandidat danach | `FND-004` – FluentAssertions-Sperre automatisieren |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sechs minimalen F#-Projekten; FND-002-Paket-, Lock-, Lizenz- und AOT-Baseline ist menschlich abgenommen, fachliche Tests und Produktoberfläche fehlen weiterhin |
+| Repositoryzustand | `JiraBoard.slnx` mit sechs F#-Projekten; FND-003 und der test-first entstandene xUnit-3.2.2-Harness mit 47 vollständig inventarisierten Lockpaaren sind menschlich abgenommen; fachliche Tests und Produktoberfläche fehlen weiterhin |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Keine.
 
 ## Aktuelle menschliche Abnahme
 
-`FND-002` wurde am 27. Juli 2026 für das fertiggestellte `In Review`-Paket ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt.
+`FND-003` wurde am 27. Juli 2026 für das fertiggestellte `In Review`-Paket ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert und auf `Done` gesetzt.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,7 @@ Keine.
 
 ## Letzter Prüfstand
 
+- `FND-003` wurde nach der bestätigten Vertragskorrektur und Feedbackumsetzung am 27. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt: xUnit `3.2.2`, Microsoft Testing Platform, eingebautes `Assert` und `TestResult.assertOk` sind grün; der Harness-Test war vor der Helper-Implementierung rot. Restore und Release-Build liefen mit 0 Fehlern/0 Warnungen, die Suite mit 1/1 Test grün, Lockgraph und Allowlist stimmen mit 47/47 Paaren überein, der Notice-Hash ist reproduzierbar, und der erneute Standards-/Spec-Review meldet keinen blockierenden Befund. `.gitignore` ignoriert `.idea/` nachweislich.
 - `GOV-007` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen, auf `Done` gesetzt und im G2-Gate nachgeführt.
 - `GOV-008` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt.
 - Neun Markdown-Dateien und acht PNGs wurden für das Übergabepaket inventarisiert; alle PNGs waren lesbar und das ZIP bestand vor der Abnahme den vollständigen Integritätstest. Das temporäre ZIP wurde anschließend auf ausdrücklichen Wunsch gelöscht und wird nicht erneut angelegt.

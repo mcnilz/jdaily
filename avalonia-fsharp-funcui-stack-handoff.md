@@ -1798,7 +1798,8 @@ Der Agent vermeidet eine pauschale Bitte wie „Bitte prüfen“. Die Abnahmehin
 
 ### Meilenstein 1: Technischer Spike
 
-- TDD-Harness und erste fehlschlagende Domain-/Update-Tests vor dem zugehörigen Produktionscode anlegen.
+- TDD-Harness mit einem zuerst fehlschlagenden Harness-Test vor der zugehörigen Testhelper-Implementierung einrichten.
+- Nach Abschluss der Fundament- und Architekturgrenzen bis einschließlich `FND-005` die ersten fehlschlagenden Domain-/Update-Tests weiterhin vor dem jeweils zugehörigen Produktionscode anlegen.
 - Domainmodule und die Anti-Corruption-Grenze zu Jira als Abhängigkeitsrichtung festlegen.
 - minimalen F#-/FuncUI-/Elmish-UiCatalog ohne XAML als ersten UI-Host erstellen und unter Windows starten.
 - `JiraBoard.App` nur als leeren Composition-/Packaging-Host anlegen; noch keine Produktoberfläche darin implementieren.

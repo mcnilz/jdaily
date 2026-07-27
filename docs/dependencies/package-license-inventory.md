@@ -2,7 +2,8 @@
 
 ## Scope and evidence
 
-This inventory records the exact package baseline introduced by `FND-002`.
+This inventory records the exact package baseline introduced by `FND-002` and
+the test-only xUnit graph introduced by `FND-003`.
 `Restored` means that the package occurs in a checked-in
 `packages.lock.json`; the lock entry supplies the NuGet content hash.
 `Reserved` means that only an exact future version is held centrally and that
@@ -13,6 +14,15 @@ extracted `.nuspec` and package license files. Repository license files and
 official NuGet/source pages were used as independent evidence. The three
 Native-AOT toolchain packages were discovered by publishing, then added to the
 same review. Fonts, icons and product assets are not part of the repository yet.
+
+Before the `FND-003` package reference was added, a disposable restore resolved
+the complete `xunit.v3 3.2.2` graph. Its exact lock hashes, `.nuspec` repository
+commits and upstream license files were reviewed. All 16 new pairs use only
+pre-approved `MIT` or `Apache-2.0` licenses. They are test/build-only, stay out
+of product and Native-AOT graphs, and introduce no dynamic product discovery.
+The stable xUnit line is actively maintained; restore audit reported no
+vulnerability warning. The Microsoft Testing Platform telemetry extension is
+runner infrastructure only and honors the standard .NET telemetry controls.
 
 The native packages contain additional vendor notices beyond their NuGet-level
 MIT declaration. On 27 July 2026 the owner approved these notices for exactly
@@ -58,14 +68,30 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Native-AOT publish | AOT compiler | inventory; MIT text | Approved, build only | FND-002 |
 | `Microsoft.NET.ILLink.Tasks` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.NET.ILLink.Tasks/10.0.10) | `MIT` | Native-AOT publish | trimmer/linker | inventory; MIT text | Approved, build only | FND-002 |
 | `runtime.win-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.win-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | Windows AOT toolchain | inventory; MIT text | Approved, build only | FND-002 |
+| `Microsoft.ApplicationInsights` | `2.23.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0) | `MIT` | MTP telemetry | test-runner telemetry transport | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Bcl.AsyncInterfaces` | `6.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/6.0.0) | `MIT` | xUnit common | async test contracts | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Testing.Extensions.Telemetry` | `1.9.1`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Testing.Extensions.Telemetry/1.9.1) | `MIT` | xUnit MTP runner | standard MTP runner telemetry extension | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Testing.Extensions.TrxReport.Abstractions` | `1.9.1`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Testing.Extensions.TrxReport.Abstractions/1.9.1) | `MIT` | xUnit MTP runner | TRX reporting contracts | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Testing.Platform` | `1.9.1`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Testing.Platform/1.9.1) | `MIT` | xUnit MTP runner | cross-platform test host | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Testing.Platform.MSBuild` | `1.9.1`; lock | Build/Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild/1.9.1) | `MIT` | xUnit MTP runner | `dotnet test` integration | inventory; MIT text | Approved, test only | FND-003 |
+| `Microsoft.Win32.Registry` | `5.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Win32.Registry/5.0.0) | `MIT` | xUnit runner common | runner environment support | inventory; MIT text | Approved, test only | FND-003 |
 | `SkiaSharp` | `2.88.9`; lock | Production | [NuGet/source](https://www.nuget.org/packages/SkiaSharp/2.88.9) | `MIT` | Avalonia.Skia | managed renderer API | MIT text | Approved | FND-002 |
 | `SkiaSharp.NativeAssets.Linux` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.Linux/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | Linux renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `SkiaSharp.NativeAssets.macOS` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.macOS/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | macOS renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `SkiaSharp.NativeAssets.WebAssembly` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.WebAssembly/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | WebAssembly renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `SkiaSharp.NativeAssets.Win32` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.Win32/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | Windows renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `Tmds.DBus.Protocol` | `0.21.3`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Tmds.DBus.Protocol/0.21.3) | `MIT` | Avalonia.FreeDesktop | Linux D-Bus protocol | MIT text | Approved | FND-002 |
+| `xunit.analyzers` | `1.27.0`; lock | Build/Test | [NuGet/source](https://www.nuget.org/packages/xunit.analyzers/1.27.0) | `Apache-2.0` | xunit.v3 | compile-time test diagnostics | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3/3.2.2) | `Apache-2.0` | direct JiraBoard.Tests | stable F# unit-test framework | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.assert` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.assert/3.2.2) | `Apache-2.0` | xunit.v3 | built-in assertions | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.common` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.common/3.2.2) | `Apache-2.0` | xUnit runner | shared runner contracts | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.core.mtp-v1` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.core.mtp-v1/3.2.2) | `Apache-2.0` | xunit.v3.mtp-v1 | MTP v1 test core | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.extensibility.core` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.extensibility.core/3.2.2) | `Apache-2.0` | xUnit core/runner | test discovery contracts | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.mtp-v1` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.mtp-v1/3.2.2) | `Apache-2.0` | xunit.v3 | MTP v1 integration aggregate | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.runner.common` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.common/3.2.2) | `Apache-2.0` | in-process runner | shared runner behavior | Apache license/NOTICE | Approved, test only | FND-003 |
+| `xunit.v3.runner.inproc.console` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.inproc.console/3.2.2) | `Apache-2.0` | xUnit core | executable in-process runner | Apache license/NOTICE | Approved, test only | FND-003 |
 
-The restored graph contains 31 exact package/version pairs. The machine-readable
+The restored graph contains 47 exact package/version pairs. The machine-readable
 package decision for every pair is
 [`eng/dependency-allowlist.json`](../../eng/dependency-allowlist.json).
 
@@ -102,7 +128,7 @@ source hash differs:
 
 Two consecutive generations on 27 July 2026 produced the identical repository
 artifact SHA-256
-`94919640f595cc38f306581afa9c4b0d2bb95f25f3ca51e346421b56b0506f1b`.
+`c45fe917f3ebf4990b5c8873392810d8c1b5f231643895e626737e90171db2ad`.
 All three AOT/linker packages and all eight approved native-assets packages are
 individually checked before their byte-identical notices are deduplicated.
 

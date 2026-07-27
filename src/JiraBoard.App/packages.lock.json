@@ -103,11 +103,6 @@
         "resolved": "4.3.0",
         "contentHash": "x53eufxL/61kMvvtffJADaYCyEpOD45IRCmSBfKmAvRhBUoiEfeugo+AaA7xf5C9Ctpnam/1ryR2hpN+eeqNDQ=="
       },
-      "FSharp.Core": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "fbv1UwJ2LXVcFCt+GGDPu0sIYA5C6gdDvAupDj3iLQF3clRkua/6J33f+FiGQa8P1tEa+zmz3wrjoTnXZ1UiYg=="
-      },
       "HarfBuzzSharp": {
         "type": "Transitive",
         "resolved": "8.3.1.1",
@@ -232,6 +227,12 @@
           "SkiaSharp.NativeAssets.Linux": "2.88.9",
           "SkiaSharp.NativeAssets.WebAssembly": "2.88.9"
         }
+      },
+      "FSharp.Core": {
+        "type": "CentralTransitive",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "fbv1UwJ2LXVcFCt+GGDPu0sIYA5C6gdDvAupDj3iLQF3clRkua/6J33f+FiGQa8P1tEa+zmz3wrjoTnXZ1UiYg=="
       }
     },
     "net10.0/win-x64": {

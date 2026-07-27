@@ -42,12 +42,12 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 - [x] Repository und Solution mit den im Handover festgelegten Projekten anlegen; Nachweis: [JiraBoard.slnx](JiraBoard.slnx), `FND-001`, menschlich abgenommen am 27. Juli 2026.
 - [x] `global.json` auf einen freigegebenen .NET-10-SDK-Feature-Band festlegen; Nachweis: [`global.json`](global.json) pinnt SDK `10.0.302`, deaktiviert Roll-forward und Preview-SDKs.
 - [x] Central Package Management einrichten und Avalonia `11.3.18`, die ausdrücklich freigegebene DataGrid-Ausnahme `11.3.13` sowie FuncUI/Elmish `1.6.0` exakt festsetzen; Nachweis: [`Directory.Packages.props`](Directory.Packages.props) und versionsgesperrte `packages.lock.json` je Projekt.
-- [x] Preview-Pakete ausschließen; Nachweis: SDK-Preview deaktiviert, zentrale Versionen ohne Preview-Suffix und lokaler Vergleich aller 31 restaurierten Paket-/Versionspaare ohne Preview-/Alpha-/Beta-/RC-Treffer.
-- [x] versionsgenaue Allowlist ausschließlich für Avalonia Free/MIT und freigegebene, kommerziell nutzbare OSS-Pakete mit Quelle, SPDX-Ausdruck und Lizenzdatei anlegen; Nachweis: [`eng/dependency-allowlist.json`](eng/dependency-allowlist.json) deckt alle 31 restaurierten Paare ab und markiert die am 27. Juli 2026 exakt verwendungsspezifisch freigegebenen Native-Assets-Ausnahmen.
+- [x] Preview-Pakete ausschließen; Nachweis: SDK-Preview deaktiviert, zentrale Versionen ohne Preview-Suffix und lokaler Vergleich aller 47 restaurierten Paket-/Versionspaare ohne Preview-/Alpha-/Beta-/RC-Treffer.
+- [x] versionsgenaue Allowlist ausschließlich für Avalonia Free/MIT und freigegebene, kommerziell nutzbare OSS-Pakete mit Quelle, SPDX-Ausdruck und Lizenzdatei anlegen; Nachweis: [`eng/dependency-allowlist.json`](eng/dependency-allowlist.json) deckt alle 47 restaurierten Paare ab und markiert die am 27. Juli 2026 exakt verwendungsspezifisch freigegebenen Native-Assets-Ausnahmen.
 - [x] Avalonia Community, Plus, Pro, Enterprise und Accelerate sowie lizenz-, account-, trial- oder subscriptiongebundene Tools und Controls ausdrücklich ausschließen; Nachweis: [Lizenzpolicy](license-policy.md), Allowlist und Marker-Scan der Projekt-, Paket-, Lock-, JSON-, Workflow- und Quelltextdateien ohne Treffer.
 - [ ] CI-Hard-Fail für unbekannte direkte oder transitive `Avalonia*`-/AvaloniaUI-Pakete, Premium-Paketmarker und Avalonia-Lizenzschlüsselmarker anlegen.
 - [x] nachweisen, dass weder `AvaloniaUILicenseKey`, `AVALONIA_TOOLS_LICENSE_KEY` noch `ACCELERATE_LICENSE_KEY` in Projektdateien, Props/Targets, Workflows oder Quelltext vorkommen; Nachweis: lokaler Marker-Scan am 27. Juli 2026 ohne Treffer. Prüfung von späteren CI-Secrets und benötigtem Umgebungssetup bleibt Teil von `FND-009`.
-- [x] Lizenzinventar für den aktuellen direkten/transitiven Code-, Build- und Packaging-Graphen anlegen; Nachweis: [Paket-/Lizenzinventar](docs/dependencies/package-license-inventory.md) mit allen Pflichtfeldern für 31 restaurierte Paare, Native-AOT-Tools und exakten Ausnahmeentscheidungen. Fonts, Icons und Assets sind noch nicht eingeführt.
+- [x] Lizenzinventar für den aktuellen direkten/transitiven Code-, Build- und Packaging-Graphen anlegen; Nachweis: [Paket-/Lizenzinventar](docs/dependencies/package-license-inventory.md) mit allen Pflichtfeldern für 47 restaurierte Paare, Native-AOT-Tools und exakten Ausnahmeentscheidungen. Fonts, Icons und Assets sind noch nicht eingeführt.
 - [ ] CI-Hard-Fail für direkte und transitive FluentAssertions-Abhängigkeiten im vollständigen Restore-Graphen anlegen.
 - [ ] CI-Hard-Fail für FluentAssertions-Einträge in `Directory.Packages.props`, Projektdateien, Lock-/Assets-Dateien sowie für Namespace-, Alias- oder Wrapper-Verwendungen im Quelltext anlegen.
 - [ ] Nachweisen, dass der FluentAssertions-Check nicht per Allowlist, Suppression oder Testprojekt-Ausnahme umgangen werden kann.
@@ -62,7 +62,7 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 ### Nachweis
 
 - Pfad oder CI-Lauf: [JiraBoard.slnx](JiraBoard.slnx); `dotnet restore JiraBoard.slnx`, `dotnet build JiraBoard.slnx -c Release --no-restore` und `dotnet test JiraBoard.slnx -c Release --no-build` am 27. Juli 2026 lokal grün.
-- SDK- und Paketversionen: SDK `10.0.302`; Avalonia `11.3.18`; ausdrücklich freigegebene DataGrid-Ausnahme `11.3.13`; FuncUI/Elmish `1.6.0`; 31 Paket-/Versionspaare in den Lockfiles.
+- SDK- und Paketversionen: SDK `10.0.302`; Avalonia `11.3.18`; ausdrücklich freigegebene DataGrid-Ausnahme `11.3.13`; FuncUI/Elmish `1.6.0`; xUnit `3.2.2`; 47 Paket-/Versionspaare in den Lockfiles.
 - offene Warnungen mit Entscheidung: keine Build-, Restore-, Publish-, AOT- oder Trimwarnung im aktuellen Stand. Die nativen Unterlizenzen sind für die exakten Paketversionen und diesen Einsatz freigegeben; die vollständigen Vendor-Texte sind Auslieferungs- und App-Ressource. Die Online-Vulnerability-/Deprecation-Abfrage wurde wegen möglicher Weitergabe des Paketgraphen an benutzerkonfigurierte NuGet-Endpunkte nicht genehmigt und nicht umgangen; automatisierte CI-Gates und negative Kontrollen bleiben `FND-004`, `FND-006` und `FND-009`.
 
 ## G2 – TDD- und DDD-Fundament
@@ -221,7 +221,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### Blocker
 
-- [ ] stabile xUnit-Version und eingebaute Assertions beziehungsweise kleine F#-Helper festsetzen.
+- [x] stabile xUnit-Version und eingebaute Assertions beziehungsweise kleine F#-Helper festsetzen; Nachweis: `xunit.v3 3.2.2` ist zentral gepinnt, [`JiraBoard.Tests`](tests/JiraBoard.Tests/JiraBoard.Tests.fsproj) läuft über Microsoft Testing Platform und [`TestResult.assertOk`](tests/JiraBoard.Tests/TestSupport.fs) verwendet ausschließlich xUnit-`Assert`.
 - [ ] mit einem negativen Kontrolltest nachweisen, dass ein absichtlich eingebrachter direkter oder transitiver FluentAssertions-Treffer die CI zuverlässig fehlschlagen lässt; die Kontrolländerung danach vollständig entfernen.
 - [ ] mit einem Quelltext-Kontrolltest nachweisen, dass `open FluentAssertions`, ein Alias oder ein Kompatibilitätswrapper zuverlässig erkannt wird; die Kontrolländerung danach vollständig entfernen.
 - [ ] kanonisches Betriebssystem für blockierende Golden-Master-Vergleiche bestimmen.
