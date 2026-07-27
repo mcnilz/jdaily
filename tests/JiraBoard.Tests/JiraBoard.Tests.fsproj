@@ -10,6 +10,7 @@
     <Compile Include="HarnessTests.fs" />
     <Compile Include="DomainIdentityTests.fs" />
     <Compile Include="IssueHierarchyTests.fs" />
+    <Compile Include="BoardOrderTests.fs" />
     <Compile Include="DomainBoundaryTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />

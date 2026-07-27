@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Identifiers.fs" />
     <Compile Include="IssueHierarchy.fs" />
+    <Compile Include="BoardOrder.fs" />
     <Compile Include="Board.fs" />
     <PackageReference Include="FSharp.Core" />
   </ItemGroup>
