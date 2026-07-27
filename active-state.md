@@ -14,14 +14,14 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 26. Juli 2026 |
+| Stand | 27. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | `FND-001` – Solution-Skelett erzeugen; Status `Proposed` |
-| Nächste menschliche Aktion | Ziel, Scope, Risiken, Prüfplan und spätere Abnahmepunkte bestätigen oder Änderungsfeedback geben |
+| Aktiver Arbeitsauftrag | `FND-001` – Solution-Skelett erzeugen; Status `In Review` |
+| Nächste menschliche Aktion | Solution-Struktur, Projektverweise und Abgrenzung anhand der untenstehenden Punkte abnehmen oder konkretes Feedback geben |
 | Nächster Paketkandidat danach | `FND-002` wird erst nach Umsetzung und menschlicher Abnahme von `FND-001` vorgeschlagen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | bisher Dokumentation; noch keine Solution und kein ausführbarer Produktionscode |
+| Repositoryzustand | `JiraBoard.sln` mit sechs minimalen F#-Projekten; noch keine Drittanbieterpakete, Tests oder Produktoberfläche |
 
 ## Aktive Arbeitspositionen
 
@@ -29,17 +29,27 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 | Backlog-ID | Status | Verantwortlich | Aktueller Teilschritt | Nächste konkrete Aktion | Schreibbereich | Letzter Prüfstand |
 |---|---|---|---|---|---|---|
-| `FND-001` | `Proposed` | Codex | Arbeitsumfang zur Startbestätigung vorgelegt | Menschliche Bestätigung oder Änderungsfeedback abwarten | neues Solution- und Projektgerüst; Statusdokumente | Abhängigkeit `GOV-005` erfüllt; noch keine Umsetzung |
+| `FND-001` | `In Review` | Codex | Solution-Gerüst, Referenzgraph, Build und zweiachsiger Review abgeschlossen | Menschliche Abnahme oder konkretes Feedback abwarten | `JiraBoard.sln`, `src/`, `tests/`, Statusdokumente | Restore, Build und leerer Testlauf grün; beide Review-Achsen ohne verbleibenden Befund |
 
 ## Aktuelle menschliche Abnahme
 
-Keine; `FND-001` wartet auf Startbestätigung, nicht auf Abnahme.
+### `FND-001` – Solution-Skelett erzeugen
+
+Bitte prüfen:
+
+- Enthält `JiraBoard.sln` genau die sechs vorgesehenen Projekte `App`, `Ui`, `UiCatalog`, `Tests`, `AotSmokeTests` und `VisualTests`?
+- Sind sämtliche F#-Quelldateien über explizite `Compile`-Einträge in nachvollziehbarer Reihenfolge eingebunden?
+- Referenzieren App, UiCatalog, AOT-SmokeTests und VisualTests ausschließlich die gemeinsame UI-Bibliothek, während `Ui` und `Tests` noch nach innen frei bleiben?
+- Bleiben App und UiCatalog leere Hosts und AOT-SmokeTests ein gewöhnliches Executable ohne Test-Runner?
+- Wurden Paketversionen, Avalonia-Initialisierung, Testframework, XAML/AXAML und Produktoberfläche für die vorgesehenen Folgeitems bewusst noch nicht eingeführt?
+
+Bei Zustimmung wird `FND-001` auf `Done` gesetzt und aus den aktiven Positionen entfernt. Erst danach wird `FND-002` vorgeschlagen.
 
 ## Offene Blocker und Entscheidungen
 
 - Es besteht kein technischer Blocker.
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
-- `FND-001` ist vorgeschlagen und darf erst nach ausdrücklicher Startbestätigung umgesetzt werden.
+- `FND-001` wartet regulär auf menschliche Abnahme.
 
 ## Letzter Prüfstand
 
@@ -47,7 +57,8 @@ Keine; `FND-001` wartet auf Startbestätigung, nicht auf Abnahme.
 - `GOV-008` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt.
 - Neun Markdown-Dateien und acht PNGs wurden für das Übergabepaket inventarisiert; alle PNGs waren lesbar und das ZIP bestand vor der Abnahme den vollständigen Integritätstest. Das temporäre ZIP wurde anschließend auf ausdrücklichen Wunsch gelöscht und wird nicht erneut angelegt.
 - `GOV-005` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt; die beiden Vorlagen unter `docs/templates/` sind in den G2-Nachweisen verlinkt.
-- Es wurden keine Build- oder Testbefehle ausgeführt, weil noch keine Solution existiert und `GOV-005` ausschließlich Markdown betrifft.
+- Für `FND-001` sind Restore, Release-Build und der derzeit noch leere Testlauf grün; App-, UiCatalog- und AOT-Smoke-Platzhalter starten jeweils mit Exit-Code 0.
+- Der zweiachsige Review gegen Commit `5e6efec` meldet nach Korrektur einer veralteten Active-State-Zeile weder Standard- noch Spezifikationsbefunde.
 - Die Lizenzgrenze, die ausnahmslose FluentAssertions-Sperre, die Readiness-Gates und der Human-in-the-loop-Flow sind in den maßgeblichen Dokumenten verankert.
 
 ## Wiedereinstieg in einem neuen Kontext
