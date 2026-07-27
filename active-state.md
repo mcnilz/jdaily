@@ -15,13 +15,13 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Feld | Aktueller Stand |
 |---|---|
 | Stand | 27. Juli 2026 |
-| Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | 'FND-006' – abgeschlossen (Done, menschlich abgenommen am 27. Juli 2026); CI-Nachbesserung: Negativkontroll-Skripte linux-tauglich (plattformneutrale Pfade) + neues Backlog-Item 'FND-010' (Locked-Mode-Restore wiederherstellen, P1/Planned) |
-| Nächste menschliche Aktion | Nächstes eligibles P0-Item bestätigen (z. B. `DOM-009`), damit es auf `Proposed` gesetzt und vorgestellt wird |
-| Nächster Paketkandidat danach | 'DOM-009' – Fixture-Sicherheitsprüfung automatisieren (P0; 'DOM-007' ist P1) |
+| Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
+| Aktiver Arbeitsauftrag | keiner; `UI-004` ist abgeschlossen und menschlich abgenommen |
+| Nächste menschliche Aktion | `UI-003` – ausführbare UiCatalog-Shell erstellen – als nächstes Paket bestätigen oder Änderungsfeedback geben |
+| Nächster Paketkandidat danach | `UI-005` – erste echte Produktionskomponenten im UiCatalog sichtbar machen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich das normalisierte Boardereignismodell. `DOM-001`, `DOM-002`, `DOM-003`, `DOM-004` und `DOM-005` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
+| Repositoryzustand | `JiraBoard.Ui` enthält mit `BoardLayout.fs` die frameworkfreie, deterministische IdentityRail-, Spalten- und ReviewTrack-Geometrie; vier öffentliche Verhaltenstests sind grün. `UI-004` ist menschlich abgenommen und `Done`; `UI-003` ist `Ready`, der UiCatalog bleibt bis dahin ein leerer Host. |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`DOM-008` (Repräsentative Jira-Fixtures aufbauen) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Die Fixtures sind unter `tests/JiraBoard.Tests/Fixtures/` verfügbar und über `FixtureTests.fs` validiert. Gate G4 ist abgeschlossen.
+`UI-004` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert, auf `Done` synchronisiert und automatisch committet. Die pure Layout-API deckt IdentityRail, normale/eingeklappte Spalten und die 1,33-/80-/20-ReviewTrack-Geometrie ab.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `UI-004` wurde test-first umgesetzt und befindet sich `In Review`. Neu sind [`BoardLayout.fs`](src/JiraBoard.Ui/BoardLayout.fs) mit `BoardLayoutRequest`, `BoardLayoutMetrics`, `ReviewMetrics`, `ReviewSide`, der puren Funktion `BoardLayout.calculate` sowie `BoardLayout.reviewX`, und vier öffentliche Verhaltenstests in [`BoardLayoutTests.fs`](tests/JiraBoard.Tests/BoardLayoutTests.fs). TDD-Rot wurde separat belegt: zunächst fehlende öffentliche API (8 Kompilierfehler), dann fehlende Mindestbreiten (204,8 statt 280), fehlende Maximalbreite (1740 statt 320) und schließlich fehlende Review-API (5 Kompilierfehler). `dotnet restore JiraBoard.slnx`: 8 Projekte, 0 Fehler/0 Warnungen; `dotnet build JiraBoard.slnx -c Release --no-restore`: 8 Projekte, 0 Fehler/0 Warnungen; roher .NET-10-Solution-Testlauf via `rtk pwsh` (um RTKs nicht kompatible automatische `--report-trx`-Ergänzung zu vermeiden): 76/76 grün; FluentAssertions- und Secret-Marker-Scanner grün; `git diff --check` grün. Keine neue Abhängigkeit, kein Font/Asset, kein Rendering und kein Golden Master; daher Lizenzinventar, Notices, Headless-Visualtests und AOT-Publish unverändert beziehungsweise nicht betroffen.
 
 - `DOM-005` (Boardereignismodell erstellen) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu im Domainprojekt: [`BoardEvents.fs`](src/JiraBoard.Domain/BoardEvents.fs) mit `BoardEventSource` (`JiraHistory of itemIndex`/`JiraComment`/`DevelopmentInformation`), `LabelChange` (`LabelAdded`/`LabelRemoved`), `BoardEventKind` (`StatusChanged of fromStatus * toStatus`, `AssigneeChanged of assignee option`, `LabelChanged`, `CommentAdded`, `CommitLinked of commitHash`) und dem Record `BoardEvent` (`EventId`, `IssueId`, `OccurredAtUtc: DateTimeOffset`, `Source`, `Kind`); das Modell ist normalisiert, ohne rohe Jira-Changelog-Items, mit `StatusChanged` als beobachtetem Ergebnis. [`Identifiers.fs`](src/JiraBoard.Domain/Identifiers.fs) trägt zusätzlich die starken Identitäten `StatusId` und `BoardEventId`. Verhaltenstests [`BoardEventTests.fs`](tests/JiraBoard.Tests/BoardEventTests.fs) belegen Status-Übergang, Konstruier-/Unterscheidbarkeit aller Arten, Assignee inkl. `None`, Label add/remove, Quelle und `BoardEventId`-Identität. TDD-Rot war bewiesen (63 Kompilierfehler wegen fehlender Ereignistypen). `dotnet build -c Release` (gesamte `JiraBoard.slnx`) 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` 37/37 grün (29 bisher + 8 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert. Mitcommittet wurde auf ausdrücklichen Wunsch das token-sparende Hilfsskript [`eng/active-state.ps1`](eng/active-state.ps1) samt Verweis in `AGENTS.md`.
 

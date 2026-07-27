@@ -153,8 +153,8 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 |---|---|---|---|---|---|
 | UI-001 | P0 | Done | Design Tokens als F#-Code anlegen | Farben, Typografie, Abstände, Radien, Z-Order und Motion liegen zentral; keine lokalen Magic Numbers. | FND-001–003 |
 | UI-002 | P0 | Planned | Fonts reproduzierbar bündeln | Freigegebene Iosevka-Aile-/Fixed-Builds und Lizenztext sind gepinnt; UI-Text und Issue-Keys verwenden die richtigen Fonts. | UI-001, FND-009 |
-| UI-003 | P0 | Planned | UiCatalog-Shell erstellen | Native Avalonia-/FuncUI-App ohne XAML startet zuerst und steuert Viewport, Zoom, Motion, Reduced Motion und Animationsfortschritt. | FND-002, UI-001 |
-| UI-004 | P0 | Planned | Boardlayout als pure Funktionen implementieren | IdentityRail, normale/eingeklappte Spalten und 1,33-/80-/20-Reviewgeometrie sind deterministisch getestet. | UI-001, DOM-002–004 |
+| UI-003 | P0 | Ready | UiCatalog-Shell erstellen | Native Avalonia-/FuncUI-App ohne XAML startet zuerst und steuert Viewport, Zoom, Motion, Reduced Motion und Animationsfortschritt. | FND-002, UI-001, UI-004 |
+| UI-004 | P0 | Done | Boardlayout als pure Funktionen implementieren | IdentityRail, normale/eingeklappte Spalten und 1,33-/80-/20-Reviewgeometrie sind deterministisch getestet. Menschlich abgenommen am 27. Juli 2026. | UI-001, DOM-002–004 |
 | UI-005 | P0 | Planned | Kernkomponenten im UiCatalog bauen | `SwimlaneHeader`, `TicketCard`, `CollapsedColumnCell` und `ReviewTrack` verwenden Produktionsviews und zeigen alle Pflichtzustände. | UI-003–004 |
 | UI-006 | P0 | Planned | Tastatur- und Automation-Verträge demonstrieren | Roving Focus, Pfeile, Leertaste, Enter, Escape, Tooltips und Accessible Names funktionieren in Katalogfixtures. | UI-005 |
 | UI-007 | P0 | Planned | Headless-Visualtest-Harness aufbauen | Kanonisches OS, Fonts, Locale, DPI und Renderer sind fixiert; Diffs werden als Artefakte ausgegeben, Baselines nie automatisch aktualisiert. | UI-002–005, FND-006 |

@@ -96,18 +96,18 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 
 ### Blocker
 
-- [ ] die [UI-Design-Spezifikation](ui-design-specification.md) lesen und ihre Token-, Geometrie-, Komponenten- und Szenarioverträge als verbindliche Baseline übernehmen.
+- [x] die [UI-Design-Spezifikation](ui-design-specification.md) lesen und ihre Token-, Geometrie-, Komponenten- und Szenarioverträge als verbindliche Baseline übernehmen; Nachweis: `UI-001` und die test-first umgesetzten [`BoardLayoutTests`](tests/JiraBoard.Tests/BoardLayoutTests.fs) aus `UI-004`.
 - [ ] `JiraBoard.UiCatalog` als ersten ausführbaren UI-Host ohne XAML erstellen.
 - [ ] `JiraBoard.App` bis zur Katalogabnahme nur als leeren Composition-/Packaging-Host verwenden.
 - [ ] `JiraBoard.UiCatalog` und `JiraBoard.App` dieselben Produktionsviews aus `JiraBoard.Ui` referenzieren lassen.
 - [ ] getrennte oder vereinfachte Storybook-Doubles für Produktkomponenten technisch und organisatorisch ausschließen.
-- [ ] zentrale Design-Tokens für Farbe, Typografie, Abstände, Radien, Größen, Z-Order und Motion anlegen.
+- [x] zentrale Design-Tokens für Farbe, Typografie, Abstände, Radien, Größen, Z-Order und Motion anlegen; Nachweis: [`DesignTokens.fs`](src/JiraBoard.Ui/DesignTokens.fs), [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs) und `UI-001`.
 - [ ] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen.
 - [ ] Katalogregler für Viewport, App-Zoom, Schriftzoom, Theme, Reduced Motion und Animationsfortschritt vorsehen.
 - [ ] mindestens `TicketCard`, eine Standard-Issue-Swimlane, Subtasks und zusammengeklappte Spalten zuerst im UiCatalog darstellen.
 - [ ] `ProjectSelectionModal` und `SprintMenu` mit stabilen IDs, mehreren aktiven Sprints, gleichen Namen, mehreren Boards und leerem Zustand zuerst im UiCatalog darstellen.
 - [ ] festlegen, dass eine Komponente erst nach Katalogszenario, Unit-/Headless-Tests und Designabnahme in `JiraBoard.App` integriert werden darf.
-- [ ] automatisierte Tests für IdentityRail, normale/eingeklappte Spalten, 1,33-/80-/20-Reviewgeometrie und Mindest-Hit-Targets anlegen.
+- [x] automatisierte Tests für IdentityRail, normale/eingeklappte Spalten, 1,33-/80-/20-Reviewgeometrie und Mindest-Hit-Targets anlegen; Nachweis: [`BoardLayoutTests.fs`](tests/JiraBoard.Tests/BoardLayoutTests.fs) aus `UI-004` sowie der Hit-Target-Nachweis in [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs).
 - [ ] nachweisen, dass generierte Konzeptbilder nicht als Pixelquelle oder Golden Master verwendet werden; Baselines entstehen ausschließlich aus den implementierten Produktionskomponenten.
 
 ### Katalog-Startzustände

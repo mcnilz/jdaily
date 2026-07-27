@@ -17,6 +17,7 @@
     <Compile Include="DomainBoundaryTests.fs" />
     <Compile Include="FixtureTests.fs" />
     <Compile Include="DesignTokenTests.fs" />
+    <Compile Include="BoardLayoutTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
   </ItemGroup>
