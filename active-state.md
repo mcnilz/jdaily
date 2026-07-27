@@ -18,10 +18,10 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | keine; der nächste Kandidat muss vor Umsetzung als `Proposed` vorgestellt und bestätigt werden |
-| Nächster Paketkandidat danach | `DOM-004` – Multi-Sprint-Scope projizieren |
+| Nächster Paketkandidat danach | `DOM-005` – Boardereignismodell erstellen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich die pure Boardreihenfolge-Modellierung. `DOM-001`, `DOM-002` und `DOM-003` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
+| Repositoryzustand | `JiraBoard.slnx` mit sieben F#-Projekten; das Domainprojekt `JiraBoard.Domain` (nur `FSharp.Core`) trägt jetzt zusätzlich die pure Multi-Sprint-Scope-Projektion. `DOM-001`, `DOM-002`, `DOM-003` und `DOM-004` sind menschlich abgenommen und `Done`; `FND-005` bleibt `Blocked` mit Abhängigkeit von `DOM-001` und ist inhaltlich durch dessen Grenzprüfung erfüllt |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`DOM-003` (Boardreihenfolge modellieren) wurde am 27. Juli 2026 ausdrücklich mit dem eigenständigen Wort `Abgenommen` akzeptiert, auf `Done` gesetzt und committet. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
+`DOM-004` (Multi-Sprint-Scope projizieren) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. `FND-005` bleibt als eigenständiges Item `Blocked` mit Abhängigkeit von `DOM-001`; seine Anforderung ist inhaltlich durch die abgenommene Grenzprüfung erfüllt.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `DOM-004` (Multi-Sprint-Scope projizieren) wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu im Domainprojekt: [`SprintProjection.fs`](src/JiraBoard.Domain/SprintProjection.fs) mit dem Eingabetyp `SprintBoardIssue` (`IssueId`, `Position: BoardPosition`, `Sprints: Set<SprintId>`) und der puren, auto-geöffneten Funktion `projectSprintScope : SprintScope -> SprintBoardIssue list -> SprintBoardIssue list`. Die Projektion bildet zuerst die globale `resolveBoardOrder` über die unveränderten `BoardPosition`-Werte, filtert dann per `stableSubsequence` nach Scope (`AllActiveSprints`: nicht-leere Sprintmenge; `ActiveSprint sprintId`: Menge enthält `sprintId`) und entfernt Duplikate nach `IssueId` reihenfolgeerhaltend; die Ausgabe ist damit immer eine stabile Teilfolge der globalen `ResolvedBoardOrder` und nie eine Verkettung einzelner Sprintantworten (Glossar Z. 78, Entscheidung Z. 168). Verhaltenstests [`SprintProjectionTests.fs`](tests/JiraBoard.Tests/SprintProjectionTests.fs) belegen Dedup eines Multi-Sprint-Issues auf eine globale Position, stabile Teilfolge trotz abweichender Eingabereihenfolge, exakten Einzelsprint-Filter sowie die Randfälle (leere Eingabe, Sprint ohne Issues, Issue ohne Sprintzugehörigkeit). `dotnet build -c Release` (gesamte `JiraBoard.slnx`) 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` 29/29 grün (21 bisher + 8 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 
 - `DOM-003` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen, auf `Done` gesetzt und automatisch committet. Neu im Domainprojekt: [`BoardOrder.fs`](src/JiraBoard.Domain/BoardOrder.fs) mit `JiraRank` (opaker, nicht numerisch interpretierter Vergleichswert; keine feste `customfield_*`-ID), `BoardOrdinal` (monotone Position der unveränderten API-Reihenfolge einer Revision), `BoardPosition` sowie den puren, auto-geöffneten Funktionen `resolveBoardOrder` und `stableSubsequence`. `resolveBoardOrder` ist die stabile `ResolvedBoardOrder`-Kaskade: zuerst verifizierter `JiraRank`, dann `BoardOrdinal`, und nur bei fehlenden/gleichen beiden der `IssueKey` als letzter Notanker (Entscheidung 2026-07-20). `stableSubsequence` entfernt Elemente ohne Änderung der relativen Reihenfolge der verbleibenden. Verhaltenstests [`BoardOrderTests.fs`](tests/JiraBoard.Tests/BoardOrderTests.fs) belegen Rank-Sortierung, Ordinal-Tiebreak, Key als letzten Anker, Stabilität bei gleichen Positionen sowie die reihenfolgeerhaltende und identitätswahrende Teilfolge. TDD-Rot war bewiesen (Kompilierfehler wegen fehlender Typen/Funktionen vor der Umsetzung). `dotnet build -c Release` (gesamte `JiraBoard.slnx`) 0 Fehler/0 Warnungen; `dotnet test -c Release --no-build` 21/21 grün (14 bisher + 7 neu), der statische `DomainBoundaryTests` bleibt grün. Kein neues Paket, daher Lizenzinventar und `THIRD-PARTY-NOTICES.txt` unverändert.
 
