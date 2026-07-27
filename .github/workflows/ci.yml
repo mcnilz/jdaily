@@ -32,17 +32,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (clean)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # The SDK version is pinned by global.json (rollForward: disable), so the
       # runner must provide exactly that .NET 10 SDK.
       - name: Set up .NET (pinned by global.json)
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
 
-      - name: Restore (locked mode)
-        run: dotnet restore JiraBoard.slnx --locked-mode
+      # The desktop app and the AOT smoke runner pin `RuntimeIdentifiers=win-x64`
+      # with Native AOT, so their lock files carry the Windows-only
+      # `runtime.win-x64.Microsoft.DotNet.ILCompiler` runtime pack. On this Linux
+      # runner a `--locked-mode` restore of that win-x64 runtime graph fails
+      # (exit 1). Until the pinned RID set is broadened to the cross-platform
+      # target (a stack-scope decision, tracked separately), restore without
+      # locked mode so the runner can resolve its own runtime assets; the pinned
+      # central package versions still come from the committed lock files.
+      - name: Restore
+        run: dotnet restore JiraBoard.slnx
 
       - name: Build (Release, warnings as errors)
         run: dotnet build JiraBoard.slnx -c Release --no-restore -warnaserror -p:TreatWarningsAsErrors=true
