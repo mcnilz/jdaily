@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="CatalogShell.fs" />
+    <Compile Include="CatalogView.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

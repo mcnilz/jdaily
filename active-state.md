@@ -16,12 +16,12 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 27. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner; `UI-004` ist abgeschlossen und menschlich abgenommen |
-| Nächste menschliche Aktion | `UI-003` – ausführbare UiCatalog-Shell erstellen – als nächstes Paket bestätigen oder Änderungsfeedback geben |
-| Nächster Paketkandidat danach | `UI-005` – erste echte Produktionskomponenten im UiCatalog sichtbar machen |
+| Aktiver Arbeitsauftrag | keiner; `UI-003` ist abgeschlossen und menschlich abgenommen |
+| Nächste menschliche Aktion | `UI-005` – erste echte Produktionskomponenten im UiCatalog bauen – als nächstes Paket bestätigen oder Änderungsfeedback geben |
+| Nächster Paketkandidat danach | `UI-006` – Tastatur- und Automation-Verträge demonstrieren |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `JiraBoard.Ui` enthält mit `BoardLayout.fs` die frameworkfreie, deterministische IdentityRail-, Spalten- und ReviewTrack-Geometrie; vier öffentliche Verhaltenstests sind grün. `UI-004` ist menschlich abgenommen und `Done`; `UI-003` ist `Ready`, der UiCatalog bleibt bis dahin ein leerer Host. |
+| Repositoryzustand | `JiraBoard.UiCatalog` ist der erste native, XAML-freie FuncUI-/Elmish-Host und läuft sichtbar unter Windows; `Shell.Overview` sowie Viewport-, Zoom-, Motion-, Reduced-Motion- und Fortschrittssteuerung sind test-first umgesetzt. `UI-003` ist menschlich abgenommen und `Done`; `UI-005` ist `Ready`. |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`UI-004` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert, auf `Done` synchronisiert und automatisch committet. Die pure Layout-API deckt IdentityRail, normale/eingeklappte Spalten und die 1,33-/80-/20-ReviewTrack-Geometrie ab.
+`UI-003` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert, auf `Done` synchronisiert und automatisch committet. Die native Shell, Szenariennavigation und Steuerungsleiste bilden nun die abgenommene Grundlage für `UI-005`.
 
 ## Offene Blocker und Entscheidungen
 
@@ -41,6 +41,8 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 
 ## Letzter Prüfstand
+
+- `UI-003` wurde test-first umgesetzt und befindet sich `In Review`. Neu sind [`CatalogShell.fs`](src/JiraBoard.UiCatalog/CatalogShell.fs) mit deterministischem Shellzustand, statischer Szenarioregistrierung `Shell.Overview`, festen Viewport-/Zoom-/Motion-/Fortschrittsoptionen und purer Update-Funktion; [`CatalogView.fs`](src/JiraBoard.UiCatalog/CatalogView.fs) mit nativer Menüleiste, 48-DIP-Kontrollleiste, Szenariennavigation und tokenbasierter Shell-Übersicht; sowie der echte Avalonia-/FuncUI-/Elmish-Host in [`Program.fs`](src/JiraBoard.UiCatalog/Program.fs), vollständig ohne XAML. Sechs neue Verhaltenstests plus zwei reproduzierende Mehrfachinteraktions-Regressionstests sind in [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs) grün. TDD-Rot wurde für fehlenden Startzustand, feste Auswahlmengen, Update-Grenze, Szenarioregistrierung, wiederholtes Viewport-Zyklisieren, zentrale Shellmetriken und wiederholtes Reduced-Motion-Toggling belegt. Windows-Start blieb stabil; UI-Automation durchlief alle vier Viewports und toggelte Reduced Motion zweimal zurück zum Startzustand. `dotnet restore JiraBoard.slnx`: 8 Projekte, 0 Fehler/0 Warnungen; vollständiger Release-Build: 8 Projekte, 0 Fehler/0 Warnungen; Tests: 83/83 grün; FluentAssertions- und Secret-Marker-Scanner sowie `git diff --check` grün; keine XAML-/AXAML-Datei. Keine neue Paketversion, kein Produkt-App-Wiring und kein Golden Master; das Headless-Harness bleibt planmäßig `UI-007`.
 
 - `UI-004` wurde test-first umgesetzt und befindet sich `In Review`. Neu sind [`BoardLayout.fs`](src/JiraBoard.Ui/BoardLayout.fs) mit `BoardLayoutRequest`, `BoardLayoutMetrics`, `ReviewMetrics`, `ReviewSide`, der puren Funktion `BoardLayout.calculate` sowie `BoardLayout.reviewX`, und vier öffentliche Verhaltenstests in [`BoardLayoutTests.fs`](tests/JiraBoard.Tests/BoardLayoutTests.fs). TDD-Rot wurde separat belegt: zunächst fehlende öffentliche API (8 Kompilierfehler), dann fehlende Mindestbreiten (204,8 statt 280), fehlende Maximalbreite (1740 statt 320) und schließlich fehlende Review-API (5 Kompilierfehler). `dotnet restore JiraBoard.slnx`: 8 Projekte, 0 Fehler/0 Warnungen; `dotnet build JiraBoard.slnx -c Release --no-restore`: 8 Projekte, 0 Fehler/0 Warnungen; roher .NET-10-Solution-Testlauf via `rtk pwsh` (um RTKs nicht kompatible automatische `--report-trx`-Ergänzung zu vermeiden): 76/76 grün; FluentAssertions- und Secret-Marker-Scanner grün; `git diff --check` grün. Keine neue Abhängigkeit, kein Font/Asset, kein Rendering und kein Golden Master; daher Lizenzinventar, Notices, Headless-Visualtests und AOT-Publish unverändert beziehungsweise nicht betroffen.
 

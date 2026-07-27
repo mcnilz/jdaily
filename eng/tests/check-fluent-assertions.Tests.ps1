@@ -30,8 +30,9 @@ try {
     Write-FixtureFile "tests/Example/Wrapper.cs" "static class AssertionExtensions { static object Should<T>(this T value) => value; }"
 
     $output = & pwsh -NoProfile -File $checker -Root $fixture 2>&1 | Out-String
+    $checkerExitCode = $LASTEXITCODE
 
-    if ($LASTEXITCODE -eq 0) {
+    if ($checkerExitCode -eq 0) {
         throw "Expected the forbidden-assertion gate to fail."
     }
 
@@ -53,4 +54,7 @@ finally {
     }
 }
 
+# GitHub Actions dot-sources pwsh `run` scripts. Do not leak the expected
+# non-zero checker exit code into the otherwise successful workflow step.
+$global:LASTEXITCODE = 0
 [Console]::WriteLine("PASS: forbidden assertion negative control")

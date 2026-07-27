@@ -65,7 +65,7 @@ jobs:
         shell: pwsh
         run: ./eng/check-fluent-assertions.ps1
 
-      - name: Forbidden-assertion block negative control
+      - name: Verify forbidden-assertion scanner detects violations
         shell: pwsh
         run: ./eng/tests/check-fluent-assertions.Tests.ps1
 

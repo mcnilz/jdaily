@@ -18,6 +18,7 @@
     <Compile Include="FixtureTests.fs" />
     <Compile Include="DesignTokenTests.fs" />
     <Compile Include="BoardLayoutTests.fs" />
+    <Compile Include="UiCatalogShellTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
   </ItemGroup>
@@ -30,5 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\JiraBoard.Domain\JiraBoard.Domain.fsproj" />
     <ProjectReference Include="..\..\src\JiraBoard.Ui\JiraBoard.Ui.fsproj" />
+    <ProjectReference Include="..\..\src\JiraBoard.UiCatalog\JiraBoard.UiCatalog.fsproj" />
   </ItemGroup>
 </Project>

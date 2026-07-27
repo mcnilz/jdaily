@@ -97,13 +97,13 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 ### Blocker
 
 - [x] die [UI-Design-Spezifikation](ui-design-specification.md) lesen und ihre Token-, Geometrie-, Komponenten- und Szenarioverträge als verbindliche Baseline übernehmen; Nachweis: `UI-001` und die test-first umgesetzten [`BoardLayoutTests`](tests/JiraBoard.Tests/BoardLayoutTests.fs) aus `UI-004`.
-- [ ] `JiraBoard.UiCatalog` als ersten ausführbaren UI-Host ohne XAML erstellen.
-- [ ] `JiraBoard.App` bis zur Katalogabnahme nur als leeren Composition-/Packaging-Host verwenden.
+- [x] `JiraBoard.UiCatalog` als ersten ausführbaren UI-Host ohne XAML erstellen; Nachweis: [`Program.fs`](src/JiraBoard.UiCatalog/Program.fs) startet die native FuncUI-/Elmish-Shell, der Repositoryscan findet keine XAML-/AXAML-Datei und der Windows-Starttest aus `UI-003` blieb stabil.
+- [x] `JiraBoard.App` bis zur Katalogabnahme nur als leeren Composition-/Packaging-Host verwenden; Nachweis: [`JiraBoard.App/Program.fs`](src/JiraBoard.App/Program.fs) bleibt unverändert der leere Exit-0-Host.
 - [ ] `JiraBoard.UiCatalog` und `JiraBoard.App` dieselben Produktionsviews aus `JiraBoard.Ui` referenzieren lassen.
 - [ ] getrennte oder vereinfachte Storybook-Doubles für Produktkomponenten technisch und organisatorisch ausschließen.
 - [x] zentrale Design-Tokens für Farbe, Typografie, Abstände, Radien, Größen, Z-Order und Motion anlegen; Nachweis: [`DesignTokens.fs`](src/JiraBoard.Ui/DesignTokens.fs), [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs) und `UI-001`.
-- [ ] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen.
-- [ ] Katalogregler für Viewport, App-Zoom, Schriftzoom, Theme, Reduced Motion und Animationsfortschritt vorsehen.
+- [x] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen; Nachweis: [`CatalogShell.fs`](src/JiraBoard.UiCatalog/CatalogShell.fs) registriert den statischen Startzustand `Shell.Overview`, abgesichert durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs).
+- [ ] Katalogregler für Viewport, App-Zoom, Schriftzoom, Theme, Reduced Motion und Animationsfortschritt vorsehen. Teilnachweis aus `UI-003`: Viewport, beide Zooms, Motion, Reduced Motion und die fünf deterministischen Fortschrittswerte sind sichtbar und per Zustands-/Windows-Automationstest bedienbar; ein Theme-Regler bleibt mangels freigegebenem Dark-Theme-Vertrag offen.
 - [ ] mindestens `TicketCard`, eine Standard-Issue-Swimlane, Subtasks und zusammengeklappte Spalten zuerst im UiCatalog darstellen.
 - [ ] `ProjectSelectionModal` und `SprintMenu` mit stabilen IDs, mehreren aktiven Sprints, gleichen Namen, mehreren Boards und leerem Zustand zuerst im UiCatalog darstellen.
 - [ ] festlegen, dass eine Komponente erst nach Katalogszenario, Unit-/Headless-Tests und Designabnahme in `JiraBoard.App` integriert werden darf.
@@ -123,9 +123,9 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 
 ### Nachweis
 
-- ausführbarer UiCatalog: _offen_
-- erste Szenarionamen: _offen_
-- Designabnahme: _offen_
+- ausführbarer UiCatalog: [`JiraBoard.UiCatalog`](src/JiraBoard.UiCatalog/JiraBoard.UiCatalog.fsproj), nativer Windows-Start und sichtbares Fenster in `UI-003` nachgewiesen
+- erste Szenarionamen: `Shell.Overview`
+- Designabnahme: native Shell aus `UI-003` am 27. Juli 2026 menschlich abgenommen; Komponenten- und Boarddesign bleibt bis `UI-005` beziehungsweise Vertical Slice offen
 
 ## G4 – Repräsentative Jira-Fixtures
 
