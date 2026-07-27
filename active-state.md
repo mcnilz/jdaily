@@ -16,9 +16,9 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 27. Juli 2026 |
 | Phase | Welle 0 – Produkt- und Ausführungsgrundlage |
-| Aktiver Arbeitsauftrag | `FND-001` – Solution-Skelett erzeugen; Status `In Review` |
-| Nächste menschliche Aktion | `.slnx`-Struktur und NuGet-Sandbox-Hinweis anhand der untenstehenden Punkte abnehmen oder konkretes Feedback geben |
-| Nächster Paketkandidat danach | `FND-002` wird erst nach Umsetzung und menschlicher Abnahme von `FND-001` vorgeschlagen |
+| Aktiver Arbeitsauftrag | keiner |
+| Nächste menschliche Aktion | keine offene Abnahme; nächster Arbeitsauftrag wird vor Umsetzung vorgeschlagen |
+| Nächster Paketkandidat danach | `FND-002` steht auf `Ready` und ist der nächste zulässige Vorschlag |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `JiraBoard.slnx` mit sechs minimalen F#-Projekten; noch keine Drittanbieterpakete, Tests oder Produktoberfläche |
@@ -29,27 +29,17 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 | Backlog-ID | Status | Verantwortlich | Aktueller Teilschritt | Nächste konkrete Aktion | Schreibbereich | Letzter Prüfstand |
 |---|---|---|---|---|---|---|
-| `FND-001` | `In Review` | Codex | `.slnx`-Migration, Dokumentation, Build und zweiachsiger Review abgeschlossen | Menschliche Abnahme oder konkretes Feedback abwarten | `JiraBoard.slnx`, `AGENTS.md`, Status- und Spezifikationsdokumente | sechs Projekte; Restore, Build und leerer Testlauf grün; beide Review-Achsen ohne Befund |
+| – | – | – | – | – | – | – |
 
 ## Aktuelle menschliche Abnahme
 
-### `FND-001` – Solution-Skelett erzeugen
-
-Bitte prüfen:
-
-- Ersetzt `JiraBoard.slnx` die alte `.sln` vollständig und enthält genau die sechs vorgesehenen Projekte?
-- Sind sämtliche F#-Quelldateien weiterhin über explizite `Compile`-Einträge in nachvollziehbarer Reihenfolge eingebunden?
-- Referenzieren App, UiCatalog, AOT-SmokeTests und VisualTests ausschließlich die gemeinsame UI-Bibliothek, während `Ui` und `Tests` noch nach innen frei bleiben?
-- Beschreibt `AGENTS.md` den erfolgreichen Eskalationsweg für sandboxbedingte NuGet-Konfigurations- und Lock-Zugriffsfehler verständlich?
-- Verhindert der Hinweis ausdrücklich destruktive oder repositorylokale Scheinlösungen für ein reines Sandbox-Berechtigungsproblem?
-
-Bei Zustimmung wird `FND-001` auf `Done` gesetzt und aus den aktiven Positionen entfernt. Erst danach wird `FND-002` vorgeschlagen.
+Keine.
 
 ## Offene Blocker und Entscheidungen
 
 - Es besteht kein technischer Blocker.
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
-- `FND-001` wartet nach der Überarbeitung regulär auf menschliche Abnahme.
+- `FND-002` steht nach erfüllter Abhängigkeit auf `Ready` und muss vor der Umsetzung als nächster Arbeitsauftrag vorgeschlagen und bestätigt werden.
 
 ## Letzter Prüfstand
 
@@ -58,8 +48,9 @@ Bei Zustimmung wird `FND-001` auf `Done` gesetzt und aus den aktiven Positionen 
 - Neun Markdown-Dateien und acht PNGs wurden für das Übergabepaket inventarisiert; alle PNGs waren lesbar und das ZIP bestand vor der Abnahme den vollständigen Integritätstest. Das temporäre ZIP wurde anschließend auf ausdrücklichen Wunsch gelöscht und wird nicht erneut angelegt.
 - `GOV-005` wurde am 26. Juli 2026 ausdrücklich menschlich abgenommen und auf `Done` gesetzt; die beiden Vorlagen unter `docs/templates/` sind in den G2-Nachweisen verlinkt.
 - Für `FND-001` sind die sechs Projekte nach offizieller SDK-Migration in `JiraBoard.slnx` enthalten; Restore, Release-Build und der derzeit noch leere Testlauf sind grün.
-- `AGENTS.md` erklärt für künftige Agenten den sicheren Eskalationsweg bei sandboxbedingtem Zugriff auf Benutzer-NuGet-Konfiguration und globalen Scratch-Lock, ohne Lock-Dateien oder Konfigurationen zu verändern.
-- Der zweiachsige Review gegen Commit `f7ef24e` meldet weder Standard- noch Spezifikationsbefunde.
+- `AGENTS.md` erklärt den NuGet-Eskalationsweg ohne reale lokale Pfade; Skill-Commits vor der Abnahme sind verboten, während ein klares eigenständiges `Abgenommen` den Commit des danach synchronisierten Paketstands automatisch autorisiert.
+- Der zweiachsige Review des ungestagten Flow-Diffs gegen Commit `74eca91` meldet nach Angleichung des operativen Pflegeabschnitts keine verbleibenden Befunde; HEAD und Index sind unverändert.
+- `FND-001` wurde am 27. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich abgenommen und auf `Done` gesetzt.
 - Die Lizenzgrenze, die ausnahmslose FluentAssertions-Sperre, die Readiness-Gates und der Human-in-the-loop-Flow sind in den maßgeblichen Dokumenten verankert.
 
 ## Wiedereinstieg in einem neuen Kontext
@@ -78,7 +69,7 @@ Bei Zustimmung wird `FND-001` auf `Done` gesetzt und aus den aktiven Positionen 
 - **Während der Arbeit:** Nach jedem kohärenten Zwischenergebnis nur Teilschritt, nächste Aktion, Schreibbereich und Prüfstand aktualisieren. Keine Akzeptanzkriterien hierher kopieren.
 - **Bei Blockade:** Das Item im Backlog auf `Blocked` setzen und hier den konkreten Blocker sowie die benötigte Entscheidung oder Abhängigkeit nennen.
 - **Vor Abnahme:** Nach Umsetzung, Tests und Review auf `In Review` setzen; konkrete Abnahmehinweise, Prüfergebnisse, Einschränkungen und Agentenretrospektive vorstellen.
-- **Bei Abnahme:** Nur nach ausdrücklicher menschlicher Zustimmung Tests und Nachweise verlinken, Readiness aktualisieren, auf `Done` setzen, die aktive Zeile entfernen und den nächsten Kandidaten bestimmen.
+- **Bei Abnahme:** Nur ein eigenständiges menschliches `Abgenommen` für das aktuelle `In Review`-Paket gilt; Zitate, Beispiele oder Diskussionen des Wortes gelten nicht. Zuerst Tests und Nachweise verlinken, Readiness und Backlog synchronisieren, auf `Done` setzen und die aktive Zeile entfernen; anschließend exakt diesen abgenommenen Zustand automatisch stagen und committen. Eine separate Commit-Anweisung ist nicht erforderlich.
 - **Bei Feedback:** Auf `In Progress` zurücksetzen und Umsetzung, Tests, Review und Vorstellung wiederholen. Bei wesentlicher Scopeänderung auf `Proposed` zurücksetzen und erneut bestätigen lassen.
 - **Vor Kontextwechsel oder Handover:** Diese Datei muss den tatsächlich verbleibenden Zustand beschreiben; vergangene Sitzungsprotokolle und erledigte Detailaufgaben werden entfernt.
 - **Bei Parallelisierung:** Jede aktive Zeile besitzt genau einen Verantwortlichen und einen überschneidungsfreien Schreibbereich. Mehrere Agenten bearbeiten niemals dieselben Dateien.

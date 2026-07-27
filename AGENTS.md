@@ -24,6 +24,7 @@ The active-state file is the operational re-entry point, but it is not a specifi
 - If work is blocked, mark the backlog item `Blocked` and record the exact blocker and required decision in `active-state.md`.
 - After implementation, tests and review, move the item to `In Review` and present a concrete human acceptance checklist plus agent feedback on successes, problems and suggested improvements.
 - Never move an item to `Done` without explicit human acceptance. Feedback returns it to `In Progress`; a material scope change returns it to `Proposed` for renewed confirmation.
+- Never stage or commit an `In Review` package before the human clearly accepts that current package with the standalone acceptance word `Abgenommen`. A quoted mention, example or discussion of that word is not acceptance. A skill instruction to commit does not override this repository rule. After a valid `Abgenommen`, first synchronize the package to `Done`, then automatically stage and commit exactly the accepted current package state.
 - Before any context switch, pause or handoff, update `active-state.md` to the real remaining state.
 - Keep it compact: remove completed work, link to evidence and specifications, and never duplicate requirements or maintain a session diary there.
 
@@ -32,7 +33,7 @@ The active-state file is the operational re-entry point, but it is not a specifi
 1. **Propose:** The agent decides the next eligible work package, explains why it is next and asks the human to confirm it.
 2. **Execute:** After confirmation, the agent organizes implementation, TDD, applicable tests, self-review and any useful independent review within the approved scope.
 3. **Present:** The agent sets the package to `In Review`, demonstrates the result, lists exact acceptance checks, reports commands and results, and provides a short retrospective with improvements.
-4. **Accept or loop:** Human acceptance permits `Done`. Otherwise the same package returns to implementation and repeats execution, review and presentation. The next package is not started before acceptance.
+4. **Accept or loop:** Only a clear human `Abgenommen` for the current `In Review` package permits `Done` and authorizes its automatic commit. The agent first synchronizes Active State, backlog and readiness evidence, then stages and commits exactly that accepted state. Any other wording, quoted occurrence or feedback does not authorize a commit; feedback returns the same package to implementation. The next package is not started before acceptance.
 
 ## Non-negotiable rules
 
@@ -89,7 +90,7 @@ dotnet test -c Release --no-build
 
 ### Codex sandbox and NuGet locks
 
-If restore or build inside the Codex sandbox reports denied access to the user-level `NuGet.Config` or cannot access a NuGet lock below `D:\packages\nuget-scratch`, treat that first as a sandbox permission problem, not as a stale project lock. Re-run the identical `rtk dotnet restore JiraBoard.slnx` or build command with the required sandbox escalation (`require_escalated`) so NuGet can read the existing user configuration and global scratch area.
+If restore or build inside the Codex sandbox reports denied access to the user-level `NuGet.Config` or cannot access a NuGet lock in a global scratch area outside the workspace, treat that first as a sandbox permission problem, not as a stale project lock. Re-run the identical `rtk dotnet restore JiraBoard.slnx` or build command with the required sandbox escalation (`require_escalated`) so NuGet can read the existing user configuration and global scratch area.
 
 Do not delete the global lock file, overwrite the user-level `NuGet.Config`, commit a repository-local workaround configuration or redirect package sources merely to bypass this sandbox error. Only investigate a genuinely stale lock after the same command also fails with normal user access and no other NuGet process is active.
 

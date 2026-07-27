@@ -39,7 +39,7 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 
 ### Blocker
 
-- [x] Repository und Solution mit den im Handover festgelegten Projekten anlegen; Nachweis: [JiraBoard.slnx](JiraBoard.slnx), `FND-001`.
+- [x] Repository und Solution mit den im Handover festgelegten Projekten anlegen; Nachweis: [JiraBoard.slnx](JiraBoard.slnx), `FND-001`, menschlich abgenommen am 27. Juli 2026.
 - [ ] `global.json` auf einen freigegebenen .NET-10-SDK-Feature-Band festlegen.
 - [ ] Central Package Management einrichten und Avalonia `11.3.18` sowie FuncUI/Elmish `1.6.0` exakt festsetzen.
 - [ ] Preview-Pakete ausschließen.
@@ -51,7 +51,7 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 - [ ] CI-Hard-Fail für direkte und transitive FluentAssertions-Abhängigkeiten im vollständigen Restore-Graphen anlegen.
 - [ ] CI-Hard-Fail für FluentAssertions-Einträge in `Directory.Packages.props`, Projektdateien, Lock-/Assets-Dateien sowie für Namespace-, Alias- oder Wrapper-Verwendungen im Quelltext anlegen.
 - [ ] Nachweisen, dass der FluentAssertions-Check nicht per Allowlist, Suppression oder Testprojekt-Ausnahme umgangen werden kann.
-- [x] F#-Dateireihenfolge und Projektabhängigkeiten explizit festlegen; Nachweis: explizite `Compile`- und `ProjectReference`-Einträge in den sechs Projekten aus [JiraBoard.slnx](JiraBoard.slnx), `FND-001`.
+- [x] F#-Dateireihenfolge und Projektabhängigkeiten explizit festlegen; Nachweis: explizite `Compile`- und `ProjectReference`-Einträge in den sechs Projekten aus [JiraBoard.slnx](JiraBoard.slnx), `FND-001`, menschlich abgenommen am 27. Juli 2026.
 - [ ] `AGENTS.md` beziehungsweise die lokale Agentenanweisung auf Handover und diese Checkliste verweisen und die ausnahmslose FluentAssertions-Sperre wörtlich wiederholen lassen.
 - [ ] `dotnet restore` und `dotnet build -c Release` auf einem sauberen Checkout reproduzierbar ausführen.
 - [ ] minimalen Self-contained-Publish und Native-AOT-Publish ohne pauschal unterdrückte Trim-/AOT-Warnungen erzeugen.
