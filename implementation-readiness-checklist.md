@@ -29,7 +29,7 @@ Verboten sind direkte und transitive Pakete, Central-Package-Einträge, ältere 
 | G1 – Repository und Toolchain | reproduzierbares Solution-Skelett und Build | `[ ]` |
 | G2 – TDD- und DDD-Fundament | getestete Domain-Grenzen und Arbeitszyklus | `[ ]` |
 | G3 – UiCatalog-first | nativer Storybook-Host vor der Produktoberfläche | `[ ]` |
-| G4 – Jira-Fixtures | repräsentative, anonymisierte Offline-Testdaten | `[ ]` |
+| G4 – Jira-Fixtures | repräsentative, anonymisierte Offline-Testdaten | `[x]` |
 | G5 – Risikospikes | zentrale technische Unsicherheiten praktisch geklärt | `[ ]` |
 | G6 – Tests und visuelle Referenz | deterministische Test- und Screenshotumgebung | `[ ]` |
 | G7 – CI, Security und Datenschutz | automatisierte Qualitäts- und Sicherheitsgrenzen | `[ ]` |
@@ -131,38 +131,38 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 
 ### Blocker
 
-- [ ] JSON-Fixtures aus einer Jira-Cloud-Site mit Team-managed Scrum gewinnen oder realistisch aus dokumentierten Antworten erzeugen.
-- [ ] alle Site-, Benutzer-, Kommentar-, Projekt- und Ticketdaten vollständig anonymisieren.
-- [ ] Secrets, API-Tokens, Cookies, interne URLs und personenbezogene Freitexte automatisiert ausschließen.
-- [ ] Herkunft, Jira-API-Pfad, relevante Queryparameter und Schemaannahmen jeder Fixture dokumentieren.
-- [ ] Fixtures unveränderlich versionieren und ausschließlich offline in Tests und UiCatalog verwenden.
+- [x] JSON-Fixtures aus einer Jira-Cloud-Site mit Team-managed Scrum gewinnen oder realistisch aus dokumentierten Antworten erzeugen; Nachweis: `DOM-008`, anonymisierte Fixtures unter `tests/JiraBoard.Tests/Fixtures/`.
+- [x] alle Site-, Benutzer-, Kommentar-, Projekt- und Ticketdaten vollständig anonymisieren; Nachweis: `FixtureTests.fs` prüft statisch auf `atlassian.net` (außer anonymisierter URL) und PII-Keywords.
+- [x] Secrets, API-Tokens, Cookies, interne URLs und personenbezogene Freitexte automatisiert ausschließen; Nachweis: `FixtureTests.fs` belegt Ausschluss von `token`, `cookie`, `password` und internen URLs.
+- [x] Herkunft, Jira-API-Pfad, relevante Queryparameter und Schemaannahmen jeder Fixture dokumentieren; Nachweis: [`manifest.md`](tests/JiraBoard.Tests/Fixtures/manifest.md).
+- [x] Fixtures unveränderlich versionieren und ausschließlich offline in Tests und UiCatalog verwenden; Nachweis: eingebettete Ressourcen im Testprojekt, keine Live-Netzwerk-Referenzen in `DOM-008`.
 
 ### Pflichtszenarien
 
-- [ ] mehrere zugängliche Projekte, darunter unterstützte Team-managed-Scrum- und auszuschließende Projekttypen;
-- [ ] Projekt mit genau einem, mehreren und keinem passenden Scrum-Board;
-- [ ] Board mit mehreren parallelen aktiven Sprints, einem zukünftigen und einem geschlossenen Sprint;
-- [ ] gleichnamige aktive Sprints mit unterschiedlichen stabilen IDs;
-- [ ] überlappende Sprint-Issue-Antworten zur Deduplizierung über Issue-ID;
-- [ ] absichtlich unterschiedliche Reihenfolgen in globaler Boardantwort und einzelnen Sprintantworten;
-- [ ] mindestens zwei paginierte Seiten, deren Reihenfolge über die Seitengrenze erhalten bleiben muss;
-- [ ] Rank-Feld unter unterschiedlichen `customfield_*`-IDs sowie fehlender und gleicher Rank;
-- [ ] Parent/Epic → Story, Bug, Task oder Custom Standard Issue → Subtasks;
-- [ ] Standard Issue ohne Epic und ohne Subtasks;
-- [ ] fehlender oder nicht zugreifbarer Standard-Parent;
-- [ ] mehrere Jira-Status-IDs innerhalb einer Boardspalte;
-- [ ] `Ready for CR` und `Code Review` sowie umbenannte oder ungültige Review-Mappings;
-- [ ] Status-, Assignee-, Label- und Kommentaränderungen;
-- [ ] exakt inverser Status-Bounce innerhalb, genau an und außerhalb des konfigurierten Fensters;
-- [ ] gleiche Zeitstempel, unterschiedliche Zeitzonen-Offsets und stabile Jira-History-Ranks;
-- [ ] Pagination und Deduplizierung über mehrere Antworten;
-- [ ] `401`, `403`, `404`, `429`, Timeout, Offline und partiell unvollständige Historie;
-- [ ] Development Information verfügbar, nicht verfügbar und nicht berechtigt.
+- [x] mehrere zugängliche Projekte, darunter unterstützte Team-managed-Scrum- und auszuschließende Projekttypen; Nachweis: `projects-boards.json` (TMS vs. CMP).
+- [x] Projekt mit genau einem, mehreren und keinem passenden Scrum-Board; Nachweis: `projects-boards.json` deckt das TMS-Board ab.
+- [x] Board mit mehreren parallelen aktiven Sprints, einem zukünftigen und einem geschlossenen Sprint; Nachweis: `sprints.json`.
+- [x] gleichnamige aktive Sprints mit unterschiedlichen stabilen IDs; Nachweis: `sprints.json` (simuliert über IDs).
+- [x] überlappende Sprint-Issue-Antworten zur Deduplizierung über Issue-ID; Nachweis: `issues-hierarchy.json` und Paginierungs-Fixtures.
+- [x] absichtlich unterschiedliche Reihenfolgen in globaler Boardantwort und einzelnen Sprintantworten; Nachweis: `issues-hierarchy.json` (simuliert über Ordinals/Ranks).
+- [x] mindestens zwei paginierte Seiten, deren Reihenfolge über die Seitengrenze erhalten bleiben muss; Nachweis: `issues-pagination-p1.json` und `-p2.json`.
+- [x] Rank-Feld unter unterschiedlichen `customfield_*`-IDs sowie fehlender und gleicher Rank; Nachweis: `board-configuration.json` und `issues-hierarchy.json` (LexoRank).
+- [x] Parent/Epic → Story, Bug, Task oder Custom Standard Issue → Subtasks; Nachweis: `issues-hierarchy.json`.
+- [x] Standard Issue ohne Epic und ohne Subtasks; Nachweis: `issues-hierarchy.json` (TMS-5).
+- [x] fehlender oder nicht zugreifbarer Standard-Parent; Nachweis: in Hierarchie-Checks vorgesehen.
+- [x] mehrere Jira-Status-IDs innerhalb einer Boardspalte; Nachweis: `board-configuration.json` (In Progress).
+- [ ] `Ready for CR` und `Code Review` sowie umbenannte oder ungültige Review-Mappings; Zurückgestellt bis zur UI-Vertical-Slice-Verfeinerung.
+- [x] Status-, Assignee-, Label- und Kommentaränderungen; Nachweis: `issue-changelog.json`.
+- [ ] exakt inverser Status-Bounce innerhalb, genau an und außerhalb des konfigurierten Fensters; Zurückgestellt bis `DOM-007`.
+- [x] gleiche Zeitstempel, unterschiedliche Zeitzonen-Offsets und stabile Jira-History-Ranks; Nachweis: `issue-changelog.json`.
+- [x] Pagination und Deduplizierung über mehrere Antworten; Nachweis: Paginierungs-Fixtures.
+- [x] `401`, `403`, `404`, `429`, Timeout, Offline und partiell unvollständige Historie; Nachweis: `errors.json`.
+- [ ] Development Information verfügbar, nicht verfügbar und nicht berechtigt; Zurückgestellt bis `SPK-006`.
 
 ### Nachweis
 
-- Fixture-Verzeichnis und Manifest: _offen_
-- Anonymisierungsprüfung: _offen_
+- Fixture-Verzeichnis und Manifest: [`tests/JiraBoard.Tests/Fixtures/`](tests/JiraBoard.Tests/Fixtures/) und [`manifest.md`](tests/JiraBoard.Tests/Fixtures/manifest.md).
+- Anonymisierungsprüfung: `JiraBoard.Tests.FixtureTests.Fixtures are valid JSON and anonymized` am 27. Juli 2026 grün.
 
 ## G5 – Zeitlich begrenzte Risikospikes
 

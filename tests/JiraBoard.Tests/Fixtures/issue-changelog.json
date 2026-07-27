@@ -1,0 +1,67 @@
+{
+  "startAt": 0,
+  "maxResults": 100,
+  "total": 5,
+  "histories": [
+    {
+      "id": "10100",
+      "author": { "displayName": "Anonymized User", "accountId": "acc-123" },
+      "created": "2026-07-26T09:00:00.000Z",
+      "items": [
+        {
+          "field": "status",
+          "fieldtype": "jira",
+          "from": "10000",
+          "fromString": "To Do",
+          "to": "3",
+          "toString": "In Progress"
+        }
+      ]
+    },
+    {
+      "id": "10101",
+      "author": { "displayName": "Anonymized User", "accountId": "acc-123" },
+      "created": "2026-07-26T09:05:00.000Z",
+      "items": [
+        {
+          "field": "assignee",
+          "fieldtype": "jira",
+          "from": null,
+          "fromString": null,
+          "to": "acc-123",
+          "toString": "Anonymized User"
+        }
+      ]
+    },
+    {
+      "id": "10102",
+      "author": { "displayName": "Anonymized User", "accountId": "acc-123" },
+      "created": "2026-07-26T09:10:00.000Z",
+      "items": [
+        {
+          "field": "labels",
+          "fieldtype": "jira",
+          "from": null,
+          "fromString": "",
+          "to": "frontend",
+          "toString": "frontend"
+        }
+      ]
+    },
+    {
+      "id": "10103",
+      "author": { "displayName": "Anonymized User", "accountId": "acc-123" },
+      "created": "2026-07-26T09:15:00.000Z",
+      "items": [
+        {
+          "field": "summary",
+          "fieldtype": "jira",
+          "from": "Core Domain Logic",
+          "fromString": "Core Domain Logic",
+          "to": "Core Domain Logic (Updated)",
+          "toString": "Core Domain Logic (Updated)"
+        }
+      ]
+    }
+  ]
+}

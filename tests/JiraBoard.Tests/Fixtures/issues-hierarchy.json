@@ -1,0 +1,70 @@
+{
+  "expand": "schema,names",
+  "startAt": 0,
+  "maxResults": 50,
+  "total": 5,
+  "issues": [
+    {
+      "id": "1000",
+      "key": "TMS-1",
+      "fields": {
+        "summary": "Infrastructure Epic",
+        "issuetype": { "id": "10000", "name": "Epic", "subtask": false, "hierarchyLevel": 1 },
+        "status": { "id": "10000", "name": "To Do" },
+        "priority": { "name": "Medium" },
+        "assignee": null,
+        "customfield_10019": "0|i00001:",
+        "created": "2026-07-20T10:00:00.000Z"
+      }
+    },
+    {
+      "id": "1001",
+      "key": "TMS-2",
+      "fields": {
+        "summary": "Core Domain Logic",
+        "issuetype": { "id": "10001", "name": "Story", "subtask": false, "hierarchyLevel": 0 },
+        "status": { "id": "3", "name": "In Progress" },
+        "priority": { "name": "High" },
+        "assignee": { "displayName": "Anonymized User", "accountId": "acc-123" },
+        "parent": { "id": "1000", "key": "TMS-1" },
+        "customfield_10019": "0|i00002:",
+        "created": "2026-07-20T10:05:00.000Z"
+      }
+    },
+    {
+      "id": "1002",
+      "key": "TMS-3",
+      "fields": {
+        "summary": "Define Identifiers",
+        "issuetype": { "id": "10002", "name": "Subtask", "subtask": true, "hierarchyLevel": -1 },
+        "status": { "id": "10001", "name": "Done" },
+        "parent": { "id": "1001", "key": "TMS-2" },
+        "customfield_10019": "0|i00003:",
+        "created": "2026-07-20T10:10:00.000Z"
+      }
+    },
+    {
+      "id": "1003",
+      "key": "TMS-4",
+      "fields": {
+        "summary": "Implement BoardOrder",
+        "issuetype": { "id": "10002", "name": "Subtask", "subtask": true, "hierarchyLevel": -1 },
+        "status": { "id": "3", "name": "In Progress" },
+        "parent": { "id": "1001", "key": "TMS-2" },
+        "customfield_10019": "0|i00004:",
+        "created": "2026-07-20T10:15:00.000Z"
+      }
+    },
+    {
+      "id": "1004",
+      "key": "TMS-5",
+      "fields": {
+        "summary": "Standalone Story",
+        "issuetype": { "id": "10001", "name": "Story", "subtask": false, "hierarchyLevel": 0 },
+        "status": { "id": "10000", "name": "To Do" },
+        "customfield_10019": "0|i00005:",
+        "created": "2026-07-21T09:00:00.000Z"
+      }
+    }
+  ]
+}

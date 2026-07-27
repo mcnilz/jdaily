@@ -141,7 +141,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | DOM-005 | P0 | Done | Boardereignismodell erstellen | Status, Assignee, Labels, Kommentare und optionale Commits werden als normalisierte `BoardEvent`-Werte modelliert. Menschlich abgenommen am 27. Juli 2026. | DOM-001 |
 | DOM-006 | P0 | Done | Ereignisreihenfolge deterministisch machen | UTC, Quellreihenfolge, Scope-/Boardreihenfolge, Ereignisart und Event-ID liefern kultur- und eingabeunabhängig dieselbe Sequenz; `BoardOrdinal` steht vor dem Issue-Key-Fallback. Menschlich abgenommen am 27. Juli 2026. | DOM-003, DOM-005 |
 | DOM-007 | P1 | Planned | Status-Bounce-Policy modellieren | `Aus` oder 1–30 Minuten, Standard 5, inklusive Grenze und Erhalt anderer Ereignisse sind pure getestet. | DOM-005–006 |
-| DOM-008 | P0 | Planned | Repräsentative Jira-Fixtures aufbauen | Anonymisierte Fixtures decken Hierarchie, Multi-Sprint, Pagination, dynamischen/missing/equal Rank, Statusmapping und Fehler ab. | FND-003 |
+| DOM-008 | P0 | Done | Repräsentative Jira-Fixtures aufbauen | Anonymisierte Fixtures decken Hierarchie, Multi-Sprint, Pagination, dynamischen/missing/equal Rank, Statusmapping und Fehler ab. Menschlich abgenommen am 27. Juli 2026. | FND-003 |
 | DOM-009 | P0 | Planned | Fixture-Sicherheitsprüfung automatisieren | Manifest dokumentiert Herkunft und API-Annahmen; Tokens, Cookies, interne URLs und personenbezogene Inhalte werden blockiert. | DOM-008, FND-006 |
 
 ## E03 – UiCatalog, Designsystem und Risikospikes

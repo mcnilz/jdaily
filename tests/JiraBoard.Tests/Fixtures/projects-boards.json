@@ -1,0 +1,43 @@
+{
+  "projects": [
+    {
+      "self": "https://anonymized.atlassian.net/rest/api/3/project/10000",
+      "id": "10000",
+      "key": "TMS",
+      "name": "Team Managed Scrum",
+      "projectTypeKey": "software",
+      "simplified": true,
+      "style": "next-gen",
+      "isPrivate": false,
+      "properties": {}
+    },
+    {
+      "self": "https://anonymized.atlassian.net/rest/api/3/project/10001",
+      "id": "10001",
+      "key": "CMP",
+      "name": "Company Managed Project",
+      "projectTypeKey": "software",
+      "simplified": false,
+      "style": "classic",
+      "isPrivate": false,
+      "properties": {}
+    }
+  ],
+  "boards": [
+    {
+      "id": 1,
+      "self": "https://anonymized.atlassian.net/rest/agile/1.0/board/1",
+      "name": "TMS Board",
+      "type": "scrum",
+      "location": {
+        "projectId": 10000,
+        "displayName": "Team Managed Scrum (TMS)",
+        "projectName": "Team Managed Scrum",
+        "projectKey": "TMS",
+        "projectTypeKey": "software",
+        "avatarURI": "/rest/api/3/universal_avatar/view/type/project/avatar/10400?size=small",
+        "name": "Team Managed Scrum (TMS)"
+      }
+    }
+  ]
+}

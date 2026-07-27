@@ -1,0 +1,30 @@
+{
+  "expand": "schema,names",
+  "startAt": 2,
+  "maxResults": 2,
+  "total": 4,
+  "issues": [
+    {
+      "id": "2002",
+      "key": "TMS-12",
+      "fields": {
+        "summary": "Paginated Issue 3",
+        "issuetype": { "id": "10001", "name": "Story", "subtask": false, "hierarchyLevel": 0 },
+        "status": { "id": "10000", "name": "To Do" },
+        "customfield_10019": "0|i00012:",
+        "created": "2026-07-25T10:10:00.000Z"
+      }
+    },
+    {
+      "id": "2003",
+      "key": "TMS-13",
+      "fields": {
+        "summary": "Paginated Issue 4",
+        "issuetype": { "id": "10001", "name": "Story", "subtask": false, "hierarchyLevel": 0 },
+        "status": { "id": "10000", "name": "To Do" },
+        "customfield_10019": "0|i00013:",
+        "created": "2026-07-25T10:15:00.000Z"
+      }
+    }
+  ]
+}

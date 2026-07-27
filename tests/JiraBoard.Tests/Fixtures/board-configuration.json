@@ -1,0 +1,38 @@
+{
+  "id": 1,
+  "name": "TMS Board",
+  "type": "scrum",
+  "columnConfig": {
+    "columns": [
+      {
+        "name": "To Do",
+        "statuses": [
+          { "id": "10000", "self": "https://anonymized.atlassian.net/rest/api/3/status/10000" }
+        ]
+      },
+      {
+        "name": "In Progress",
+        "statuses": [
+          { "id": "3", "self": "https://anonymized.atlassian.net/rest/api/3/status/3" }
+        ]
+      },
+      {
+        "name": "Done",
+        "statuses": [
+          { "id": "10001", "self": "https://anonymized.atlassian.net/rest/api/3/status/10001" }
+        ]
+      }
+    ],
+    "constraintType": "none"
+  },
+  "estimation": {
+    "type": "field",
+    "field": {
+      "id": "customfield_10016",
+      "displayName": "Story point estimate"
+    }
+  },
+  "ranking": {
+    "rankCustomFieldId": 10019
+  }
+}

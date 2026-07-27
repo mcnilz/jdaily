@@ -15,8 +15,14 @@
     <Compile Include="BoardEventTests.fs" />
     <Compile Include="BoardEventOrderTests.fs" />
     <Compile Include="DomainBoundaryTests.fs" />
+    <Compile Include="FixtureTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Fixtures\*.json" />
+    <None Include="Fixtures\manifest.md" />
   </ItemGroup>
 
   <ItemGroup>

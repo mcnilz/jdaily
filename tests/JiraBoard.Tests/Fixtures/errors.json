@@ -1,0 +1,18 @@
+{
+  "401": {
+    "errorMessages": [ "Your API credentials are invalid or expired." ],
+    "errors": {}
+  },
+  "403": {
+    "errorMessages": [ "You do not have permission to access this project." ],
+    "errors": {}
+  },
+  "404": {
+    "errorMessages": [ "The requested resource was not found." ],
+    "errors": {}
+  },
+  "429": {
+    "errorMessages": [ "Rate limit exceeded. Please try again later." ],
+    "errors": {}
+  }
+}
