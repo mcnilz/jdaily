@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Fixtures\*.json" />
-    <None Include="Fixtures\manifest.md" />
+    <EmbeddedResource Include="Fixtures\manifest.md" />
   </ItemGroup>
 
   <ItemGroup>
