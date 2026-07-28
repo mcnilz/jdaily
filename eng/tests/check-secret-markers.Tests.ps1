@@ -12,6 +12,9 @@ $markers = @{
     "AvaloniaKey.props"  = "Avalonia" + "UILicenseKey"
     "ToolsKey.props"     = "AVALONIA_TOOLS_" + "LICENSE_KEY"
     "AccelerateKey.yml"  = "ACCELERATE_" + "LICENSE_KEY"
+    "PortalKey.yml"      = "AVALONIA_" + "PORTAL"
+    "SubscriptionKey.yml" = "AVALONIA_" + "SUBSCRIPTION"
+    "TrialKey.yml"       = "AVALONIA_" + "TRIAL"
 }
 
 function Write-FixtureFile([string] $Path, [string] $Content) {

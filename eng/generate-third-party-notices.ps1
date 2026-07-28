@@ -1,6 +1,8 @@
 [CmdletBinding()]
 param(
-    [string] $PackageRoot
+    [string] $PackageRoot,
+    [string] $OutputPath,
+    [switch] $Verify
 )
 
 $ErrorActionPreference = "Stop"
@@ -119,6 +121,20 @@ foreach ($source in $sources) {
     }
 }
 
-$outputPath = Join-Path $repositoryRoot "THIRD-PARTY-NOTICES.txt"
+if ([string]::IsNullOrWhiteSpace($OutputPath)) {
+    $OutputPath = Join-Path $repositoryRoot "THIRD-PARTY-NOTICES.txt"
+}
+
 $utf8WithoutBom = [Text.UTF8Encoding]::new($false)
-[IO.File]::WriteAllText($outputPath, [string]::Concat($sections), $utf8WithoutBom)
+$expectedContent = [string]::Concat($sections)
+
+if ($Verify) {
+    if (-not [IO.File]::Exists($outputPath) -or [IO.File]::ReadAllText($outputPath) -cne $expectedContent) {
+        throw "THIRD-PARTY-NOTICES.txt is not reproducible from the locked package notices."
+    }
+
+    [Console]::WriteLine("Third-party notices are reproducible.")
+    return
+}
+
+[IO.File]::WriteAllText($outputPath, $expectedContent, $utf8WithoutBom)

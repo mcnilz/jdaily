@@ -15,10 +15,14 @@ $ErrorActionPreference = "Stop"
 #   * Avalonia UI license key
 #   * Avalonia tools license key
 #   * Accelerate license key
+#   * Avalonia portal, subscription or trial requirement
 $markerAvaloniaUi = "Avalonia" + "UILicenseKey"
 $markerAvaloniaTools = "AVALONIA_TOOLS_" + "LICENSE_KEY"
 $markerAccelerate = "ACCELERATE_" + "LICENSE_KEY"
-$forbiddenMarkers = @($markerAvaloniaUi, $markerAvaloniaTools, $markerAccelerate)
+$markerPortal = "AVALONIA_" + "PORTAL"
+$markerSubscription = "AVALONIA_" + "SUBSCRIPTION"
+$markerTrial = "AVALONIA_" + "TRIAL"
+$forbiddenMarkers = @($markerAvaloniaUi, $markerAvaloniaTools, $markerAccelerate, $markerPortal, $markerSubscription, $markerTrial)
 
 $scannedExtensions = @(
     ".fs", ".fsx", ".cs", ".csx", ".vb",

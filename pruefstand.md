@@ -1,5 +1,7 @@
 # Prüfstand
 
+- `FND-009` wurde am 28. Juli 2026 mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und ist `Done`: [`eng/check-dependency-policy.ps1`](eng/check-dependency-policy.ps1) sperrt nicht allowlistete Lockpakete, Premium-Avalonia-IDs, unbekannte Lizenzen und nicht inventarisierte Medienassets; [`eng/generate-third-party-notices.ps1`](eng/generate-third-party-notices.ps1) verifiziert Notices unverändernd. Die Scannerkontrollen einschließlich manipulierter Notices sowie `dotnet restore JiraBoard.slnx`, Release-Build (0 Warnungen/0 Fehler) und 108/108 Tests waren am 28. Juli 2026 grün.
+
 ## Zweck
 
 Dieses Dokument sammelt die ausführlichen aktuellen und historischen Prüfergebnisse. Es wird nur bei Bedarf gelesen und ist weder operativer Wiedereinstieg noch zweite Spezifikation. Der gegenwärtige Arbeitszustand bleibt ausschließlich in [Active State](active-state.md).

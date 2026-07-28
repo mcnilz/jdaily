@@ -16,9 +16,9 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 28. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner; `FND-008` ist menschlich abgenommen und `Done` |
-| Nächste menschliche Aktion | bei Bedarf den nächsten zulässigen Backlog-Kandidaten vorschlagen lassen |
-| Nächster Paketkandidat danach | `FND-009` – Lizenz-, Avalonia-Free- und Dependency-Gate etablieren |
+| Aktiver Arbeitsauftrag | keiner |
+| Nächste menschliche Aktion | Nächsten zulässigen Ready-Kandidaten bestätigen, nachdem er mit Ziel, Scope, Risiken, Prüfplan und Abnahmepunkten vorgeschlagen wurde |
+| Nächster Paketkandidat danach | FND-010 – Locked-Mode-Restore in CI wiederherstellen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `UI-006` und `FND-008` sind menschlich abgenommen und `Done`. Der statische AOT-Smoke-Runner prüft Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung; Restore, Release-Build mit 0 Fehlern/0 Warnungen und 108/108 Tests sowie der veröffentlichte `win-x64`-Runner sind grün. Der Headless-Harness bleibt planmäßig `UI-007`. |
@@ -28,11 +28,6 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
 - `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001` (menschlich abgenommen), das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) inhaltlich mit umsetzt; das Item bleibt zur Nachverfolgung offen.
-
-## Aktuelle menschliche Abnahme
-
-`FND-008` wurde am 28. Juli 2026 nach Prüfung des statischen Registers, der Fehler-Exit-Code-Semantik und des `win-x64`-Native-AOT-Starts mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und auf `Done` synchronisiert. Die automatische Paket-Commit-Freigabe ist damit erteilt.
-
 ## Offene Blocker und Entscheidungen
 
 - `FND-005` (Architekturgrenzen testen) ist auf ausdrückliche menschliche Entscheidung vom 27. Juli 2026 zurückgestellt und auf `Blocked` mit neuer Abhängigkeit von `DOM-001` gesetzt; die Zurückstellung wurde am 27. Juli 2026 ausdrücklich abgenommen. Die Domain-Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt; Backlog, Readiness-G2 und der technische Handoff wurden entsprechend nachgezogen.

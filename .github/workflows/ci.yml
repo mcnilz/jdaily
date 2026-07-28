@@ -78,3 +78,19 @@ jobs:
       - name: Secret-marker scan negative control
         shell: pwsh
         run: ./eng/tests/check-secret-markers.Tests.ps1
+
+      - name: Dependency policy scan
+        shell: pwsh
+        run: ./eng/check-dependency-policy.ps1
+
+      - name: Dependency policy scan negative controls
+        shell: pwsh
+        run: ./eng/tests/check-dependency-policy.Tests.ps1
+
+      - name: Verify third-party notices
+        shell: pwsh
+        run: ./eng/generate-third-party-notices.ps1 -Verify
+
+      - name: Verify third-party notices negative control
+        shell: pwsh
+        run: ./eng/tests/generate-third-party-notices.Tests.ps1

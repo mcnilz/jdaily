@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "reviewedOn": "2026-07-27",
   "packages": [
     { "id": "Avalonia", "version": "11.3.18", "license": "MIT", "state": "restored", "avaloniaFree": true },
@@ -52,5 +52,6 @@
     { "id": "xunit.v3.mtp-v1", "version": "3.2.2", "license": "Apache-2.0", "state": "restored", "avaloniaFree": false },
     { "id": "xunit.v3.runner.common", "version": "3.2.2", "license": "Apache-2.0", "state": "restored", "avaloniaFree": false },
     { "id": "xunit.v3.runner.inproc.console", "version": "3.2.2", "license": "Apache-2.0", "state": "restored", "avaloniaFree": false }
-  ]
+  ],
+  "assets": []
 }
