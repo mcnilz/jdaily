@@ -134,6 +134,8 @@ let ``shadow tokens match the specification`` () =
     expect 0.0 4.0 12.0 0.14 Shadows.hover
     expect 0.0 8.0 24.0 0.18 Shadows.floating
     expect 0.0 16.0 48.0 0.24 Shadows.modal
+    Assert.Equal(Colors.shadowNeutral, Shadows.card.Color)
+    Assert.Equal(Colors.textPrimary, Shadows.hover.Color)
 
 // --- Z-Order ----------------------------------------------------------------
 

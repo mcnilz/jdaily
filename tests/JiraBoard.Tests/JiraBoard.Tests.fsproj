@@ -18,6 +18,7 @@
     <Compile Include="FixtureTests.fs" />
     <Compile Include="DesignTokenTests.fs" />
     <Compile Include="BoardLayoutTests.fs" />
+    <Compile Include="BoardComponentTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />

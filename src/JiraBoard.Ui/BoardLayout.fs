@@ -39,6 +39,13 @@ module BoardLayout =
         | ReadyForCr -> 0.0
         | CodeReview -> metrics.CardOffset
 
+    let reviewMetrics normalColumnWidth =
+        let trackWidth = normalColumnWidth * reviewTrackWeight
+
+        { TrackWidth = trackWidth
+          CardWidth = trackWidth * reviewCardRatio
+          CardOffset = trackWidth * (1.0 - reviewCardRatio) }
+
     let calculate request =
         let identityRailWidth =
             request.BoardWidth * identityRailRatio
@@ -61,13 +68,7 @@ module BoardLayout =
 
         let review =
             if request.IncludesReviewTrack then
-                let trackWidth = normalColumnWidth * reviewTrackWeight
-                let cardWidth = trackWidth * reviewCardRatio
-
-                Some
-                    { TrackWidth = trackWidth
-                      CardWidth = cardWidth
-                      CardOffset = trackWidth - cardWidth }
+                Some(reviewMetrics normalColumnWidth)
             else
                 None
 

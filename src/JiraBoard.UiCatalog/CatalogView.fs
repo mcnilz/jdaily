@@ -2,6 +2,7 @@ namespace JiraBoard.UiCatalog
 
 open Avalonia
 open Avalonia.Controls
+open Avalonia.Controls.Primitives
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.Layout
@@ -10,6 +11,9 @@ open JiraBoard.Ui
 
 [<RequireQualifiedAccess>]
 module CatalogView =
+    let overviewDescription =
+        "Produktionskomponenten und ihre Pflichtzustände sind als auswählbare Szenarien verfügbar."
+
     let private brush color =
         SolidColorBrush(Avalonia.Media.Color.Parse color.Hex) :> IBrush
 
@@ -84,7 +88,7 @@ module CatalogView =
                                       (SetAnimationProgress progress)
                                       dispatch ] ]) ]
 
-    let private scenarioNavigation state =
+    let private scenarioNavigation state dispatch =
         Border.create
             [ Border.dock Dock.Left
               Border.width CatalogShell.layout.ScenarioNavigationWidth
@@ -93,36 +97,58 @@ module CatalogView =
               Border.borderThickness (Thickness(0.0, 0.0, Lines.normal, 0.0))
               Border.padding (Thickness(Spacing.lg))
               Border.child (
-                  StackPanel.create
-                      [ StackPanel.spacing Spacing.md
-                        StackPanel.children
-                            [ TextBlock.create
-                                  [ TextBlock.fontSize Typography.componentTitle.Size
-                                    TextBlock.fontWeight (FontWeight.SemiBold)
-                                    TextBlock.foreground (brush Colors.textPrimary)
-                                    TextBlock.text "Szenarien" ]
-                              for scenario in CatalogScenarios.all do
-                                  Border.create
-                                      [ Border.background (
-                                            if scenario.Id = state.SelectedScenarioId then
-                                                brush Colors.surfaceSelected
-                                            else
-                                                brush Colors.surface
-                                        )
-                                        Border.cornerRadius (CornerRadius(CornerRadii.md))
-                                        Border.padding (Thickness(Spacing.md))
-                                        Border.child (
-                                            StackPanel.create
-                                                [ StackPanel.spacing Spacing.xs
-                                                  StackPanel.children
-                                                      [ TextBlock.create
-                                                            [ TextBlock.fontWeight (FontWeight.SemiBold)
-                                                              TextBlock.text scenario.Name ]
-                                                        TextBlock.create
-                                                            [ TextBlock.fontSize Typography.caption.Size
-                                                              TextBlock.foreground (brush Colors.textSecondary)
-                                                              TextBlock.text scenario.Id ] ] ]
-                                        ) ] ] ]) ]
+                  ScrollViewer.create
+                      [ ScrollViewer.verticalScrollBarVisibility ScrollBarVisibility.Auto
+                        ScrollViewer.horizontalScrollBarVisibility ScrollBarVisibility.Disabled
+                        ScrollViewer.content (
+                            StackPanel.create
+                                [ StackPanel.spacing Spacing.md
+                                  StackPanel.children
+                                      [ TextBlock.create
+                                            [ TextBlock.fontSize Typography.componentTitle.Size
+                                              TextBlock.fontWeight (FontWeight.SemiBold)
+                                              TextBlock.foreground (brush Colors.textPrimary)
+                                              TextBlock.text "Szenarien" ]
+                                        for scenario in CatalogScenarios.all do
+                                            Button.create
+                                                [ Button.horizontalContentAlignment HorizontalAlignment.Stretch
+                                                  Button.background (
+                                                      if scenario.Id = state.SelectedScenarioId then
+                                                          brush Colors.surfaceSelected
+                                                      else
+                                                          brush Colors.surface
+                                                  )
+                                                  Button.padding (Thickness(Spacing.md))
+                                                  Button.onClick (
+                                                      fun _ ->
+                                                          dispatch (SelectScenario scenario.Id)
+                                                  )
+                                                  Button.content (
+                                                      StackPanel.create
+                                                          [ StackPanel.spacing Spacing.xs
+                                                            StackPanel.children
+                                                                [ TextBlock.create
+                                                                      [ TextBlock.fontWeight (FontWeight.SemiBold)
+                                                                        TextBlock.textWrapping (
+                                                                            if CatalogShell.layout.WrapScenarioLabels then
+                                                                                TextWrapping.Wrap
+                                                                            else
+                                                                                TextWrapping.NoWrap
+                                                                        )
+                                                                        TextBlock.text scenario.Name ]
+                                                                  TextBlock.create
+                                                                      [ TextBlock.fontSize Typography.caption.Size
+                                                                        TextBlock.foreground (brush Colors.textSecondary)
+                                                                        TextBlock.textWrapping (
+                                                                            if CatalogShell.layout.WrapScenarioLabels then
+                                                                                TextWrapping.Wrap
+                                                                            else
+                                                                                TextWrapping.NoWrap
+                                                                        )
+                                                                        TextBlock.text scenario.Id ] ] ]
+                                                  ) ] ] ]
+                        ) ]
+              ) ]
 
     let private preview state =
         let effectiveFontSize =
@@ -149,9 +175,7 @@ module CatalogView =
                               TextBlock.create
                                   [ TextBlock.fontSize effectiveFontSize
                                     TextBlock.foreground (brush Colors.textSecondary)
-                                    TextBlock.text (
-                                        "Die native Shell läuft. Produktionskomponenten folgen test-first in UI-005."
-                                    ) ]
+                                    TextBlock.text overviewDescription ]
                               Border.create
                                   [ Border.background (brush Colors.canvas)
                                     Border.borderBrush (brush Colors.border)
@@ -187,5 +211,11 @@ module CatalogView =
               DockPanel.children
                   [ menu
                     controlBar state dispatch
-                    scenarioNavigation state
-                    preview state ] ]
+                    scenarioNavigation state dispatch
+                    if state.SelectedScenarioId = "Shell.Overview" then
+                        preview state
+                    else
+                        ComponentCatalogView.view
+                            state.AppZoomPercent
+                            state.FontZoomPercent
+                            state.SelectedScenarioId ] ]

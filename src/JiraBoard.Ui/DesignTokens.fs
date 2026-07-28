@@ -25,6 +25,22 @@ type Color = { Hex: string }
 /// highlight (`#FFFFFF` at 70 %).
 type TranslucentColor = { Base: Color; Opacity: float }
 
+/// Independent application and typography scaling factors used while measuring
+/// production views. Layout uses only `AppFactor`; text uses both factors.
+type DisplayScale =
+    { AppFactor: float
+      FontFactor: float }
+
+[<RequireQualifiedAccess>]
+module DisplayScale =
+    let create appZoomPercent fontZoomPercent =
+        { AppFactor = float appZoomPercent / 100.0
+          FontFactor = float fontZoomPercent / 100.0 }
+
+    let normal = create 100 100
+    let layout scale value = value * scale.AppFactor
+    let font scale value = value * scale.AppFactor * scale.FontFactor
+
 /// Central color palette and semantic color roles
 /// (ui-design-specification.md, section "Farben").
 [<RequireQualifiedAccess>]
@@ -71,6 +87,8 @@ module Colors =
     let danger = color "#DE350B"
     /// Neutral information.
     let info = color "#579DFF"
+    /// Neutral black base used by resting shadows; opacity remains a shadow token.
+    let shadowNeutral = color "#000000"
 
     /// Bright inner top edge of metallic surfaces: white at 70 % opacity.
     let metalHighlight = { Base = color "#FFFFFF"; Opacity = 0.70 }
@@ -174,6 +192,24 @@ module HitTarget =
     /// Preferred square hit target.
     let preferred = 36.0
 
+/// Fixed component measurements required by the public board-component
+/// contracts. Values that are ratios remain in the pure layout modules.
+[<RequireQualifiedAccess>]
+module ComponentMetrics =
+    let ticketCardMinimumHeight = 44.0
+    let ticketCardHorizontalPadding = 8.0
+    let ticketCardVerticalPadding = 6.0
+    let ticketCardColumnInset = 16.0
+    let ticketCardFocusOuterSpacing = 2.0
+    let collapsedCellWidth = 48.0
+    let collapsedCellMinimumHeight = 36.0
+    let collapsedCellAvatarSize = 24.0
+    let swimlaneHeaderMinimumHeight = 52.0
+    let swimlaneHeaderHorizontalPadding = 12.0
+    let replayLoopButtonSize = 32.0
+    let boardColumnHeaderHeight = 44.0
+    let reviewCardStackStep = 52.0
+
 /// Shadow and metallic-depth tokens (ui-design-specification.md, section
 /// "Schatten und metallische Tiefe"). Offsets and blur are DIPs; opacity is the
 /// inclusive `0.0..1.0` alpha of the shadow color.
@@ -184,22 +220,24 @@ module Shadows =
         { OffsetX: float
           OffsetY: float
           Blur: float
-          Opacity: float }
+          Opacity: float
+          Color: Color }
 
-    let private shadow offsetY blur opacity =
+    let private shadow color offsetY blur opacity =
         { OffsetX = 0.0
           OffsetY = offsetY
           Blur = blur
-          Opacity = opacity }
+          Opacity = opacity
+          Color = color }
 
     /// Resting card shadow: `0 1 2`, black 12 %.
-    let card = shadow 1.0 2.0 0.12
+    let card = shadow Colors.shadowNeutral 1.0 2.0 0.12
     /// Hover shadow: `0 4 12`, dark blue 14 %.
-    let hover = shadow 4.0 12.0 0.14
+    let hover = shadow Colors.textPrimary 4.0 12.0 0.14
     /// Floating menu shadow: `0 8 24`, dark blue 18 %.
-    let floating = shadow 8.0 24.0 0.18
+    let floating = shadow Colors.textPrimary 8.0 24.0 0.18
     /// Modal shadow: `0 16 48`, dark blue 24 %.
-    let modal = shadow 16.0 48.0 0.24
+    let modal = shadow Colors.textPrimary 16.0 48.0 0.24
 
 /// Z-order (layering) tokens. Higher values render above lower ones. The
 /// values are strictly increasing from the board surface up to the modal so

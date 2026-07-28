@@ -19,14 +19,56 @@ type CatalogShellLayout =
       InitialWindowWidth: float
       InitialWindowHeight: float
       MinimumWindowWidth: float
-      MinimumWindowHeight: float }
+      MinimumWindowHeight: float
+      ScenarioNavigationScrollable: bool
+      WrapScenarioLabels: bool
+      CollapsedStatePreviewWidth: float }
 
 [<RequireQualifiedAccess>]
 module CatalogScenarios =
     let all =
         [ { Id = "Shell.Overview"
             Name = "Katalogübersicht"
-            Area = "Shell" } ]
+            Area = "Shell" }
+          { Id = "TicketCard.AllStates"
+            Name = "TicketCard · alle Zustände"
+            Area = "TicketCard" }
+          { Id = "TicketCard.DataVariants"
+            Name = "TicketCard · Datenvarianten"
+            Area = "TicketCard" }
+          { Id = "CollapsedCell.AllStates"
+            Name = "CollapsedColumnCell · alle Zustände"
+            Area = "CollapsedColumnCell" }
+          { Id = "CollapsedCell.DataVariants"
+            Name = "CollapsedColumnCell · Datenvarianten"
+            Area = "CollapsedColumnCell" }
+          { Id = "Board.SwimlaneHover"
+            Name = "SwimlaneHeader · Zustände"
+            Area = "SwimlaneHeader" }
+          { Id = "SwimlaneHeader.AllStates"
+            Name = "SwimlaneHeader · alle Zustände"
+            Area = "SwimlaneHeader" }
+          { Id = "SwimlaneHeader.DataVariants"
+            Name = "SwimlaneHeader · Datenvarianten"
+            Area = "SwimlaneHeader" }
+          { Id = "Board.ReviewTrack.Ready"
+            Name = "ReviewTrack · Ready for CR"
+            Area = "ReviewTrack" }
+          { Id = "Board.ReviewTrack.CodeReview"
+            Name = "ReviewTrack · Code Review"
+            Area = "ReviewTrack" }
+          { Id = "Board.ReviewTrack.Multiple"
+            Name = "ReviewTrack · mehrere Karten"
+            Area = "ReviewTrack" }
+          { Id = "Board.ReviewTrack.DataVariants"
+            Name = "ReviewTrack · Datenvarianten"
+            Area = "ReviewTrack" }
+          { Id = "Board.ReviewTrack.InvalidMapping"
+            Name = "ReviewTrack · ungültiges Mapping"
+            Area = "ReviewTrack" }
+          { Id = "Board.ReviewTrack.UnconfirmedMapping"
+            Name = "ReviewTrack · unbestätigtes Mapping"
+            Area = "ReviewTrack" } ]
 
 type CatalogShellState =
     { Viewport: ViewportPreset
@@ -38,6 +80,7 @@ type CatalogShellState =
       SelectedScenarioId: string }
 
 type CatalogShellMessage =
+    | SelectScenario of string
     | SelectViewport of ViewportPreset
     | SelectAppZoom of int
     | SelectFontZoom of int
@@ -78,7 +121,10 @@ module CatalogShell =
           InitialWindowWidth = 1280.0
           InitialWindowHeight = 800.0
           MinimumWindowWidth = 1024.0
-          MinimumWindowHeight = 640.0 }
+          MinimumWindowHeight = 640.0
+          ScenarioNavigationScrollable = true
+          WrapScenarioLabels = true
+          CollapsedStatePreviewWidth = 128.0 }
 
     let private nextItem current items =
         let index = items |> List.findIndex ((=) current)
@@ -95,6 +141,9 @@ module CatalogShell =
 
     let update message state =
         match message with
+        | SelectScenario scenarioId ->
+            { state with
+                SelectedScenarioId = scenarioId }
         | SelectViewport viewport -> { state with Viewport = viewport }
         | SelectAppZoom percent -> { state with AppZoomPercent = percent }
         | SelectFontZoom percent -> { state with FontZoomPercent = percent }

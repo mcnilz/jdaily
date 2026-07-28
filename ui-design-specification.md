@@ -225,17 +225,18 @@ Pflichtvarianten sind `Normal`, `Hover`, `KeyboardFocus`, `Blocked`, `ReplayActi
 - Mindesthöhe 36, bevorzugte Avatargröße 24.
 - Zeigt pro Subtask genau ein eigenes Element; niemals Aggregation oder Stapelzähler als Ersatz.
 - Varianten: `Assigned`, `Unassigned`, `AvatarFailed`, `HighPriority`, `Flagged`, `Blocked`, `Hover`, `KeyboardFocus`, `ReplayActive`.
-- Priority/Blocker erscheint als 12- bis 16-DIP-Form oder Icon zusätzlich zum Avatar.
+- Zugewiesene Avatare zeigen bei Vor- und Nachname deren beide Initialen, bei einem einzelnen Namen dessen erstes Zeichen.
+- `Flagged` zeigt eine kleine rote Flagge; Priority und Blocker erscheinen als 12- bis 16-DIP-Signal zusätzlich zum Avatar.
 - Tooltip und Accessible Name enthalten Key, Titel, Assignee und Warnzustand.
 - Hover/Fokus darf einen Overlay-Tooltip und Replaybutton zeigen, aber die Spalte nicht verbreitern.
 
 ### `ReviewTrack`
 
-- Gesamtbreite exakt `1,33 × NormalColumn`.
+- Die geometrische Inhaltsbreite bleibt exakt `1,33 × NormalColumn`; die sichtbare Trackfläche ergänzt links und rechts je 8 DIPs Innenabstand.
 - Zwei gleichwertige semantische Zielbereiche mit sichtbaren Labels `Ready for CR` und `Code Review`.
-- Jede Karte exakt `0,80 × TrackWidth`.
-- Ready-for-CR-Karten links bei Offset 0; Code-Review-Karten bei Offset `0,20 × TrackWidth`.
-- Mehrere Karten werden vertikal gestapelt und nicht verkleinert.
+- Jede Karte exakt `0,80 ×` geometrischer Trackbreite.
+- Ready-for-CR-Karten beginnen innerhalb des Inhaltsbereichs bei Offset 0; Code-Review-Karten bei Offset `0,20 ×` geometrischer Trackbreite.
+- Mehrere Karten werden in stabiler Eingabereihenfolge auf unterschiedliche vertikale Zeilen verteilt, niemals überlagert und nicht verkleinert.
 - Ungültiges oder unbestätigtes Mapping fällt auf zwei normale Jira-Spalten zurück.
 - Bewegung innerhalb des Tracks verwendet das kürzere Review-Motion-Token.
 

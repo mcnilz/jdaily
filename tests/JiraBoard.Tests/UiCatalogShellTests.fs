@@ -55,8 +55,70 @@ let ``catalog registers and selects its deterministic shell scenario`` () =
     let scenarioIds = CatalogScenarios.all |> List.map _.Id
     let state = CatalogShell.init ()
 
-    Assert.Equal<string list>([ "Shell.Overview" ], scenarioIds)
+    Assert.Contains("Shell.Overview", scenarioIds)
     Assert.Equal("Shell.Overview", state.SelectedScenarioId)
+
+[<Fact>]
+let ``catalog overview describes the available production components`` () =
+    Assert.Equal(
+        "Produktionskomponenten und ihre Pflichtzustände sind als auswählbare Szenarien verfügbar.",
+        CatalogView.overviewDescription
+    )
+
+[<Fact>]
+let ``catalog registers every UI-005 production component scenario`` () =
+    let scenarioIds = CatalogScenarios.all |> List.map _.Id
+
+    let required =
+        [ "TicketCard.AllStates"
+          "TicketCard.DataVariants"
+          "CollapsedCell.AllStates"
+          "CollapsedCell.DataVariants"
+          "Board.SwimlaneHover"
+          "SwimlaneHeader.AllStates"
+          "SwimlaneHeader.DataVariants"
+          "Board.ReviewTrack.Ready"
+          "Board.ReviewTrack.CodeReview"
+          "Board.ReviewTrack.Multiple"
+          "Board.ReviewTrack.DataVariants"
+          "Board.ReviewTrack.InvalidMapping"
+          "Board.ReviewTrack.UnconfirmedMapping" ]
+
+    for scenarioId in required do
+        Assert.Contains(scenarioId, scenarioIds)
+
+[<Fact>]
+let ``catalog shares deterministic component fixtures with tests`` () =
+    Assert.Equal(6, ComponentCatalogFixtures.ticketCards.Length)
+    Assert.Equal(9, ComponentCatalogFixtures.collapsedCells.Length)
+    Assert.Equal(4, ComponentCatalogFixtures.swimlaneHeaders.Length)
+    Assert.Equal(SwimlaneHeaderState.PointerHover, ComponentCatalogFixtures.swimlaneHover.State)
+    Assert.Equal(4, ComponentCatalogFixtures.ticketCardDataVariants.Length)
+    Assert.Equal(4, ComponentCatalogFixtures.collapsedCellDataVariants.Length)
+    Assert.Equal(4, ComponentCatalogFixtures.swimlaneHeaderDataVariants.Length)
+    Assert.Equal(4, ComponentCatalogFixtures.reviewTrackDataVariants.Length)
+    Assert.Equal(2, ComponentCatalogFixtures.swimlaneHoverSubtasks.Length)
+
+    let unassigned =
+        ComponentCatalogFixtures.collapsedCells
+        |> List.find (fun model -> model.State = CollapsedColumnCellState.Unassigned)
+
+    Assert.Equal<string option>(None, unassigned.Assignee)
+    Assert.Contains("Nicht zugewiesen", CollapsedColumnCell.accessibleName unassigned)
+
+    let assigned =
+        ComponentCatalogFixtures.collapsedCells
+        |> List.find (fun model -> model.State = CollapsedColumnCellState.Assigned)
+
+    Assert.Equal("MS", CollapsedColumnCell.initials assigned.Assignee)
+
+[<Fact>]
+let ``catalog scenario navigation selects the production component preview`` () =
+    let state =
+        CatalogShell.init ()
+        |> CatalogShell.update (SelectScenario "TicketCard.AllStates")
+
+    Assert.Equal("TicketCard.AllStates", state.SelectedScenarioId)
 
 [<Fact>]
 let ``repeated viewport actions advance from the current selection`` () =
@@ -78,6 +140,15 @@ let ``catalog shell dimensions and animation stops match the specification`` () 
         [ 0.0; 0.25; 0.50; 0.75; 1.0 ],
         CatalogShell.animationProgressStops
     )
+
+[<Fact>]
+let ``catalog allocates readable labels for long component state names`` () =
+    Assert.True(CatalogShell.layout.WrapScenarioLabels)
+    Assert.True(CatalogShell.layout.CollapsedStatePreviewWidth >= 128.0)
+
+[<Fact>]
+let ``catalog scenario navigation remains vertically scrollable`` () =
+    Assert.True(CatalogShell.layout.ScenarioNavigationScrollable)
 
 [<Fact>]
 let ``repeated reduced motion actions toggle from the current state`` () =

@@ -102,9 +102,9 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 - [ ] `JiraBoard.UiCatalog` und `JiraBoard.App` dieselben Produktionsviews aus `JiraBoard.Ui` referenzieren lassen.
 - [ ] getrennte oder vereinfachte Storybook-Doubles für Produktkomponenten technisch und organisatorisch ausschließen.
 - [x] zentrale Design-Tokens für Farbe, Typografie, Abstände, Radien, Größen, Z-Order und Motion anlegen; Nachweis: [`DesignTokens.fs`](src/JiraBoard.Ui/DesignTokens.fs), [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs) und `UI-001`.
-- [x] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen; Nachweis: [`CatalogShell.fs`](src/JiraBoard.UiCatalog/CatalogShell.fs) registriert den statischen Startzustand `Shell.Overview`, abgesichert durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs).
+- [x] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen; Nachweis: [`CatalogShell.fs`](src/JiraBoard.UiCatalog/CatalogShell.fs) registriert `Shell.Overview` sowie die Zustands-, Datenvarianten-, Swimlane- und ReviewTrack-Szenarien aus `UI-005`, abgesichert durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs).
 - [ ] Katalogregler für Viewport, App-Zoom, Schriftzoom, Theme, Reduced Motion und Animationsfortschritt vorsehen. Teilnachweis aus `UI-003`: Viewport, beide Zooms, Motion, Reduced Motion und die fünf deterministischen Fortschrittswerte sind sichtbar und per Zustands-/Windows-Automationstest bedienbar; ein Theme-Regler bleibt mangels freigegebenem Dark-Theme-Vertrag offen.
-- [ ] mindestens `TicketCard`, eine Standard-Issue-Swimlane, Subtasks und zusammengeklappte Spalten zuerst im UiCatalog darstellen.
+- [x] mindestens `TicketCard`, eine Standard-Issue-Swimlane, Subtasks und zusammengeklappte Spalten zuerst im UiCatalog darstellen; Nachweis: dieselben Produktionsviews aus [`JiraBoard.Ui`](src/JiraBoard.Ui/JiraBoard.Ui.fsproj) werden mit deterministischen Fixtures in [`ComponentCatalogView.fs`](src/JiraBoard.UiCatalog/ComponentCatalogView.fs) dargestellt und durch [`BoardComponentTests.fs`](tests/JiraBoard.Tests/BoardComponentTests.fs) abgesichert.
 - [ ] `ProjectSelectionModal` und `SprintMenu` mit stabilen IDs, mehreren aktiven Sprints, gleichen Namen, mehreren Boards und leerem Zustand zuerst im UiCatalog darstellen.
 - [ ] festlegen, dass eine Komponente erst nach Katalogszenario, Unit-/Headless-Tests und Designabnahme in `JiraBoard.App` integriert werden darf.
 - [x] automatisierte Tests für IdentityRail, normale/eingeklappte Spalten, 1,33-/80-/20-Reviewgeometrie und Mindest-Hit-Targets anlegen; Nachweis: [`BoardLayoutTests.fs`](tests/JiraBoard.Tests/BoardLayoutTests.fs) aus `UI-004` sowie der Hit-Target-Nachweis in [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs).
@@ -113,9 +113,9 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 ### Katalog-Startzustände
 
 - [ ] normaler aktueller Boardzustand ohne Replay-Hinweise;
-- [ ] Standard-Issue-Swimlane-Hover mit kontextuellem Loop-Button;
+- [x] Standard-Issue-Swimlane-Hover mit kontextuellem Loop-Button; Nachweis: menschlich abgenommenes Szenario `Board.SwimlaneHover` aus `UI-005`.
 - [ ] Subtask-Hover mit lokalem Replay-Button;
-- [ ] kompakter Subtask in zusammengeklappter Spalte;
+- [x] kompakter Subtask in zusammengeklappter Spalte; Nachweis: menschlich abgenommene Zustands- und Datenvarianten von `CollapsedColumnCell` aus `UI-005`.
 - [ ] Reduced Motion;
 - [ ] Loading, Empty, Offline und Error.
 - [ ] automatische Wiederherstellung des letzten gültigen Projekt-/Board-/Sprintkontexts, Projektauswahl bei Erststart oder ungültigem Kontext, erneute Auswahl über Menü, mehrere Boards und neutraler Abbruchzustand;
@@ -124,8 +124,8 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 ### Nachweis
 
 - ausführbarer UiCatalog: [`JiraBoard.UiCatalog`](src/JiraBoard.UiCatalog/JiraBoard.UiCatalog.fsproj), nativer Windows-Start und sichtbares Fenster in `UI-003` nachgewiesen
-- erste Szenarionamen: `Shell.Overview`
-- Designabnahme: native Shell aus `UI-003` am 27. Juli 2026 menschlich abgenommen; Komponenten- und Boarddesign bleibt bis `UI-005` beziehungsweise Vertical Slice offen
+- Szenarionachweis: `Shell.Overview` sowie benannte Zustands- und Datenvarianten für `TicketCard`, `CollapsedColumnCell`, `SwimlaneHeader`, vollständigen Swimlane-Hover und `ReviewTrack`
+- Designabnahme: native Shell aus `UI-003` am 27. Juli 2026 und die Produktionskomponenten aus `UI-005` am 28. Juli 2026 menschlich abgenommen; das vollständige Boarddesign bleibt bis zum Vertical Slice offen
 
 ## G4 – Repräsentative Jira-Fixtures
 
