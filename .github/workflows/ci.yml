@@ -41,22 +41,22 @@ jobs:
         with:
           global-json-file: global.json
 
-      # The desktop app and the AOT smoke runner pin `RuntimeIdentifiers=win-x64`
-      # with Native AOT, so their lock files carry the Windows-only
-      # `runtime.win-x64.Microsoft.DotNet.ILCompiler` runtime pack. On this Linux
-      # runner a `--locked-mode` restore of that win-x64 runtime graph fails
-      # (exit 1). Until the pinned RID set is broadened to the cross-platform
-      # target (a stack-scope decision, tracked separately), restore without
-      # locked mode so the runner can resolve its own runtime assets; the pinned
-      # central package versions still come from the committed lock files.
-      - name: Restore
-        run: dotnet restore JiraBoard.slnx
+      # FND-010: the AOT projects lock both win-x64 and linux-x64 runtime assets,
+      # so this Linux runner can validate the committed dependency graph without
+      # altering any lock file.
+      - name: Restore (locked mode)
+        run: dotnet restore JiraBoard.slnx --locked-mode
 
       - name: Build (Release, warnings as errors)
         run: dotnet build JiraBoard.slnx -c Release --no-restore -warnaserror -p:TreatWarningsAsErrors=true
 
       - name: Test (Release, no rebuild)
         run: dotnet test JiraBoard.slnx -c Release --no-build
+
+      - name: Publish and run Linux Native-AOT smoke
+        run: |
+          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true
+          ./tests/JiraBoard.AotSmokeTests/bin/Release/net10.0/linux-x64/publish/JiraBoard.AotSmokeTests
 
       # Package/license gate: the forbidden assertion library must not appear
       # in package declarations, lockfiles, restored assets, source, scripts or

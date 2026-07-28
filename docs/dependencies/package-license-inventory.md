@@ -15,6 +15,13 @@ official NuGet/source pages were used as independent evidence. The three
 Native-AOT toolchain packages were discovered by publishing, then added to the
 same review. Fonts, icons and product assets are not part of the repository yet.
 
+On 28 July 2026, `runtime.linux-x64.Microsoft.DotNet.ILCompiler 10.0.10` was
+checked from its restored package as `MIT`; its distinct
+`THIRD-PARTY-NOTICES.TXT` has SHA-256
+`66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54` and is
+distributed in full. It is build/packaging-only and is required for the
+approved `linux-x64` target.
+
 Before the `FND-003` package reference was added, a disposable restore resolved
 the complete `xunit.v3 3.2.2` graph. Its exact lock hashes, `.nuspec` repository
 commits and upstream license files were reviewed. All 16 new pairs use only
@@ -67,6 +74,7 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `MicroCom.Runtime` | `0.11.0`; lock | Production | [NuGet/source](https://www.nuget.org/packages/MicroCom.Runtime/0.11.0) | `MIT` | Avalonia native interop | generated COM runtime | MIT text | Approved | FND-002 |
 | `Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Native-AOT publish | AOT compiler | inventory; MIT text | Approved, build only | FND-002 |
 | `Microsoft.NET.ILLink.Tasks` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.NET.ILLink.Tasks/10.0.10) | `MIT` | Native-AOT publish | trimmer/linker | inventory; MIT text | Approved, build only | FND-002 |
+| `runtime.linux-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.linux-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | Linux AOT toolchain | inventory; full distinct notice `66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54` | Approved, build only | FND-010 |
 | `runtime.win-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.win-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | Windows AOT toolchain | inventory; MIT text | Approved, build only | FND-002 |
 | `Microsoft.ApplicationInsights` | `2.23.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0) | `MIT` | MTP telemetry | test-runner telemetry transport | inventory; MIT text | Approved, test only | FND-003 |
 | `Microsoft.Bcl.AsyncInterfaces` | `6.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/6.0.0) | `MIT` | xUnit common | async test contracts | inventory; MIT text | Approved, test only | FND-003 |
@@ -91,7 +99,7 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `xunit.v3.runner.common` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.common/3.2.2) | `Apache-2.0` | in-process runner | shared runner behavior | Apache license/NOTICE | Approved, test only | FND-003 |
 | `xunit.v3.runner.inproc.console` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.inproc.console/3.2.2) | `Apache-2.0` | xUnit core | executable in-process runner | Apache license/NOTICE | Approved, test only | FND-003 |
 
-The restored graph contains 47 exact package/version pairs. The machine-readable
+The restored graph contains 48 exact package/version pairs. The machine-readable
 package decision for every pair is
 [`eng/dependency-allowlist.json`](../../eng/dependency-allowlist.json).
 
@@ -129,8 +137,9 @@ source hash differs:
 Two consecutive generations on 27 July 2026 produced the identical repository
 artifact SHA-256
 `c45fe917f3ebf4990b5c8873392810d8c1b5f231643895e626737e90171db2ad`.
-All three AOT/linker packages and all eight approved native-assets packages are
-individually checked before their byte-identical notices are deduplicated.
+All four AOT/linker packages and all eight approved native-assets packages are
+individually checked; byte-identical notices are deduplicated, while the distinct
+Linux ILCompiler notice is included in full.
 
 ## Centrally reserved versions
 

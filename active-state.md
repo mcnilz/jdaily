@@ -18,10 +18,10 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | Nächsten zulässigen Ready-Kandidaten bestätigen, nachdem er mit Ziel, Scope, Risiken, Prüfplan und Abnahmepunkten vorgeschlagen wurde |
-| Nächster Paketkandidat danach | FND-010 – Locked-Mode-Restore in CI wiederherstellen |
+| Nächster Paketkandidat danach | noch zu bestimmen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-006` und `FND-008` sind menschlich abgenommen und `Done`. Der statische AOT-Smoke-Runner prüft Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung; Restore, Release-Build mit 0 Fehlern/0 Warnungen und 108/108 Tests sowie der veröffentlichte `win-x64`-Runner sind grün. Der Headless-Harness bleibt planmäßig `UI-007`. |
+| Repositoryzustand | `UI-006`, `FND-008` und `FND-010` sind menschlich abgenommen und `Done`. Der statische AOT-Smoke-Runner prüft Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung; Locked-Restore, Release-Build mit 0 Fehlern/0 Warnungen und 108/108 Tests sowie der veröffentlichte `win-x64`-Runner sind grün. Der native `linux-x64`-Publish-/Start-Smoke läuft in GitHub Actions. Der Headless-Harness bleibt planmäßig `UI-007`. |
 
 ## Aktive Arbeitspositionen
 
