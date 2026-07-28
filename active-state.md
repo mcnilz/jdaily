@@ -21,7 +21,7 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Nächster Paketkandidat danach | noch zu bestimmen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-006`, `FND-008` und `FND-010` sind menschlich abgenommen und `Done`. Der statische AOT-Smoke-Runner prüft Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung; Locked-Restore, Release-Build mit 0 Fehlern/0 Warnungen und 108/108 Tests sowie der veröffentlichte `win-x64`-Runner sind grün. Der native `linux-x64`-Publish-/Start-Smoke läuft in GitHub Actions. Der Headless-Harness bleibt planmäßig `UI-007`. |
+| Repositoryzustand | `UI-006`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. Der Headless-Harness bleibt planmäßig `UI-007`. |
 
 ## Aktive Arbeitspositionen
 

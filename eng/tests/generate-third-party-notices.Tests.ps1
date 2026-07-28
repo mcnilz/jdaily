@@ -16,6 +16,11 @@ try {
         throw "Expected third-party notice generation to succeed."
     }
 
+    $generatedContent = [IO.File]::ReadAllText($outputPath)
+    if ($generatedContent.Contains("`r`n")) {
+        throw "Expected generated third-party notices to use canonical LF line endings."
+    }
+
     & pwsh -NoProfile -File $generator -OutputPath $outputPath -Verify 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) {
         throw "Expected generated third-party notices to be reproducible."

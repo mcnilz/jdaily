@@ -97,9 +97,10 @@ $sources = @(
     }
 )
 
-$newline = [Environment]::NewLine
+$newline = "`n"
 $sections = [System.Collections.Generic.List[string]]::new()
-$sections.Add([IO.File]::ReadAllText((Join-Path $PSScriptRoot "third-party-notices-header.txt")))
+$header = [IO.File]::ReadAllText((Join-Path $PSScriptRoot "third-party-notices-header.txt")) -replace "`r`n?", $newline
+$sections.Add($header)
 
 foreach ($source in $sources) {
     if (-not [IO.File]::Exists($source.Path)) {
@@ -123,7 +124,8 @@ foreach ($source in $sources) {
 
     if ($source.Include) {
         $separator = "$newline$newline$('=' * 79)$newline$($source.Title)$newline$('=' * 79)$newline$newline"
-        $sections.Add($separator + [IO.File]::ReadAllText($source.Path))
+        $notice = [IO.File]::ReadAllText($source.Path) -replace "`r`n?", $newline
+        $sections.Add($separator + $notice)
     }
 }
 
