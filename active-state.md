@@ -21,7 +21,7 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Nächster Paketkandidat danach | noch zu bestimmen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-006`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. Der Headless-Harness bleibt planmäßig `UI-007`. |
+| Repositoryzustand | `UI-002`, `UI-006`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. Der Headless-Harness bleibt planmäßig `UI-007`. |
 
 ## Aktive Arbeitspositionen
 

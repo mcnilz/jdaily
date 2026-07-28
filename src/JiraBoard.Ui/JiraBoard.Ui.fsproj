@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <Compile Include="AssemblyMarker.fs" />
+    <Compile Include="FontResources.fs" />
     <Compile Include="DesignTokens.fs" />
     <Compile Include="Accessibility.fs" />
     <Compile Include="BoardLayout.fs" />
@@ -12,6 +13,10 @@
     <Compile Include="CollapsedColumnCell.fs" />
     <Compile Include="SwimlaneHeader.fs" />
     <Compile Include="ReviewTrack.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Fonts\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>

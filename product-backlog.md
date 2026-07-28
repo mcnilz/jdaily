@@ -152,7 +152,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
 | UI-001 | P0 | Done | Design Tokens als F#-Code anlegen | Farben, Typografie, Abstände, Radien, Z-Order und Motion liegen zentral; keine lokalen Magic Numbers. | FND-001–003 |
-| UI-002 | P0 | Planned | Fonts reproduzierbar bündeln | Freigegebene Iosevka-Aile-/Fixed-Builds und Lizenztext sind gepinnt; UI-Text und Issue-Keys verwenden die richtigen Fonts. | UI-001, FND-009 |
+| UI-002 | P0 | Done | Fonts reproduzierbar bündeln | Freigegebene Iosevka-Aile-/Fixed-Builds und Lizenztext sind gepinnt; UI-Text und Issue-Keys verwenden die richtigen Fonts. Quelle: Iosevka `v34.8.0`, jeweils Standard-TTF-Paket; Asset-Hashes werden mit den gebündelten Dateien geprüft. Menschlich abgenommen am 28. Juli 2026. | UI-001, FND-009 |
 | UI-003 | P0 | Done | UiCatalog-Shell erstellen | Native Avalonia-/FuncUI-App ohne XAML startet zuerst und steuert Viewport, Zoom, Motion, Reduced Motion und Animationsfortschritt. Menschlich abgenommen am 27. Juli 2026. | FND-002, UI-001, UI-004 |
 | UI-004 | P0 | Done | Boardlayout als pure Funktionen implementieren | IdentityRail, normale/eingeklappte Spalten und 1,33-/80-/20-Reviewgeometrie sind deterministisch getestet. Menschlich abgenommen am 27. Juli 2026. | UI-001, DOM-002–004 |
 | UI-005 | P0 | Done | Kernkomponenten im UiCatalog bauen | `SwimlaneHeader`, `TicketCard`, `CollapsedColumnCell` und `ReviewTrack` verwenden Produktionsviews und zeigen alle Pflichtzustände. Menschlich abgenommen am 28. Juli 2026. | UI-003–004 |

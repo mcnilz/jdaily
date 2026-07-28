@@ -18,6 +18,13 @@ if ([string]::IsNullOrWhiteSpace($PackageRoot)) {
 
 $sources = @(
     @{
+        Title = "Iosevka 34.8.0 font license"
+        Path = Join-Path $repositoryRoot "src/JiraBoard.Ui/Assets/Fonts/LICENSE.md"
+        Sha256 = "4ba53c7c1cb39279aae5f8d7d22054c485c71169920e5a36ed098b115e2e3c5d"
+        Include = $true
+        NormalizeTrailingWhitespace = $true
+    },
+    @{
         Title = "Avalonia ANGLE native license"
         Path = Join-Path $PackageRoot "avalonia.angle.windows.natives\2.1.25547.20250602\LICENSE"
         Sha256 = "54aff7276217df9f6b5181613999d208c9e40d2b1d51bf55217837e6871a4a63"
@@ -125,6 +132,11 @@ foreach ($source in $sources) {
     if ($source.Include) {
         $separator = "$newline$newline$('=' * 79)$newline$($source.Title)$newline$('=' * 79)$newline$newline"
         $notice = [IO.File]::ReadAllText($source.Path) -replace "`r`n?", $newline
+
+        if ($source.NormalizeTrailingWhitespace) {
+            $notice = $notice -replace '(?m)[ \t]+$', ''
+        }
+
         $sections.Add($separator + $notice)
     }
 }

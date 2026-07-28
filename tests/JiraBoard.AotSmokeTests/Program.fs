@@ -22,7 +22,8 @@ module SmokeChecks =
               let notices: string = JiraBoard.App.LicenseNotices.read ()
 
               let requiredMarkers =
-                  [| "SkiaSharp.NativeAssets.* 2.88.9"
+                  [| "Iosevka 34.8.0 font license"
+                     "SkiaSharp.NativeAssets.* 2.88.9"
                      "HarfBuzzSharp.NativeAssets.* 8.3.1.1"
                      "DNG SDK License Agreement"
                      "Version: MPL 1.1/GPL 2.0/LGPL 2.1"

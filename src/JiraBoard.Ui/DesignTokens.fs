@@ -100,11 +100,11 @@ module Colors =
 module Typography =
     /// Quasi-proportional UI font for menus, titles, body text and controls.
     [<Literal>]
-    let fontUi = "Iosevka Aile"
+    let fontUi = FontResources.aile
 
     /// Monospace font used specifically for Jira issue keys and technical ids.
     [<Literal>]
-    let fontMono = "Iosevka Fixed"
+    let fontMono = FontResources.fixedWidth
 
     /// A named text style. `Size` and `LineHeight` are DIPs at 100 % zoom,
     /// `Weight` is the numeric font weight and `Tracking` is the additional

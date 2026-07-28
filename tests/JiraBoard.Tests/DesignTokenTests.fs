@@ -60,8 +60,15 @@ let ``every color hex value is a valid uppercase six digit code`` () =
 
 [<Fact>]
 let ``font families map ui text and issue keys correctly`` () =
-    Assert.Equal("Iosevka Aile", Typography.fontUi)
-    Assert.Equal("Iosevka Fixed", Typography.fontMono)
+    Assert.Equal("avares://JiraBoard.Ui/Assets/Fonts#Iosevka Aile", Typography.fontUi)
+    Assert.Equal("avares://JiraBoard.Ui/Assets/Fonts#Iosevka Fixed", Typography.fontMono)
+
+[<Fact>]
+let ``approved font collections are embedded as Avalonia resources`` () =
+    let resourceManifest =
+        typeof<AssemblyMarker>.Assembly.GetManifestResourceInfo("!AvaloniaResources")
+
+    Assert.NotNull(resourceManifest)
 
 [<Fact>]
 let ``type scale matches the specification`` () =
@@ -81,13 +88,13 @@ let ``type scale matches the specification`` () =
 
 [<Fact>]
 let ``issue key style uses the monospace font and its tracking`` () =
-    Assert.Equal("Iosevka Fixed", Typography.issueKey.Family)
+    Assert.Equal(FontResources.fixedWidth, Typography.issueKey.Family)
     Assert.Equal(0.2, Typography.issueKey.Tracking, 3)
 
 [<Fact>]
 let ``regular ui text styles use the ui font`` () =
     for style in [ Typography.body; Typography.swimlaneTitle; Typography.boardTitle ] do
-        Assert.Equal("Iosevka Aile", style.Family)
+        Assert.Equal(FontResources.aile, style.Family)
 
 // --- Spacing, radii and lines ----------------------------------------------
 
