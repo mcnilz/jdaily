@@ -5,6 +5,7 @@ open Avalonia.Controls
 open Avalonia.Controls.Primitives
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
+open Avalonia.Input
 open Avalonia.Layout
 open Avalonia.Media
 open JiraBoard.Ui
@@ -169,6 +170,41 @@ module ComponentCatalogView =
                                   TicketCard.viewAt scale card ] ]
               ) ]
 
+    let private keyboardKey (eventArgs: KeyEventArgs) =
+        match eventArgs.Key, eventArgs.KeyModifiers with
+        | Key.Tab, KeyModifiers.Shift -> Some ShiftTab
+        | Key.Tab, _ -> Some Tab
+        | Key.Up, _ -> Some ArrowUp
+        | Key.Down, _ -> Some ArrowDown
+        | Key.Left, _ -> Some ArrowLeft
+        | Key.Right, _ -> Some ArrowRight
+        | Key.Space, _ -> Some Space
+        | Key.Enter, _ -> Some Enter
+        | Key.Escape, _ -> Some Escape
+        | _ -> None
+
+    let private interactiveSwimlaneHover scale keyboard dispatch =
+        let focusedIssue = keyboard.FocusedIssueKey |> Option.defaultValue "Kein Fokus"
+        let replayIssue = keyboard.ReplayIssueKey |> Option.defaultValue "Kein Replay"
+        let modalIssue = keyboard.ModalIssueKey |> Option.defaultValue "Kein Modal"
+
+        StackPanel.create
+            [ StackPanel.spacing (DisplayScale.layout scale Spacing.sm)
+              StackPanel.children
+                  [ TextBlock.create
+                        [ TextBlock.foreground (brush Colors.textSecondary)
+                          TextBlock.text "Tab: Board betreten · Pfeile: Navigation · Leertaste: Replay · Enter: Modal · Escape: Abbruch" ]
+                    Border.create
+                        [ Border.focusable true
+                          Border.isTabStop true
+                          Border.onKeyDown (fun eventArgs ->
+                              keyboardKey eventArgs
+                              |> Option.iter (fun key -> dispatch (HandleKeyboard key)))
+                          Border.child (swimlaneHover scale) ]
+                    TextBlock.create
+                        [ TextBlock.foreground (brush Colors.textSecondary)
+                          TextBlock.text $"Fokus: {focusedIssue} · Replay: {replayIssue} · Modal: {modalIssue}" ] ] ]
+
     let private reviewReady scale =
         section
             scale
@@ -210,7 +246,7 @@ module ComponentCatalogView =
             scale
             "ReviewTrack · kurze, lange, fehlende und fehlerhafte Daten"
 
-    let view appZoomPercent fontZoomPercent scenarioId =
+    let view appZoomPercent fontZoomPercent scenarioId keyboard dispatch =
         let scale = DisplayScale.create appZoomPercent fontZoomPercent
 
         ScrollViewer.create
@@ -239,7 +275,7 @@ module ComponentCatalogView =
                                 section
                                     scale
                                     "Board.SwimlaneHover · genau ein Replaybutton"
-                                    [ swimlaneHover scale ]
+                                    [ interactiveSwimlaneHover scale keyboard dispatch ]
                             | "SwimlaneHeader.AllStates" -> swimlaneHeaders scale
                             | "SwimlaneHeader.DataVariants" ->
                                 swimlaneHeaderDataVariants scale

@@ -77,7 +77,8 @@ type CatalogShellState =
       MotionPreset: Motion.SpeedPreset
       ReducedMotion: bool
       AnimationProgress: float
-      SelectedScenarioId: string }
+      SelectedScenarioId: string
+      Keyboard: CatalogKeyboardState }
 
 type CatalogShellMessage =
     | SelectScenario of string
@@ -92,6 +93,7 @@ type CatalogShellMessage =
     | SetReducedMotion of bool
     | ToggleReducedMotion
     | SetAnimationProgress of float
+    | HandleKeyboard of CatalogKeyboardKey
 
 [<RequireQualifiedAccess>]
 module CatalogShell =
@@ -137,7 +139,8 @@ module CatalogShell =
           MotionPreset = Motion.Normal
           ReducedMotion = false
           AnimationProgress = 0.0
-          SelectedScenarioId = CatalogScenarios.all.Head.Id }
+          SelectedScenarioId = CatalogScenarios.all.Head.Id
+          Keyboard = CatalogKeyboard.init CatalogKeyboard.boardTargets }
 
     let update message state =
         match message with
@@ -165,3 +168,6 @@ module CatalogShell =
             { state with
                 ReducedMotion = not state.ReducedMotion }
         | SetAnimationProgress progress -> { state with AnimationProgress = progress }
+        | HandleKeyboard key ->
+            { state with
+                Keyboard = CatalogKeyboard.handle key state.Keyboard }

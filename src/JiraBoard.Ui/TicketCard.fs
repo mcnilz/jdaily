@@ -123,18 +123,30 @@ module TicketCard =
             let signalText = String.concat " · " values
             $"{assignee} · {signalText}"
 
+    let displayTitle model =
+        if String.IsNullOrWhiteSpace model.Title then
+            "Titel nicht verfügbar"
+        else
+            model.Title
+
+    let accessibleName model =
+        let assignee = model.Assignee |> Option.defaultValue "Nicht zugewiesen"
+
+        let warning =
+            match model.State, model.Priority with
+            | Blocked, _ -> "Blockiert"
+            | _, High -> "Hohe Priorität"
+            | ReplayActive, _ -> "Replay aktiv"
+            | _ -> "Kein Warnzustand"
+
+        $"{model.IssueKey} · {displayTitle model} · {assignee} · {warning}"
+
     let signalColor model =
         match model.State, model.Priority with
         | Blocked, _ -> Some Colors.danger
         | ReplayActive, _ -> Some Colors.primary
         | _, High -> Some Colors.warning
         | _ -> None
-
-    let displayTitle model =
-        if String.IsNullOrWhiteSpace model.Title then
-            "Titel nicht verfügbar"
-        else
-            model.Title
 
     let borderWidth scale model =
         let visual = contractAt scale model.State
@@ -145,6 +157,7 @@ module TicketCard =
 
     let viewAt scale model =
         let visual = contractAt scale model.State
+        let accessibleDescription = accessibleName model
 
         Border.create
             [ Border.width (borderWidth scale model)
@@ -154,6 +167,8 @@ module TicketCard =
               Border.borderBrush (brush visual.Border)
               Border.borderThickness (Thickness visual.BorderThickness)
               Border.cornerRadius (CornerRadius visual.CornerRadius)
+              Border.tip accessibleDescription
+              Accessibility.name accessibleDescription
               Border.padding (
                   Thickness(visual.HorizontalPadding, visual.VerticalPadding)
               )

@@ -16,12 +16,12 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 28. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner; `UI-005` ist menschlich abgenommen und `Done` |
-| Nächste menschliche Aktion | bei Bedarf `UI-006` – Tastatur- und Automation-Verträge demonstrieren – starten |
-| Nächster Paketkandidat danach | `UI-006` – Tastatur- und Automation-Verträge demonstrieren – `Ready` |
+| Aktiver Arbeitsauftrag | keiner; `UI-006` ist menschlich abgenommen und `Done` |
+| Nächste menschliche Aktion | bei Bedarf den nächsten zulässigen Backlog-Kandidaten vorschlagen lassen |
+| Nächster Paketkandidat danach | keiner; `UI-007` bleibt `Planned` |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-005` ist nach test-first umgesetztem Feedback menschlich abgenommen und `Done`: Zwei-Buchstaben-Initialen und rote Flagge sind sichtbar, die Szenarienleiste scrollt, ReviewTracks besitzen seitliche Innenabstände und kollisionsfreie Kartenzeilen. Release-Build und 102/102 Tests sind grün; `UI-006` ist der nächste `Ready`-Kandidat. |
+| Repositoryzustand | `UI-006` ist menschlich abgenommen und `Done`: Das Katalogszenario `Board.SwimlaneHover` ist per Tastatur bedienbar, und Karten liefern vollständige Tooltips und Automation-Namen. Restore, Release-Build mit 0 Fehlern/0 Warnungen und 107/107 Tests sind grün; der Headless-Harness bleibt planmäßig `UI-007`. |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`UI-005` wurde am 28. Juli 2026 nach der test-first umgesetzten Feedbackschleife mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und auf `Done` synchronisiert. Die automatische Paket-Commit-Freigabe ist damit erteilt.
+`UI-006` wurde am 28. Juli 2026 nach vollständiger Tastatur- und Automation-Prüfung mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und auf `Done` synchronisiert. Die automatische Paket-Commit-Freigabe ist damit erteilt.
 
 ## Offene Blocker und Entscheidungen
 

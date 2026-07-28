@@ -20,6 +20,8 @@ type NamedReviewTrackFixture =
 
 [<RequireQualifiedAccess>]
 module ComponentCatalogFixtures =
+    let keyboardBoard = CatalogKeyboard.boardTargets
+
     let ticketCards =
         [ TicketCardState.Normal
           TicketCardState.PointerHover

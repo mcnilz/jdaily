@@ -158,3 +158,82 @@ let ``repeated reduced motion actions toggle from the current state`` () =
         |> CatalogShell.update ToggleReducedMotion
 
     Assert.False(state.ReducedMotion)
+
+[<Fact>]
+let ``catalog keyboard enters the board once and moves focus by logical board geometry`` () =
+    let state = CatalogKeyboard.init ComponentCatalogFixtures.keyboardBoard
+
+    let entered = CatalogKeyboard.handle Tab state
+    let down = CatalogKeyboard.handle ArrowDown entered
+    let right = CatalogKeyboard.handle ArrowRight down
+
+    Assert.Equal(Some "APP-98", entered.FocusedIssueKey)
+    Assert.Equal(Some "APP-99", down.FocusedIssueKey)
+    Assert.Equal(Some "APP-100", right.FocusedIssueKey)
+
+[<Fact>]
+let ``catalog keyboard leaves the board as one tab stop and keeps focus at navigation edges`` () =
+    let state =
+        CatalogKeyboard.init ComponentCatalogFixtures.keyboardBoard
+        |> CatalogKeyboard.handle Tab
+        |> CatalogKeyboard.handle ShiftTab
+
+    let atTopEdge = CatalogKeyboard.handle ArrowUp state
+
+    Assert.Equal(None, state.FocusedIssueKey)
+    Assert.Equal(None, atTopEdge.FocusedIssueKey)
+
+[<Fact>]
+let ``catalog keyboard toggles replay opens the focused issue and escapes in precedence order`` () =
+    let focused =
+        CatalogKeyboard.init ComponentCatalogFixtures.keyboardBoard
+        |> CatalogKeyboard.handle Tab
+        |> CatalogKeyboard.handle ArrowDown
+
+    let replaying = CatalogKeyboard.handle Space focused
+    let modalOpen = CatalogKeyboard.handle Enter replaying
+    let modalClosed = CatalogKeyboard.handle Escape modalOpen
+    let replayStopped = CatalogKeyboard.handle Escape modalClosed
+
+    Assert.Equal(Some "APP-99", replaying.ReplayIssueKey)
+    Assert.Equal(Some "APP-99", modalOpen.ModalIssueKey)
+    Assert.Equal(None, modalClosed.ModalIssueKey)
+    Assert.Equal(Some "APP-99", modalClosed.ReplayIssueKey)
+    Assert.Equal(None, replayStopped.ReplayIssueKey)
+
+[<Fact>]
+let ``catalog shell delegates keyboard messages to the visible board interaction state`` () =
+    let state =
+        CatalogShell.init ()
+        |> CatalogShell.update (HandleKeyboard Tab)
+        |> CatalogShell.update (HandleKeyboard ArrowDown)
+        |> CatalogShell.update (HandleKeyboard Space)
+
+    Assert.Equal(Some "APP-99", state.Keyboard.FocusedIssueKey)
+    Assert.Equal(Some "APP-99", state.Keyboard.ReplayIssueKey)
+
+[<Fact>]
+let ``ticket cards describe key title assignee and warning for tooltip and automation`` () =
+    let normal =
+        { AvailableWidth = 320.0
+          IssueKey = "APP-142"
+          Title = "Daily Replay im Board nachvollziehbar machen"
+          Assignee = Some "Mara"
+          Priority = TicketCardPriority.Standard
+          State = TicketCardState.Normal }
+
+    let blocked = { normal with State = TicketCardState.Blocked }
+    let highPriority = { normal with Priority = TicketCardPriority.High }
+
+    Assert.Equal(
+        "APP-142 · Daily Replay im Board nachvollziehbar machen · Mara · Kein Warnzustand",
+        TicketCard.accessibleName normal
+    )
+    Assert.Equal(
+        "APP-142 · Daily Replay im Board nachvollziehbar machen · Mara · Blockiert",
+        TicketCard.accessibleName blocked
+    )
+    Assert.Equal(
+        "APP-142 · Daily Replay im Board nachvollziehbar machen · Mara · Hohe Priorität",
+        TicketCard.accessibleName highPriority
+    )

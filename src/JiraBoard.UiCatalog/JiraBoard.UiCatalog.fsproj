@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="CatalogKeyboard.fs" />
     <Compile Include="CatalogShell.fs" />
     <Compile Include="ComponentCatalogFixtures.fs" />
     <Compile Include="ComponentCatalogView.fs" />
