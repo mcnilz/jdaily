@@ -182,7 +182,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 - [ ] FuncUI-/Avalonia-Minimalhost mit Native AOT starten.
 - [ ] Jira-JSON-Mapping ohne unkontrollierte Reflection ausführen.
 - [ ] SQLite öffnen und eine minimale Migration anwenden.
-- [ ] statischen AOT-Smoke-Runner ohne Test-Discovery ausführen.
+- [x] statischen AOT-Smoke-Runner ohne Test-Discovery ausführen; Nachweis: `JiraBoard.AotSmokeTests` besitzt ein explizites Register für Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung, wurde am 28. Juli 2026 als `win-x64`-Native-AOT-Artefakt veröffentlicht und mit Exit-Code 0 gestartet. Die weitergehenden JSON-, SQLite- und Cross-Plattform-Nachweise bleiben Bestandteil von `SPK-002`.
 - [ ] Windows-, Linux- und macOS-Buildhost beziehungsweise CI-Matrix praktisch bestätigen.
 - [ ] native Skia-/Packaging-Besonderheiten und verbleibende Warnungen dokumentieren.
 

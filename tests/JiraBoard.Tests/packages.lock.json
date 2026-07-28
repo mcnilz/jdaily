@@ -256,6 +256,23 @@
           "xunit.v3.runner.common": "[3.2.2]"
         }
       },
+      "jiraboard.aotsmoketests": {
+        "type": "Project",
+        "dependencies": {
+          "JiraBoard.App": "[1.0.0, )",
+          "JiraBoard.Domain": "[1.0.0, )",
+          "JiraBoard.Ui": "[1.0.0, )"
+        }
+      },
+      "jiraboard.app": {
+        "type": "Project",
+        "dependencies": {
+          "Avalonia.Desktop": "[11.3.18, )",
+          "Avalonia.FuncUI.Elmish": "[1.6.0, )",
+          "Avalonia.Themes.Fluent": "[11.3.18, )",
+          "JiraBoard.Ui": "[1.0.0, )"
+        }
+      },
       "jiraboard.domain": {
         "type": "Project",
         "dependencies": {

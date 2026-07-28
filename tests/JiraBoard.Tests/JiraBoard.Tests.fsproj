@@ -20,6 +20,7 @@
     <Compile Include="BoardLayoutTests.fs" />
     <Compile Include="BoardComponentTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
+    <Compile Include="AotSmokeRunnerTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
   </ItemGroup>
@@ -33,5 +34,6 @@
     <ProjectReference Include="..\..\src\JiraBoard.Domain\JiraBoard.Domain.fsproj" />
     <ProjectReference Include="..\..\src\JiraBoard.Ui\JiraBoard.Ui.fsproj" />
     <ProjectReference Include="..\..\src\JiraBoard.UiCatalog\JiraBoard.UiCatalog.fsproj" />
+    <ProjectReference Include="..\JiraBoard.AotSmokeTests\JiraBoard.AotSmokeTests.fsproj" />
   </ItemGroup>
 </Project>

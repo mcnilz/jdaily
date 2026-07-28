@@ -150,6 +150,12 @@
           "JiraBoard.Ui": "[1.0.0, )"
         }
       },
+      "jiraboard.domain": {
+        "type": "Project",
+        "dependencies": {
+          "FSharp.Core": "[6.0.0, )"
+        }
+      },
       "jiraboard.ui": {
         "type": "Project",
         "dependencies": {

@@ -4,63 +4,111 @@ open System
 open System.IO
 open System.Security.Cryptography
 open System.Text
+open Avalonia
+open Avalonia.Themes.Fluent
+open JiraBoard.Domain
+open JiraBoard.Ui
+
+type SmokeApplication() =
+    inherit Application()
+
+    override this.Initialize() =
+        this.Styles.Add(FluentTheme())
+
+module SmokeChecks =
+    let private licenseNotices =
+        { Name = "embedded and distributed third-party notices"
+          Run = fun () ->
+              let notices: string = JiraBoard.App.LicenseNotices.read ()
+
+              let requiredMarkers =
+                  [| "SkiaSharp.NativeAssets.* 2.88.9"
+                     "HarfBuzzSharp.NativeAssets.* 8.3.1.1"
+                     "DNG SDK License Agreement"
+                     "Version: MPL 1.1/GPL 2.0/LGPL 2.1"
+                     "GNU LESSER GENERAL PUBLIC LICENSE"
+                     "The FreeType Project LICENSE"
+                     "ICU License"
+                     "libjpeg-turbo Licenses" |]
+
+              let missingMarker = requiredMarkers |> Array.tryFind (fun marker -> not (notices.Contains marker))
+
+              match missingMarker with
+              | Some marker -> Error $"Missing third-party notice marker: {marker}"
+              | None when String.IsNullOrWhiteSpace notices -> Error "Third-party notices are empty."
+              | None ->
+                  let distributedPath = Path.Combine(AppContext.BaseDirectory, "THIRD-PARTY-NOTICES.txt")
+
+                  if not (File.Exists distributedPath) then
+                      Error $"Distributed third-party notices are missing: {distributedPath}"
+                  elif File.ReadAllText distributedPath <> notices then
+                      Error "Distributed and embedded third-party notices differ."
+                  else
+                      let vendorStart = notices.IndexOf "THIRD-PARTY SOFTWARE NOTICES AND INFORMATION"
+
+                      if vendorStart < 0 then
+                          Error "The verbatim native vendor notice is missing."
+                      else
+                          let vendorNotice = notices.Substring(vendorStart).Replace("\r\n", "\n")
+
+                          let vendorHash =
+                              Convert
+                                  .ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes vendorNotice))
+                                  .ToLowerInvariant()
+
+                          let expectedVendorHash =
+                              "98acf9d4d6083959988c884f630cdff760f94bfeb9acf57774653e08c23d1e45"
+
+                          if vendorHash <> expectedVendorHash then
+                              Error $"Native vendor notice hash differs: {vendorHash}"
+                          else
+                              Ok() }
+
+    let private boardOrder =
+        { Name = "domain board order"
+          Run = fun () ->
+              let positions =
+                  [ { IssueKey = IssueKey "APP-2"
+                      JiraRank = Some(JiraRank "b")
+                      BoardOrdinal = BoardOrdinal 1L }
+                    { IssueKey = IssueKey "APP-1"
+                      JiraRank = Some(JiraRank "a")
+                      BoardOrdinal = BoardOrdinal 2L } ]
+
+              match resolveBoardOrder positions |> List.map (fun position -> position.IssueKey) with
+              | [ IssueKey "APP-1"; IssueKey "APP-2" ] -> Ok()
+              | ordered -> Error $"Unexpected resolved board order: {ordered}" }
+
+    let private ticketCardContract =
+        { Name = "ui ticket card contract"
+          Run = fun () ->
+              let contract = TicketCard.contract TicketCardState.KeyboardFocus
+
+              if contract.MinimumHeight = 44.0
+                 && contract.Border = Colors.focus
+                 && contract.BorderThickness = 2.0
+                 && contract.OuterFocusSpacing = 2.0 then
+                  Ok()
+              else
+                  Error "The keyboard-focus ticket card contract is inconsistent." }
+
+    let private avaloniaInitialization =
+        { Name = "minimal Avalonia and FuncUI dependency initialization"
+          Run = fun () ->
+              let application = SmokeApplication()
+              application.Initialize()
+              AppBuilder.Configure<SmokeApplication>() |> ignore
+
+              if application.Styles.Count = 1 then
+                  Ok()
+              else
+                  Error "The minimal Avalonia application did not register its Fluent theme." }
+
+    let all = [ licenseNotices; boardOrder; ticketCardContract; avaloniaInitialization ]
 
 [<EntryPoint>]
 let main _ =
-    let notices: string = JiraBoard.App.LicenseNotices.read ()
+    let result = SmokeRunner.run SmokeChecks.all
 
-    let requiredMarkers =
-        [| "SkiaSharp.NativeAssets.* 2.88.9"
-           "HarfBuzzSharp.NativeAssets.* 8.3.1.1"
-           "DNG SDK License Agreement"
-           "Version: MPL 1.1/GPL 2.0/LGPL 2.1"
-           "GNU LESSER GENERAL PUBLIC LICENSE"
-           "The FreeType Project LICENSE"
-           "ICU License"
-           "libjpeg-turbo Licenses" |]
-
-    let mutable missingMarker: string = null
-
-    for marker in requiredMarkers do
-        if isNull missingMarker && not (notices.Contains marker) then
-            missingMarker <- marker
-
-    if not (isNull missingMarker) then
-        Console.Error.WriteLine $"Missing third-party notice marker: {missingMarker}"
-        1
-    elif String.IsNullOrWhiteSpace notices then
-        Console.Error.WriteLine "Third-party notices are empty."
-        1
-    else
-        let distributedPath =
-            Path.Combine(AppContext.BaseDirectory, "THIRD-PARTY-NOTICES.txt")
-
-        if not (File.Exists distributedPath) then
-            Console.Error.WriteLine $"Distributed third-party notices are missing: {distributedPath}"
-            1
-        elif File.ReadAllText distributedPath <> notices then
-            Console.Error.WriteLine "Distributed and embedded third-party notices differ."
-            1
-        else
-            let vendorStart = notices.IndexOf "THIRD-PARTY SOFTWARE NOTICES AND INFORMATION"
-
-            if vendorStart < 0 then
-                Console.Error.WriteLine "The verbatim native vendor notice is missing."
-                1
-            else
-                let vendorNotice =
-                    notices.Substring(vendorStart).Replace("\r\n", "\n")
-
-                let vendorHash =
-                    Convert
-                        .ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes vendorNotice))
-                        .ToLowerInvariant()
-
-                let expectedVendorHash =
-                    "98acf9d4d6083959988c884f630cdff760f94bfeb9acf57774653e08c23d1e45"
-
-                if vendorHash <> expectedVendorHash then
-                    Console.Error.WriteLine $"Native vendor notice hash differs: {vendorHash}"
-                    1
-                else
-                    0
+    result.Failures |> List.iter Console.Error.WriteLine
+    SmokeRunner.exitCode result

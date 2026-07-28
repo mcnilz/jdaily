@@ -16,12 +16,12 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 28. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner; `UI-006` ist menschlich abgenommen und `Done` |
+| Aktiver Arbeitsauftrag | keiner; `FND-008` ist menschlich abgenommen und `Done` |
 | Nächste menschliche Aktion | bei Bedarf den nächsten zulässigen Backlog-Kandidaten vorschlagen lassen |
-| Nächster Paketkandidat danach | keiner; `UI-007` bleibt `Planned` |
+| Nächster Paketkandidat danach | `FND-009` – Lizenz-, Avalonia-Free- und Dependency-Gate etablieren |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-006` ist menschlich abgenommen und `Done`: Das Katalogszenario `Board.SwimlaneHover` ist per Tastatur bedienbar, und Karten liefern vollständige Tooltips und Automation-Namen. Restore, Release-Build mit 0 Fehlern/0 Warnungen und 107/107 Tests sind grün; der Headless-Harness bleibt planmäßig `UI-007`. |
+| Repositoryzustand | `UI-006` und `FND-008` sind menschlich abgenommen und `Done`. Der statische AOT-Smoke-Runner prüft Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung; Restore, Release-Build mit 0 Fehlern/0 Warnungen und 108/108 Tests sowie der veröffentlichte `win-x64`-Runner sind grün. Der Headless-Harness bleibt planmäßig `UI-007`. |
 
 ## Aktive Arbeitspositionen
 
@@ -31,7 +31,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 
 ## Aktuelle menschliche Abnahme
 
-`UI-006` wurde am 28. Juli 2026 nach vollständiger Tastatur- und Automation-Prüfung mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und auf `Done` synchronisiert. Die automatische Paket-Commit-Freigabe ist damit erteilt.
+`FND-008` wurde am 28. Juli 2026 nach Prüfung des statischen Registers, der Fehler-Exit-Code-Semantik und des `win-x64`-Native-AOT-Starts mit einem eigenständigen menschlichen `Abgenommen` ausdrücklich akzeptiert und auf `Done` synchronisiert. Die automatische Paket-Commit-Freigabe ist damit erteilt.
 
 ## Offene Blocker und Entscheidungen
 
