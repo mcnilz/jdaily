@@ -21,10 +21,10 @@ Status: Complete
 Die reine Projektion, Scope-Isolation, Abbruch und Reduced Motion sind test-first umgesetzt. Der direkte Composition-Offset-Aufruf kompiliert ohne Reflection, dynamische Ausdrücke oder Release-Warnungen.
 
 ## Phase 2: UiCatalog-Inspektion und Messung
-Status: In progress
+Status: Complete
 
 - [x] Deterministische Fixture und UiCatalog-Szenarien für drei Spalten, Swimlane- und Subtask-Scope, Abbruch sowie Reduced Motion ergänzen.
-- [ ] Bei 1920 × 1080 und hoher Auflösung CPU, Speicher, Frame-Time und Visual-Tree-Größe mit nachvollziehbarer Methode erfassen. Blockiert durch `UI-007`: kanonisches Golden-Master-Betriebssystem, Renderer und DPI sind nicht entschieden.
+- [x] Bei 1920 × 1080 und hoher Auflösung CPU, Speicher, Frame-Time und Visual-Tree-Größe mit nachvollziehbarer Methode erfassen.
 - [x] Die Scope-Isolation und den Reduced-Motion-Pfad im laufenden Katalog prüfen.
 
 ### Verification Plan
@@ -32,24 +32,24 @@ Status: In progress
 - Die Messmethode, Umgebungsdaten und Ergebnisse sind in der ADR nachvollziehbar festgehalten.
 
 ### Phase Summary
-Katalogstart, Fixture und reine Verträge sind nachgewiesen. Die Messbaseline wird nicht geschätzt und wartet auf den `UI-007`-Harness.
+Katalogstart, Fixture und reine Verträge sind nachgewiesen. Der durch `UI-007` bereitgestellte Headless-Harness erfasst die vier Stichprobenwerte bei 1920 × 1080 und 3840 × 2160; Umgebung, Methode und Ergebnisse stehen in `docs/validation/ui-007-board-surface-measurements.md`.
 
 ## Phase 3: Ergebnis und Review vorbereiten
-Status: In progress
+Status: Complete
 
 - [x] ADR mit Fragestellung, Aufbau, Ergebnis, verworfenen Alternativen, Risiken und verbindlicher Folgeentscheidung erstellen.
-- [ ] Relevante Tests, Release-Build, Gesamtsuite sowie den anwendbaren AOT-Smoke ausführen.
-- [ ] Backlog, Readiness-Nachweis und Active State auf `In Review` synchronisieren und konkrete Abnahmehinweise vorbereiten. Blockiert bis die Messbaseline vorliegt.
+- [x] Relevante Tests, Release-Build, Gesamtsuite sowie den anwendbaren AOT-Smoke ausführen.
+- [x] Backlog, Readiness-Nachweis und Active State auf `In Review` synchronisieren und konkrete Abnahmehinweise vorbereiten.
 
 ### Verification Plan
 - `dotnet restore JiraBoard.slnx`, `dotnet build JiraBoard.slnx -c Release` und `dotnet test JiraBoard.slnx -c Release --no-build` enden erfolgreich.
 - Der bestehende AOT-Smoke bleibt erfolgreich; neue AOT-relevante Warnungen werden nicht unterdrückt.
 
 ### Phase Summary
-_(write when phase completes)_
+Der Messblocker ist durch den abgenommenen `UI-007`-Harness geschlossen. Restore, Release-Build, 121 Tests und der eigenständige AOT-Smoke sind am 29. Juli 2026 erfolgreich; die ADR hält die Messdaten, Grenzen und Folgeentscheidung fest.
 
 ## Final Recap
-_(write when all phases complete: summary of the entire piece of work)_
+Die isolierte BoardSurface belegt drei Statusspalten, scope-lokale Projektion, Abbruch und Reduced Motion. Die Composition-API kompiliert reflexionsfrei; der Headless-Messnachweis ergänzt CPU, Speicher, Frame-Time und Visual-Tree für beide Referenzauflösungen. Der Kandidat bleibt bis zur menschlichen Folgeentscheidung außerhalb der Produktoberfläche.
 
 ## Deployment Plan
-_(write when all phases complete: step-by-step deployment instructions)_
+Keine Auslieferung: Der Spike bleibt im UiCatalog. Nach menschlicher Abnahme wird ausschließlich der dokumentierte Paketstand versioniert; eine spätere Produktübernahme benötigt einen zusätzlichen Runtime-Frame-Time-Nachweis.

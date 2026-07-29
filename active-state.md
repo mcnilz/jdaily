@@ -14,14 +14,14 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 28. Juli 2026 |
+| Stand | 29. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
 | Aktiver Arbeitsauftrag | Kein aktives Arbeitspaket |
-| Nächste menschliche Aktion | Infrastrukturblocker beheben oder Terminal erneut öffnen; danach den bereits abgenommenen UI-007-Paketstand gezielt stagen und committen |
-| Nächster Paketkandidat danach | `SPK-001` – Avalonia-Composition- und BoardSurface-Spike |
+| Nächste menschliche Aktion | Keiner; `SPK-001` ist abgenommen und wird mit diesem synchronisierten Paketstand versioniert |
+| Nächster Paketkandidat danach | Gemäß Backlog neu bestimmen und vor Beginn als `Proposed` vorstellen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. Der automatische UI-007-Commit steht noch aus: Die Terminalausführung scheitert vor dem Git-Start an der lokalen PowerShell-Hostinitialisierung `0x8009001d`; es wurde nichts gestagt. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. |
+| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010` und `SPK-001` sind menschlich abgenommen und `Done`. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. |
 
 ## Aktive Arbeitspositionen
 

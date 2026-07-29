@@ -170,12 +170,12 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### G5.1 Animation und BoardSurface
 
-- [ ] Ticketbewegung über mindestens drei Statusspalten mit Avalonia Composition demonstrieren.
+- [x] Ticketbewegung über mindestens drei Statusspalten mit Avalonia Composition demonstrieren; Nachweis: die Produktionsview `BoardSurface` bildet die drei deterministischen Statusspalten im UiCatalog ab, und [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md) dokumentiert den reflexionsfreien Composition-Kandidaten.
 - [x] Replay auf genau eine Swimlane und genau einen Subtask begrenzen; Nachweis: [`BoardSurfaceTests.fs`](tests/JiraBoard.Tests/BoardSurfaceTests.fs) prüft Swimlane-Isolation, der Subtask-Scope ist als Katalogszenario `Board.Surface.SubtaskReplay` registriert und durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs) abgesichert.
-- [ ] Abbruch bei Hover-Verlust und `Aktualisieren` ohne verspätete Callback-Mutation nachweisen.
-- [ ] Reduced Motion ohne räumliche Bewegung bei gleicher Ereignisreihenfolge demonstrieren.
-- [ ] 1920 × 1080 sowie eine hohe Auflösung mit repräsentativer Kartenanzahl messen.
-- [ ] CPU-, Speicher-, Frame-Time- und Visual-Tree-Messwerte als Ausgangsbaseline dokumentieren.
+- [x] Abbruch bei Hover-Verlust und `Aktualisieren` ohne verspätete Callback-Mutation nachweisen; Nachweis: `BoardSurfaceTests.fs` deckt den Scope-Abbruch ab, und das UiCatalog-Szenario `Board.Surface.Cancelled` verwendet dieselbe Produktionsview.
+- [x] Reduced Motion ohne räumliche Bewegung bei gleicher Ereignisreihenfolge demonstrieren; Nachweis: `BoardSurfaceTests.fs` prüft den unveränderten aktiven Scope bei Offset `0.0`, und das UiCatalog-Szenario `Board.Surface.ReducedMotion` verwendet dieselbe Produktionsview.
+- [x] 1920 × 1080 sowie eine hohe Auflösung mit repräsentativer Kartenanzahl messen; Nachweis: [`ui-007-board-surface-measurements.md`](docs/validation/ui-007-board-surface-measurements.md) erfasst die Produktionsview mit der gemeinsamen dreispaltigen Fixture bei 1920 × 1080 und 3840 × 2160.
+- [x] CPU-, Speicher-, Frame-Time- und Visual-Tree-Messwerte als Ausgangsbaseline dokumentieren; Nachweis: [`ui-007-board-surface-measurements.md`](docs/validation/ui-007-board-surface-measurements.md) enthält die Headless-Stichproben für 1920 × 1080 und 3840 × 2160.
 
 ### G5.2 Native AOT und Cross-Plattform
 
@@ -212,7 +212,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### Nachweis
 
-- Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt bis zum abgeschlossenen `UI-007`-Messharness isoliert, die Messbaseline ist ausdrücklich offen.
+- Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt als isolierter Katalog-Spike außerhalb der Produktoberfläche. Der `UI-007`-Messharness und die Ausgangsbaseline sind dokumentiert; ein Runtime-Frame-Time-Nachweis bleibt Voraussetzung für eine spätere Produktübernahme.
 - AOT-ADR: _offen_
 - Jira-API-ADR: _offen_
 - Credential-Store-ADR: _offen_

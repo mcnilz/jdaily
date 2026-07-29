@@ -3,7 +3,7 @@
 | Feld | Wert |
 |---|---|
 | Status | `Proposed` |
-| Datum | `2026-07-28` |
+| Datum | `2026-07-29` |
 | Backlog | `SPK-001` |
 | Verantwortlich | Produkteigentümer |
 | Ersetzt | `–` |
@@ -24,8 +24,10 @@ Der direkte Avalonia-Composition-Offset-Versuch ist technisch zulässig: Er
 verwendet `ElementComposition.GetElementVisual`, eine
 `Vector3KeyFrameAnimation` und `StartAnimation("Offset", ...)`, ohne
 Reflection oder dynamische Ausdrücke. Die BoardSurface bleibt jedoch ein
-isolierter Katalog-Spike und wird nicht in Produktcode übernommen, bis
-`UI-007` eine reproduzierbare Visualtest- und Messumgebung bereitstellt.
+isolierter Katalog-Spike und wird nicht in Produktcode übernommen. `UI-007`
+stellt nun die reproduzierbare Visualtest- und Messumgebung bereit; die
+erhobenen Stichproben reichen als Risikoindikator, nicht als Runtime-
+Frame-Time-Nachweis für eine Produktübernahme.
 
 Die Katalogansicht bildet vier deterministische Fälle aus derselben
 Produktionsview ab: aktive Swimlane, einzelner Subtask, Abbruch und Reduced
@@ -45,27 +47,31 @@ bei Abbruch oder Reduced Motion auf null.
 - Positiv: Drei Spalten, Swimlane- und Subtask-Scope, Abbruch und Reduced
   Motion sind als Produktionsview mit gemeinsamen Fixtures und Unit-Tests
   demonstrierbar.
-- Negativ: Für 1920 × 1080 und hohe Auflösung existieren bewusst keine
-  erfundenen CPU-, Speicher-, Frame-Time- oder Visual-Tree-Werte.
-- Folgearbeit: Der Produkteigentümer legt für `UI-007` das kanonische
-  Golden-Master-Betriebssystem fest. Anschließend erfasst der Headless-Harness
-  diese vier Werte je Auflösung und entscheidet über eine Übernahme in
-  `VS-004`/`REP-007`.
+- Negativ: Die Headless-Stichproben erfassen keine Renderthread-Frame-Time einer
+  laufenden Composition-Animation; eine Produktübernahme benötigt deshalb vor
+  `VS-004`/`REP-007` einen zusätzlichen Laufzeitnachweis.
+- Folgearbeit: Der Produkteigentümer entscheidet anhand dieses Spikes, ob der
+  lokale Composition-Kandidat für die spätere Produktvalidierung weiterverfolgt
+  wird.
 
 ## Nachweise
 
 - `BoardSurfaceTests.fs` deckt Scope-Isolation, Abbruch und Reduced Motion ab.
 - `UiCatalogShellTests.fs` registriert und prüft die dreispaltige gemeinsame
   Fixture sowie die vier BoardSurface-Szenarien.
-- `dotnet build JiraBoard.slnx -c Release` am 28. Juli 2026: 0 Warnungen,
-  0 Fehler.
-- `dotnet test JiraBoard.slnx -c Release --no-build` am 28. Juli 2026:
-  113/113 erfolgreich.
-- `dotnet run --project src\JiraBoard.UiCatalog\JiraBoard.UiCatalog.fsproj -c Release --no-build`
-  startete den Katalog am 28. Juli 2026 ohne Startfehler.
+- [`ui-007-board-surface-measurements.md`](../validation/ui-007-board-surface-measurements.md)
+  dokumentiert CPU, verwalteten Speicher, Frame-Time und Visual-Tree für
+  1920 × 1080 sowie 3840 × 2160 unter Windows 11 x64, Standard-Skia und 100 %
+  Betriebssystem-DPI.
+- `dotnet restore JiraBoard.slnx` am 29. Juli 2026: erfolgreich.
+- `dotnet build JiraBoard.slnx -c Release --no-restore` am 29. Juli 2026:
+  0 Warnungen, 0 Fehler.
+- `dotnet test JiraBoard.slnx -c Release --no-build` am 29. Juli 2026:
+  121/121 erfolgreich.
+- `dotnet run --project tests\JiraBoard.AotSmokeTests\JiraBoard.AotSmokeTests.fsproj -c Release --no-build`
+  am 29. Juli 2026: erfolgreich.
 
 ## Offene Punkte
 
-- `UI-007`: kanonisches Golden-Master-Betriebssystem, Renderer, DPI und
-  Messmethode festlegen; ohne diese Entscheidung bleiben Performance-Baselines
-  und eine Annahme dieser ADR offen.
+- Menschliche Annahme der Folgeentscheidung für die spätere
+  Produktvalidierung; bis dahin bleibt der Spike isoliert im UiCatalog.
