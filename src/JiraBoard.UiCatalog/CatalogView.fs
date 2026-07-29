@@ -218,6 +218,9 @@ module CatalogView =
                         ComponentCatalogView.view
                             state.AppZoomPercent
                             state.FontZoomPercent
+                            (float state.Viewport.Width)
+                            state.AnimationProgress
+                            state.ReducedMotion
                             state.SelectedScenarioId
                             state.Keyboard
                             dispatch ] ]

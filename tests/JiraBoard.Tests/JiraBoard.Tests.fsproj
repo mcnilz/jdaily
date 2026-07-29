@@ -19,6 +19,7 @@
     <Compile Include="DesignTokenTests.fs" />
     <Compile Include="BoardLayoutTests.fs" />
     <Compile Include="BoardComponentTests.fs" />
+    <Compile Include="BoardSurfaceTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
     <Compile Include="AotSmokeRunnerTests.fs" />
     <PackageReference Include="FSharp.Core" />

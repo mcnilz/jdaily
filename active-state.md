@@ -16,12 +16,12 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 28. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | Nächsten zulässigen Ready-Kandidaten bestätigen, nachdem er mit Ziel, Scope, Risiken, Prüfplan und Abnahmepunkten vorgeschlagen wurde |
-| Nächster Paketkandidat danach | noch zu bestimmen |
+| Aktiver Arbeitsauftrag | Kein aktives Arbeitspaket |
+| Nächste menschliche Aktion | Infrastrukturblocker beheben oder Terminal erneut öffnen; danach den bereits abgenommenen UI-007-Paketstand gezielt stagen und committen |
+| Nächster Paketkandidat danach | `SPK-001` – Avalonia-Composition- und BoardSurface-Spike |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-002`, `UI-006`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. Der Headless-Harness bleibt planmäßig `UI-007`. |
+| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009` und `FND-010` sind menschlich abgenommen und `Done`. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. Der automatische UI-007-Commit steht noch aus: Die Terminalausführung scheitert vor dem Git-Start an der lokalen PowerShell-Hostinitialisierung `0x8009001d`; es wurde nichts gestagt. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. |
 
 ## Aktive Arbeitspositionen
 
@@ -34,6 +34,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - Breite Featureimplementierung bleibt absichtlich durch `VS-007` gesperrt.
 - Der frühere DataGrid-Blocker ist durch die ausdrückliche Freigabe von `11.3.13` und die synchronisierte Vertragskorrektur aufgelöst.
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
+- Der Produkteigentümer bestätigte für `UI-007` einen reinen `Avalonia.Headless`-/xUnit-v3-Host ohne `AvaloniaFact`, weil `Avalonia.Headless.XUnit 11.3.18` `xunit.core 2.4.0` fordert. Der exakte Graph des gewählten Pfads erfordert vor jeder Referenz weiterhin aktive Inventarisierung und Verwendungsfreigabe.
 
 ## Prüfstand
 

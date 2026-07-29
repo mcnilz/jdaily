@@ -1,14 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="AssemblyMarker.fs" />
+    <Compile Include="GoldenMasterEnvironment.fs" />
+    <Compile Include="GoldenMasterEnvironmentTests.fs" />
+    <Compile Include="HeadlessTestHost.fs" />
+    <Compile Include="HeadlessTestHostTests.fs" />
+    <Compile Include="BoardSurfaceRenderTests.fs" />
+    <Compile Include="BaselineProtection.fs" />
+    <Compile Include="BaselineProtectionTests.fs" />
+    <Compile Include="BoardSurfaceGoldenMasterTests.fs" />
+    <PackageReference Include="Avalonia.Headless" />
+    <PackageReference Include="Avalonia.Skia" />
+    <PackageReference Include="Verify.Avalonia" />
+    <PackageReference Include="xunit.v3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\JiraBoard.Ui\JiraBoard.Ui.fsproj" />
+    <ProjectReference Include="..\..\src\JiraBoard.UiCatalog\JiraBoard.UiCatalog.fsproj" />
   </ItemGroup>
 </Project>
 

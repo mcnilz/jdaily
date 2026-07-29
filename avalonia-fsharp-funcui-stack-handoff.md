@@ -1365,7 +1365,16 @@ AppBuilder
             UseHeadlessDrawing = false))
 ```
 
-Für VisualTests ist xUnit mit `[<AvaloniaFact>]` zu verwenden. `Verify.Avalonia` verwaltet freigegebene `*.verified.png`-Golden-Master und erzeugt bei Abweichungen neue Vergleichsartefakte. SSIM darf verwendet werden, um minimale, fachlich irrelevante Antialiasing-Unterschiede zu tolerieren. Layoutverschiebungen, abgeschnittene Texte oder falsche Zustände müssen den Test weiterhin zuverlässig fehlschlagen lassen.
+Für VisualTests ist das stabile `xunit.v3` mit einem explizit kontrollierten
+Dispatcher zu verwenden; `Avalonia.Headless.XUnit` und `[<AvaloniaFact>]`
+bleiben ausgeschlossen, weil der Adapter `xunit.core 2.4.0` fordert. Der
+Testhost erstellt den Builder ohne XAML, setzt `UseHeadlessDrawing` explizit auf
+`false` und führt jede UI-Aktion über den kontrollierten Dispatcher aus.
+`Verify.Avalonia` verwaltet freigegebene `*.verified.png`-Golden-Master und
+erzeugt bei Abweichungen neue Vergleichsartefakte. SSIM darf verwendet werden,
+um minimale, fachlich irrelevante Antialiasing-Unterschiede zu tolerieren.
+Layoutverschiebungen, abgeschnittene Texte oder falsche Zustände müssen den Test
+weiterhin zuverlässig fehlschlagen lassen.
 
 Verbindliche Snapshot-Matrix:
 

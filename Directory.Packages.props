@@ -13,6 +13,7 @@
     <PackageVersion Include="Avalonia.Desktop" Version="11.3.18" />
     <PackageVersion Include="Avalonia.FuncUI" Version="1.6.0" />
     <PackageVersion Include="Avalonia.FuncUI.Elmish" Version="1.6.0" />
+    <PackageVersion Include="Avalonia.Headless" Version="11.3.18" />
     <PackageVersion Include="Avalonia.Headless.XUnit" Version="11.3.18" />
     <PackageVersion Include="Avalonia.Skia" Version="11.3.18" />
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.18" />

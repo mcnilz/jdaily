@@ -171,7 +171,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 ### G5.1 Animation und BoardSurface
 
 - [ ] Ticketbewegung über mindestens drei Statusspalten mit Avalonia Composition demonstrieren.
-- [ ] Replay auf genau eine Swimlane und genau einen Subtask begrenzen.
+- [x] Replay auf genau eine Swimlane und genau einen Subtask begrenzen; Nachweis: [`BoardSurfaceTests.fs`](tests/JiraBoard.Tests/BoardSurfaceTests.fs) prüft Swimlane-Isolation, der Subtask-Scope ist als Katalogszenario `Board.Surface.SubtaskReplay` registriert und durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs) abgesichert.
 - [ ] Abbruch bei Hover-Verlust und `Aktualisieren` ohne verspätete Callback-Mutation nachweisen.
 - [ ] Reduced Motion ohne räumliche Bewegung bei gleicher Ereignisreihenfolge demonstrieren.
 - [ ] 1920 × 1080 sowie eine hohe Auflösung mit repräsentativer Kartenanzahl messen.
@@ -212,7 +212,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### Nachweis
 
-- Animation-ADR: _offen_
+- Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt bis zum abgeschlossenen `UI-007`-Messharness isoliert, die Messbaseline ist ausdrücklich offen.
 - AOT-ADR: _offen_
 - Jira-API-ADR: _offen_
 - Credential-Store-ADR: _offen_
@@ -224,13 +224,13 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 - [x] stabile xUnit-Version und eingebaute Assertions beziehungsweise kleine F#-Helper festsetzen; Nachweis: `xunit.v3 3.2.2` ist zentral gepinnt, [`JiraBoard.Tests`](tests/JiraBoard.Tests/JiraBoard.Tests.fsproj) läuft über Microsoft Testing Platform und [`TestResult.assertOk`](tests/JiraBoard.Tests/TestSupport.fs) verwendet ausschließlich xUnit-`Assert`.
 - [x] mit einem negativen Kontrolltest nachweisen, dass ein absichtlich eingebrachter direkter oder transitiver FluentAssertions-Treffer die CI zuverlässig fehlschlagen lässt; Nachweis: [`eng/tests/check-fluent-assertions.Tests.ps1`](eng/tests/check-fluent-assertions.Tests.ps1) erzeugt ein isoliertes Laufzeit-Fixture für Central Package Management, Lockfile und Restore-Assets, erwartet den Hard Fail und entfernt das Fixture anschließend.
 - [x] mit einem Quelltext-Kontrolltest nachweisen, dass `open FluentAssertions`, ein Alias oder ein Kompatibilitätswrapper zuverlässig erkannt wird; Nachweis: dieselbe kombinierte Negativkontrolle prüft einen Alias und eine generische kompatible `Should<T>`-Extension; der wortbasierte Marker-Scan deckt Imports und vollqualifizierte Aufrufe identisch ab.
-- [ ] kanonisches Betriebssystem für blockierende Golden-Master-Vergleiche bestimmen.
+- [x] kanonisches Betriebssystem für blockierende Golden-Master-Vergleiche bestimmen; Entscheidung vom 28. Juli 2026: Windows 11 x64, Standard-Skia und 100 % Betriebssystem-DPI. Der noch umzusetzende `UI-007`-Harness fixiert zusätzlich Fonts und Locale.
 - [x] die in der UI-Design-Spezifikation festgelegten Builds `Iosevka Aile` und `Iosevka Fixed` samt exakter Version und Lizenztext bündeln und auf dem Runner reproduzierbar laden; Nachweis: acht Standard-TTF-Faces aus Iosevka `v34.8.0` sind per `AvaloniaResource` eingebunden, SHA-256-inventarisiert, mit der gehashten OFL-Datei in `THIRD-PARTY-NOTICES.txt` reproduzierbar und im Release-/AOT-Build geprüft.
 - [ ] per UiCatalog- und Headless-Szenario nachweisen, dass Issue-Keys `Iosevka Fixed` und normale UI-Texte `Iosevka Aile` verwenden.
 - [ ] Culture, Zeitzone, Viewport, Betriebssystem-DPI, App-Zoom, Schriftzoom und Render-Skalierung explizit festsetzen.
 - [ ] UiCatalog und VisualTests ohne Netzwerk, echte Uhr oder zufällige IDs ausführbar machen.
 - [ ] Animation-Keyframes über Fortschritt `0.00`, `0.25`, `0.50`, `0.75` und `1.00` direkt ansteuerbar machen.
-- [ ] Prozess für Received-, Verified- und Diff-Bilder dokumentieren; Golden Masters nie automatisch akzeptieren.
+- [x] Prozess für Received-, Verified- und Diff-Bilder dokumentieren; Golden Masters nie automatisch akzeptieren. Nachweis: [`ui-007-board-surface-measurements.md`](docs/validation/ui-007-board-surface-measurements.md) und [`BaselineProtectionTests.fs`](tests/JiraBoard.VisualTests/BaselineProtectionTests.fs) belegen Kandidat/Diff bei fehlender oder abweichender Referenz sowie das unveränderte `.verified.png`.
 - [ ] repräsentative Screenshot-Matrix statt vollständigem kartesischem Produkt festlegen.
 - [ ] echten Plattformtest für Fokus, Tastatur und Start der veröffentlichten AOT-App vorsehen.
 
@@ -246,7 +246,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 - kanonischer Runner und Fontliste: _offen_
 - erste akzeptierte Baseline: _offen_
-- dokumentierter Diff-Prozess: _offen_
+- dokumentierter Diff-Prozess: [`ui-007-board-surface-measurements.md`](docs/validation/ui-007-board-surface-measurements.md); eine erste menschlich akzeptierte Baseline bleibt bewusst offen.
 
 ## G7 – CI, Security und Datenschutz
 

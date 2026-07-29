@@ -18,9 +18,29 @@ type NamedReviewTrackFixture =
     { Name: string
       Model: ReviewTrackModel }
 
+type NamedBoardSurfaceFixture =
+    { Name: string
+      Model: BoardSurfaceModel }
+
 [<RequireQualifiedAccess>]
 module ComponentCatalogFixtures =
     let keyboardBoard = CatalogKeyboard.boardTargets
+
+    let boardSurface =
+        { Columns = [ "To Do"; "In Progress"; "Done" ]
+          Cards =
+            [ { IssueKey = "APP-401"
+                SwimlaneKey = "APP-400"
+                Column = "To Do" }
+              { IssueKey = "APP-402"
+                SwimlaneKey = "APP-400"
+                Column = "In Progress" }
+              { IssueKey = "APP-403"
+                SwimlaneKey = "APP-403"
+                Column = "To Do" } ]
+          Replay = Some(SwimlaneScope "APP-400")
+          Progress = 0.0
+          ReducedMotion = false }
 
     let ticketCards =
         [ TicketCardState.Normal

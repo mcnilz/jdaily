@@ -246,8 +246,17 @@ module ComponentCatalogView =
             scale
             "ReviewTrack · kurze, lange, fehlende und fehlerhafte Daten"
 
-    let view appZoomPercent fontZoomPercent scenarioId keyboard dispatch =
+    let private boardSurface scale boardWidth title model =
+        section scale title [ BoardSurface.viewAt scale boardWidth model ]
+
+    let view appZoomPercent fontZoomPercent boardWidth animationProgress reducedMotion scenarioId keyboard dispatch =
         let scale = DisplayScale.create appZoomPercent fontZoomPercent
+        let surface = ComponentCatalogFixtures.boardSurface
+
+        let replay =
+            { surface with
+                Progress = animationProgress
+                ReducedMotion = reducedMotion }
 
         ScrollViewer.create
             [ ScrollViewer.horizontalScrollBarVisibility ScrollBarVisibility.Auto
@@ -287,6 +296,26 @@ module ComponentCatalogView =
                             | "Board.ReviewTrack.InvalidMapping" -> reviewInvalid scale
                             | "Board.ReviewTrack.UnconfirmedMapping" ->
                                 reviewUnconfirmed scale
+                            | "Board.Surface.SwimlaneReplay" ->
+                                boardSurface scale boardWidth "BoardSurface · aktive Swimlane" replay
+                            | "Board.Surface.SubtaskReplay" ->
+                                boardSurface
+                                    scale
+                                    boardWidth
+                                    "BoardSurface · einzelner Subtask"
+                                    { replay with Replay = Some(SubtaskScope "APP-402") }
+                            | "Board.Surface.Aborted" ->
+                                boardSurface
+                                    scale
+                                    boardWidth
+                                    "BoardSurface · Replay abgebrochen"
+                                    { replay with Replay = None }
+                            | "Board.Surface.ReducedMotion" ->
+                                boardSurface
+                                    scale
+                                    boardWidth
+                                    "BoardSurface · Reduced Motion"
+                                    { replay with ReducedMotion = true }
                             | _ -> section scale "Unbekanntes Szenario" []
                         ) ]
               ) ]

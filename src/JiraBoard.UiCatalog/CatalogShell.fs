@@ -68,7 +68,19 @@ module CatalogScenarios =
             Area = "ReviewTrack" }
           { Id = "Board.ReviewTrack.UnconfirmedMapping"
             Name = "ReviewTrack · unbestätigtes Mapping"
-            Area = "ReviewTrack" } ]
+            Area = "ReviewTrack" }
+          { Id = "Board.Surface.SwimlaneReplay"
+            Name = "BoardSurface · Swimlane-Replay"
+            Area = "BoardSurface" }
+          { Id = "Board.Surface.SubtaskReplay"
+            Name = "BoardSurface · Subtask-Replay"
+            Area = "BoardSurface" }
+          { Id = "Board.Surface.Aborted"
+            Name = "BoardSurface · Abbruch"
+            Area = "BoardSurface" }
+          { Id = "Board.Surface.ReducedMotion"
+            Name = "BoardSurface · Reduced Motion"
+            Area = "BoardSurface" } ]
 
 type CatalogShellState =
     { Viewport: ViewportPreset

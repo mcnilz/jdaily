@@ -82,7 +82,11 @@ let ``catalog registers every UI-005 production component scenario`` () =
           "Board.ReviewTrack.Multiple"
           "Board.ReviewTrack.DataVariants"
           "Board.ReviewTrack.InvalidMapping"
-          "Board.ReviewTrack.UnconfirmedMapping" ]
+          "Board.ReviewTrack.UnconfirmedMapping"
+          "Board.Surface.SwimlaneReplay"
+          "Board.Surface.SubtaskReplay"
+          "Board.Surface.Aborted"
+          "Board.Surface.ReducedMotion" ]
 
     for scenarioId in required do
         Assert.Contains(scenarioId, scenarioIds)
@@ -98,6 +102,9 @@ let ``catalog shares deterministic component fixtures with tests`` () =
     Assert.Equal(4, ComponentCatalogFixtures.swimlaneHeaderDataVariants.Length)
     Assert.Equal(4, ComponentCatalogFixtures.reviewTrackDataVariants.Length)
     Assert.Equal(2, ComponentCatalogFixtures.swimlaneHoverSubtasks.Length)
+    Assert.Equal<string list>([ "To Do"; "In Progress"; "Done" ], ComponentCatalogFixtures.boardSurface.Columns)
+    Assert.Equal(3, ComponentCatalogFixtures.boardSurface.Cards.Length)
+    Assert.Equal(Some(SwimlaneScope "APP-400"), ComponentCatalogFixtures.boardSurface.Replay)
 
     let unassigned =
         ComponentCatalogFixtures.collapsedCells

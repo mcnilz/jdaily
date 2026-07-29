@@ -29,6 +29,18 @@ Avalonia.FuncUI 1.6.0
 Avalonia.FuncUI.Elmish 1.6.0
 Copyright the Avalonia.FuncUI contributors
 
+Avalonia.Headless 11.3.18 (test only)
+Avalonia.Controls.ColorPicker 11.3.18 (test only)
+Copyright 2013-2026 The AvaloniaUI Project
+
+Argon 0.28.0 (test only)
+DiffEngine 16.2.1 (test only)
+EmptyFiles 8.9.1 (test only)
+SimpleInfoName 3.1.0 (test only)
+Verify 30.1.0 (test only)
+Verify.Avalonia 1.4.0 (test only)
+Copyright 2025. All rights reserved.
+
 FSharp.Core 6.0.0
 Copyright Microsoft Corporation. All rights reserved.
 
@@ -52,6 +64,8 @@ Microsoft.Testing.Extensions.TrxReport.Abstractions 1.9.1 (test only)
 Microsoft.Testing.Platform 1.9.1 (test only)
 Microsoft.Testing.Platform.MSBuild 1.9.1 (test only)
 Microsoft.Win32.Registry 5.0.0 (test only)
+System.CodeDom 8.0.0 (test only)
+System.Management 8.0.0 (test only)
 Copyright Microsoft Corporation. All rights reserved.
 
 SkiaSharp 2.88.9

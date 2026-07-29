@@ -2,8 +2,9 @@
 
 ## Scope and evidence
 
-This inventory records the exact package baseline introduced by `FND-002` and
-the test-only xUnit graph introduced by `FND-003`.
+This inventory records the exact package baseline introduced by `FND-002`, the
+test-only xUnit graph introduced by `FND-003` and the test-only visual graph
+introduced by `UI-007`.
 `Restored` means that the package occurs in a checked-in
 `packages.lock.json`; the lock entry supplies the NuGet content hash.
 `Reserved` means that only an exact future version is held centrally and that
@@ -58,13 +59,17 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `Avalonia.FreeDesktop` | `11.3.18`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.FreeDesktop/11.3.18) | `MIT` | Avalonia.Desktop | Linux runtime | MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.FuncUI` | `1.6.0`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.FuncUI/1.6.0) | `MIT` | direct UI; Elmish package | F# UI DSL | MIT text | Approved | FND-002 |
 | `Avalonia.FuncUI.Elmish` | `1.6.0`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.FuncUI.Elmish/1.6.0) | `MIT` | direct App/UiCatalog | Elmish integration | MIT text | Approved | FND-002 |
+| `Avalonia.Headless` | `11.3.18`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Avalonia.Headless/11.3.18) | `MIT` | direct VisualTests; Verify.Avalonia | deterministic headless Avalonia host | inventory; MIT text | Approved, test only, Avalonia Free | UI-007, owner |
 | `Avalonia.Native` | `11.3.18`; lock | Production/native | [NuGet/source](https://www.nuget.org/packages/Avalonia.Native/11.3.18) | `MIT` | Avalonia.Desktop | macOS runtime | MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.Remote.Protocol` | `11.3.18`; lock | Build | [NuGet/source](https://www.nuget.org/packages/Avalonia.Remote.Protocol/11.3.18) | `MIT` | Avalonia/FuncUI | build protocol | inventory; MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.Skia` | `11.3.18`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.Skia/11.3.18) | `MIT` | Avalonia.Desktop | Skia renderer integration | MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.Themes.Fluent` | `11.3.18`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.Themes.Fluent/11.3.18) | `MIT` | direct App/UiCatalog | OSS theme | MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.Win32` | `11.3.18`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.Win32/11.3.18) | `MIT` | Avalonia.Desktop | Windows runtime | MIT text | Approved, Avalonia Free | FND-002 |
 | `Avalonia.X11` | `11.3.18`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Avalonia.X11/11.3.18) | `MIT` | Avalonia.Desktop | X11 runtime | MIT text | Approved, Avalonia Free | FND-002 |
+| `Argon` | `0.28.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Argon/0.28.0) | `MIT` | Verify | snapshot serialization | inventory; MIT text | Approved, test only | UI-007, owner |
+| `DiffEngine` | `16.2.1`; lock | Test | [NuGet/source](https://www.nuget.org/packages/DiffEngine/16.2.1) | `MIT` | Verify | diff artifact helper | inventory; MIT text | Approved, test only | UI-007, owner |
 | `Elmish` | `4.3.0`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Elmish/4.3.0) | `Apache-2.0` | FuncUI.Elmish | update loop | Apache license/NOTICE | Approved | FND-002 |
+| `EmptyFiles` | `8.9.1`; lock | Test | [NuGet/source](https://www.nuget.org/packages/EmptyFiles/8.9.1) | `MIT` | DiffEngine | empty comparison artifacts | inventory; MIT text | Approved, test only | UI-007, owner |
 | `FSharp.Core` | `6.0.0`; lock | Production | [NuGet/source](https://www.nuget.org/packages/FSharp.Core/6.0.0) | `MIT` | FuncUI/Elmish | F# runtime | MIT text | Approved | FND-002 |
 | `HarfBuzzSharp` | `8.3.1.1`; lock | Production | [NuGet/source](https://www.nuget.org/packages/HarfBuzzSharp/8.3.1.1) | `MIT` | Avalonia.Skia | managed text-shaping API | MIT text | Approved | FND-002 |
 | `HarfBuzzSharp.NativeAssets.Linux` | `8.3.1.1`; lock | Production/native | [package/source](https://www.nuget.org/packages/HarfBuzzSharp.NativeAssets.Linux/8.3.1.1) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | HarfBuzzSharp | Linux shaping binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
@@ -88,7 +93,12 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `SkiaSharp.NativeAssets.macOS` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.macOS/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | macOS renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `SkiaSharp.NativeAssets.WebAssembly` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.WebAssembly/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | WebAssembly renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
 | `SkiaSharp.NativeAssets.Win32` | `2.88.9`; lock | Production/native | [package/source](https://www.nuget.org/packages/SkiaSharp.NativeAssets.Win32/2.88.9) | `MIT AND LicenseRef-SkiaSharp-Vendor-Notices` | SkiaSharp | Windows renderer binary | complete vendor notice; ADR choices | Approved exact-use exception | FND-002, ADR-001 |
+| `SimpleInfoName` | `3.1.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/SimpleInfoName/3.1.0) | `MIT` | Verify | snapshot type names | inventory; MIT text | Approved, test only | UI-007, owner |
+| `System.CodeDom` | `8.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/System.CodeDom/8.0.0) | `MIT` | System.Management | DiffEngine platform support | inventory; MIT text | Approved, test only | UI-007, owner |
+| `System.Management` | `8.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/System.Management/8.0.0) | `MIT` | DiffEngine | Windows diff-tool discovery | inventory; MIT text | Approved, test only | UI-007, owner |
 | `Tmds.DBus.Protocol` | `0.21.3`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Tmds.DBus.Protocol/0.21.3) | `MIT` | Avalonia.FreeDesktop | Linux D-Bus protocol | MIT text | Approved | FND-002 |
+| `Verify` | `30.1.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Verify/30.1.0) | `MIT` | Verify.Avalonia | snapshot verification | inventory; MIT text | Approved, test only | UI-007, owner |
+| `Verify.Avalonia` | `1.4.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Verify.Avalonia/1.4.0) | `MIT` | direct VisualTests | Avalonia frame verification | inventory; MIT text | Approved, test only | UI-007, owner |
 | `xunit.analyzers` | `1.27.0`; lock | Build/Test | [NuGet/source](https://www.nuget.org/packages/xunit.analyzers/1.27.0) | `Apache-2.0` | xunit.v3 | compile-time test diagnostics | Apache license/NOTICE | Approved, test only | FND-003 |
 | `xunit.v3` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3/3.2.2) | `Apache-2.0` | direct JiraBoard.Tests | stable F# unit-test framework | Apache license/NOTICE | Approved, test only | FND-003 |
 | `xunit.v3.assert` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.assert/3.2.2) | `Apache-2.0` | xunit.v3 | built-in assertions | Apache license/NOTICE | Approved, test only | FND-003 |
@@ -99,7 +109,7 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `xunit.v3.runner.common` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.common/3.2.2) | `Apache-2.0` | in-process runner | shared runner behavior | Apache license/NOTICE | Approved, test only | FND-003 |
 | `xunit.v3.runner.inproc.console` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.inproc.console/3.2.2) | `Apache-2.0` | xUnit core | executable in-process runner | Apache license/NOTICE | Approved, test only | FND-003 |
 
-The restored graph contains 48 exact package/version pairs. The machine-readable
+The restored graph contains 58 exact package/version pairs. The machine-readable
 package decision for every pair is
 [`eng/dependency-allowlist.json`](../../eng/dependency-allowlist.json).
 
@@ -149,9 +159,7 @@ Their complete future graph must be reviewed before adding a
 
 | Name | Version | Planned scope | SPDX | Source | Decision |
 |---|---:|---|---|---|---|
-| `Avalonia.Controls.ColorPicker` | `11.3.18` | VisualTests | `MIT` | [NuGet](https://www.nuget.org/packages/Avalonia.Controls.ColorPicker/11.3.18) | version reserved |
 | `Avalonia.Headless.XUnit` | `11.3.18` | VisualTests | `MIT` | [NuGet](https://www.nuget.org/packages/Avalonia.Headless.XUnit/11.3.18) | version reserved |
-| `Verify.Avalonia` | `1.4.0` | VisualTests | `MIT` | [NuGet](https://www.nuget.org/packages/Verify.Avalonia/1.4.0) | version reserved |
 
 ## Review result
 
