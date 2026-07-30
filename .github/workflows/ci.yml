@@ -94,3 +94,23 @@ jobs:
       - name: Verify third-party notices negative control
         shell: pwsh
         run: ./eng/tests/generate-third-party-notices.Tests.ps1
+
+  macos-native-aot-smoke:
+    name: macOS Native-AOT smoke
+    runs-on: macos-13
+    steps:
+      - name: Checkout (clean)
+        uses: actions/checkout@v7
+
+      - name: Set up .NET (pinned by global.json)
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restore (locked mode)
+        run: dotnet restore JiraBoard.slnx --locked-mode
+
+      - name: Publish and run macOS Native-AOT smoke
+        run: |
+          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true
+          ./tests/JiraBoard.AotSmokeTests/bin/Release/net10.0/osx-x64/publish/JiraBoard.AotSmokeTests

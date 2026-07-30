@@ -2,11 +2,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
-    <RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="SnapshotJson.fs" />
+    <Compile Include="SnapshotDatabase.fs" />
     <Compile Include="LicenseNotices.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
@@ -28,5 +30,7 @@
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.FuncUI.Elmish" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Microsoft.Data.Sqlite" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
   </ItemGroup>
 </Project>

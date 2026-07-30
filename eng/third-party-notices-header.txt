@@ -54,7 +54,12 @@ Copyright 2021 Nikita Tsukanov
 Microsoft.DotNet.ILCompiler 10.0.10 (build only)
 Microsoft.NET.ILLink.Tasks 10.0.10 (build only)
 runtime.linux-x64.Microsoft.DotNet.ILCompiler 10.0.10 (build only)
+runtime.osx-x64.Microsoft.DotNet.ILCompiler 10.0.10 (build only)
 runtime.win-x64.Microsoft.DotNet.ILCompiler 10.0.10 (build only)
+Copyright Microsoft Corporation. All rights reserved.
+
+Microsoft.Data.Sqlite 10.0.10
+Microsoft.Data.Sqlite.Core 10.0.10
 Copyright Microsoft Corporation. All rights reserved.
 
 Microsoft.ApplicationInsights 2.23.0 (test only)
@@ -79,6 +84,12 @@ Apache-2.0 package:
 Elmish 4.3.0
 Copyright 2016-2020 Elmish contributors
 
+SQLitePCLRaw.bundle_e_sqlite3 3.0.5
+SQLitePCLRaw.config.e_sqlite3 3.0.5
+SQLitePCLRaw.core 3.0.5
+SQLitePCLRaw.provider.e_sqlite3 3.0.5
+Copyright 2014-2026 SourceGear, LLC
+
 xunit.analyzers 1.27.0 (test only)
 xunit.v3 and transitive xunit.v3.* packages 3.2.2 (test only)
 Copyright .NET Foundation and Contributors
@@ -86,6 +97,12 @@ Copyright .NET Foundation and Contributors
 BSD-3-Clause package:
 Avalonia.Angle.Windows.Natives 2.1.25547.20250602
 Copyright 2018 The ANGLE Project Authors
+
+SQLite 3.53.4 native library:
+The SQLite source code is in the public domain. The owner approved this exact
+transitive native dependency solely for Microsoft.Data.Sqlite 10.0.10 with
+SQLitePCLRaw.bundle_e_sqlite3 3.0.5; see
+docs/adr/ADR-003-native-aot-sqlite-spike.md.
 
 The package notices below are reproduced from the exact locked packages. The
 native-assets notice includes the approved exact-use license exceptions. The

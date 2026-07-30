@@ -93,6 +93,28 @@ module SmokeChecks =
               else
                   Error "The keyboard-focus ticket card contract is inconsistent." }
 
+    let private snapshotJson =
+        { Name = "explicit snapshot JSON mapping"
+          Run = fun () ->
+              match JiraBoard.App.SnapshotJson.deserialize """{"siteId":"site-7","projectId":"10001","boardId":"42"}""" with
+              | Ok snapshot when snapshot.SiteId = "site-7" && snapshot.SprintId = None -> Ok()
+              | Ok _ -> Error "The explicit snapshot JSON mapping returned unexpected values."
+              | Error error -> Error error }
+
+    let private snapshotDatabase =
+        { Name = "versioned temporary SQLite migration"
+          Run = fun () ->
+              let path = Path.Combine(Path.GetTempPath(), $"JiraBoard-AotSmoke-{Guid.NewGuid():N}.db")
+
+              try
+                  match JiraBoard.App.SnapshotDatabase.initialize path with
+                  | Ok 1 when File.Exists path -> Ok()
+                  | Ok version -> Error $"Unexpected snapshot schema version: {version}"
+                  | Error error -> Error error
+              finally
+                  if File.Exists path then
+                      File.Delete path }
+
     let private avaloniaInitialization =
         { Name = "minimal Avalonia and FuncUI dependency initialization"
           Run = fun () ->
@@ -105,7 +127,7 @@ module SmokeChecks =
               else
                   Error "The minimal Avalonia application did not register its Fluent theme." }
 
-    let all = [ licenseNotices; boardOrder; ticketCardContract; avaloniaInitialization ]
+    let all = [ licenseNotices; boardOrder; ticketCardContract; snapshotJson; snapshotDatabase; avaloniaInitialization ]
 
 [<EntryPoint>]
 let main _ =

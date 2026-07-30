@@ -18,6 +18,8 @@
     <PackageVersion Include="Avalonia.Skia" Version="11.3.18" />
     <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.18" />
     <PackageVersion Include="FSharp.Core" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="10.0.10" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.5" />
     <PackageVersion Include="Verify.Avalonia" Version="1.4.0" />
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
   </ItemGroup>

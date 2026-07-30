@@ -22,6 +22,8 @@
     <Compile Include="BoardSurfaceTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
     <Compile Include="AotSmokeRunnerTests.fs" />
+    <Compile Include="SnapshotJsonTests.fs" />
+    <Compile Include="SnapshotDatabaseTests.fs" />
     <PackageReference Include="FSharp.Core" />
     <PackageReference Include="xunit.v3" />
   </ItemGroup>
@@ -35,6 +37,7 @@
     <ProjectReference Include="..\..\src\JiraBoard.Domain\JiraBoard.Domain.fsproj" />
     <ProjectReference Include="..\..\src\JiraBoard.Ui\JiraBoard.Ui.fsproj" />
     <ProjectReference Include="..\..\src\JiraBoard.UiCatalog\JiraBoard.UiCatalog.fsproj" />
+    <ProjectReference Include="..\..\src\JiraBoard.App\JiraBoard.App.fsproj" />
     <ProjectReference Include="..\JiraBoard.AotSmokeTests\JiraBoard.AotSmokeTests.fsproj" />
   </ItemGroup>
 </Project>

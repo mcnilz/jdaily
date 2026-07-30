@@ -80,6 +80,7 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Native-AOT publish | AOT compiler | inventory; MIT text | Approved, build only | FND-002 |
 | `Microsoft.NET.ILLink.Tasks` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/Microsoft.NET.ILLink.Tasks/10.0.10) | `MIT` | Native-AOT publish | trimmer/linker | inventory; MIT text | Approved, build only | FND-002 |
 | `runtime.linux-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.linux-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | Linux AOT toolchain | inventory; full distinct notice `66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54` | Approved, build only | FND-010 |
+| `runtime.osx-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.osx-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | macOS AOT toolchain | inventory; notice matches Linux compiler `66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54` | Approved, build only | SPK-002 |
 | `runtime.win-x64.Microsoft.DotNet.ILCompiler` | `10.0.10`; lock | Build/Packaging | [NuGet/source](https://www.nuget.org/packages/runtime.win-x64.Microsoft.DotNet.ILCompiler/10.0.10) | `MIT` | Microsoft.DotNet.ILCompiler | Windows AOT toolchain | inventory; MIT text | Approved, build only | FND-002 |
 | `Microsoft.ApplicationInsights` | `2.23.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.ApplicationInsights/2.23.0) | `MIT` | MTP telemetry | test-runner telemetry transport | inventory; MIT text | Approved, test only | FND-003 |
 | `Microsoft.Bcl.AsyncInterfaces` | `6.0.0`; lock | Test | [NuGet/source](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces/6.0.0) | `MIT` | xUnit common | async test contracts | inventory; MIT text | Approved, test only | FND-003 |
@@ -109,9 +110,33 @@ The evidence value `FND-002` means review date 27 July 2026 and reviewer Codex;
 | `xunit.v3.runner.common` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.common/3.2.2) | `Apache-2.0` | in-process runner | shared runner behavior | Apache license/NOTICE | Approved, test only | FND-003 |
 | `xunit.v3.runner.inproc.console` | `3.2.2`; lock | Test | [NuGet/source](https://www.nuget.org/packages/xunit.v3.runner.inproc.console/3.2.2) | `Apache-2.0` | xUnit core | executable in-process runner | Apache license/NOTICE | Approved, test only | FND-003 |
 
-The restored graph contains 58 exact package/version pairs. The machine-readable
+The restored graph contains 66 exact package/version pairs. The machine-readable
 package decision for every pair is
 [`eng/dependency-allowlist.json`](../../eng/dependency-allowlist.json).
+
+### SPK-002 SQLite graph review
+
+On 30 July 2026, the following exact production graph was reviewed before its
+package references were added. `Microsoft.Data.Sqlite 10.0.10` normally allows
+the vulnerable `SQLitePCLRaw.lib.e_sqlite3 2.1.11` path
+([`GHSA-2m69-gcr7-jv3q`](https://github.com/advisories/GHSA-2m69-gcr7-jv3q)).
+The direct central pin to `SQLitePCLRaw.bundle_e_sqlite3 3.0.5` resolves the
+reviewed graph below without a downgrade warning and carries SQLite `3.53.4`,
+which is newer than the fixed SQLite `3.48.0` baseline. The package metadata,
+license files and a disposable .NET 10 restore were reviewed; the Windows
+Native-AOT smoke executes the actual provider path. The owner approved the
+exact Public-Domain native exception in [`ADR-003`](../adr/ADR-003-native-aot-sqlite-spike.md);
+it does not broaden the global license allowlist.
+
+| Name | Version/hash | Scope | Source | SPDX | Transitiv durch | Verwendung | Pflichten | Entscheidung | Nachweis |
+|---|---|---|---|---|---|---|---|---|---|
+| `Microsoft.Data.Sqlite` | `10.0.10`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Microsoft.Data.Sqlite/10.0.10) | `MIT` | direct App | AOT persistence spike provider | MIT notice | Approved exact graph | SPK-002, ADR-003 |
+| `Microsoft.Data.Sqlite.Core` | `10.0.10`; lock | Production | [NuGet/source](https://www.nuget.org/packages/Microsoft.Data.Sqlite.Core/10.0.10) | `MIT` | Microsoft.Data.Sqlite | managed SQLite implementation | MIT notice | Approved exact graph | SPK-002, ADR-003 |
+| `SQLitePCLRaw.bundle_e_sqlite3` | `3.0.5`; lock | Production | [NuGet/source](https://www.nuget.org/packages/SQLitePCLRaw.bundle_e_sqlite3/3.0.5) | `Apache-2.0` | direct App, Microsoft.Data.Sqlite | secure provider bundle pin | Apache license/NOTICE | Approved exact graph | SPK-002, ADR-003 |
+| `SQLitePCLRaw.config.e_sqlite3` | `3.0.5`; lock | Production | [NuGet/source](https://www.nuget.org/packages/SQLitePCLRaw.config.e_sqlite3/3.0.5) | `Apache-2.0` | SQLitePCLRaw.bundle_e_sqlite3 | bundle configuration | Apache license/NOTICE | Approved exact graph | SPK-002, ADR-003 |
+| `SQLitePCLRaw.core` | `3.0.5`; lock | Production | [NuGet/source](https://www.nuget.org/packages/SQLitePCLRaw.core/3.0.5) | `Apache-2.0` | Microsoft.Data.Sqlite | provider abstraction | Apache license/NOTICE | Approved exact graph | SPK-002, ADR-003 |
+| `SQLitePCLRaw.provider.e_sqlite3` | `3.0.5`; lock | Production | [NuGet/source](https://www.nuget.org/packages/SQLitePCLRaw.provider.e_sqlite3/3.0.5) | `Apache-2.0` | SQLitePCLRaw.config.e_sqlite3 | native provider bridge | Apache license/NOTICE | Approved exact graph | SPK-002, ADR-003 |
+| `SQLite` | `3.53.4`; lock | Production/native | [NuGet/source](https://www.nuget.org/packages/SQLite/3.53.4) | `Public-Domain` | SQLitePCLRaw.bundle_e_sqlite3 | `e_sqlite3` native library | retain public-domain notice; exact-use exception | Approved owner exception | SPK-002, ADR-003 |
 
 ## Native vendor obligations
 

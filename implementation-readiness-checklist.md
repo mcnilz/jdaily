@@ -179,12 +179,12 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### G5.2 Native AOT und Cross-Plattform
 
-- [ ] FuncUI-/Avalonia-Minimalhost mit Native AOT starten.
-- [ ] Jira-JSON-Mapping ohne unkontrollierte Reflection ausführen.
-- [ ] SQLite öffnen und eine minimale Migration anwenden.
-- [x] statischen AOT-Smoke-Runner ohne Test-Discovery ausführen; Nachweis: `JiraBoard.AotSmokeTests` besitzt ein explizites Register für Notices, Boardreihenfolge, TicketCard-Vertrag und minimale Avalonia-Initialisierung, wurde am 28. Juli 2026 als `win-x64`-Native-AOT-Artefakt veröffentlicht und mit Exit-Code 0 gestartet. Die weitergehenden JSON-, SQLite- und Cross-Plattform-Nachweise bleiben Bestandteil von `SPK-002`.
-- [ ] Windows-, Linux- und macOS-Buildhost beziehungsweise CI-Matrix praktisch bestätigen.
-- [ ] native Skia-/Packaging-Besonderheiten und verbleibende Warnungen dokumentieren.
+- [x] FuncUI-/Avalonia-Minimalhost mit Native AOT starten; Nachweis: `JiraBoard.AotSmokeTests` veröffentlicht und gestartet am 30. Juli 2026 als `win-x64`-Artefakt mit Exit-Code 0.
+- [x] Jira-JSON-Mapping ohne unkontrollierte Reflection ausführen; Nachweis: `SnapshotJsonTests` und der statisch registrierte Windows-AOT-Smoke validieren die explizite `System.Text.Json`-DTO-Abbildung.
+- [x] SQLite öffnen und eine minimale Migration anwenden; Nachweis: `SnapshotDatabaseTests` und der Windows-AOT-Smoke erzeugen eine temporäre SQLite-Datei und wenden die versionierte Schema-Migration an, ohne Daten oder Credentials zu speichern.
+- [x] statischen AOT-Smoke-Runner ohne Test-Discovery ausführen; Nachweis: `JiraBoard.AotSmokeTests` besitzt ein explizites Register für Notices, Boardreihenfolge, TicketCard-Vertrag, JSON, SQLite und minimale Avalonia-Initialisierung.
+- [ ] Windows-, Linux- und macOS-Buildhost beziehungsweise CI-Matrix praktisch bestätigen; Windows ist am 30. Juli 2026 lokal grün. Linux ist als Ubuntu-CI-Smoke vorhanden, macOS `osx-x64` als Intel-Runner `macos-13` ergänzt; beide tatsächlichen CI-Läufe benötigen eine versionierte Übertragung nach GitHub.
+- [x] native Skia-/Packaging-Besonderheiten und verbleibende Warnungen dokumentieren; Nachweis: [`ADR-003`](docs/adr/ADR-003-native-aot-sqlite-spike.md), Inventar, allowlist und reproduzierbare Notices dokumentieren den SQLite-Graphen. Die unveränderten externen `FSharp.Core`-Warnungen `IL3053` und `IL2104` bleiben sichtbar.
 
 ### G5.3 Jira-Cloud-API
 
@@ -213,7 +213,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 ### Nachweis
 
 - Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt als isolierter Katalog-Spike außerhalb der Produktoberfläche. Der `UI-007`-Messharness und die Ausgangsbaseline sind dokumentiert; ein Runtime-Frame-Time-Nachweis bleibt Voraussetzung für eine spätere Produktübernahme.
-- AOT-ADR: _offen_
+- AOT-ADR: [`ADR-003`](docs/adr/ADR-003-native-aot-sqlite-spike.md); Windows-Native-AOT-Smoke grün, Linux-/macOS-CI-Läufe stehen vor der versionierten Übertragung.
 - Jira-API-ADR: _offen_
 - Credential-Store-ADR: _offen_
 

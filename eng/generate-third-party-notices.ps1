@@ -49,6 +49,12 @@ $sources = @(
         Include = $true
     },
     @{
+        Title = "runtime.osx-x64.Microsoft.DotNet.ILCompiler 10.0.10 notice equality"
+        Path = Join-Path $PackageRoot "runtime.osx-x64.microsoft.dotnet.ilcompiler\10.0.10\THIRD-PARTY-NOTICES.TXT"
+        Sha256 = "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54"
+        Include = $false
+    },
+    @{
         Title = "runtime.win-x64.Microsoft.DotNet.ILCompiler 10.0.10 notice equality"
         Path = Join-Path $PackageRoot "runtime.win-x64.microsoft.dotnet.ilcompiler\10.0.10\THIRD-PARTY-NOTICES.TXT"
         Sha256 = "6d15e10a101c6bfff2ab4429ed061bf76c456fc4b23ad6b03e0d0f8377148a21"

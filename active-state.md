@@ -14,11 +14,11 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 29. Juli 2026 |
+| Stand | 30. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | Kein aktives Arbeitspaket |
-| Nächste menschliche Aktion | Keiner; `SPK-001` ist abgenommen und wird mit diesem synchronisierten Paketstand versioniert |
-| Nächster Paketkandidat danach | Gemäß Backlog neu bestimmen und vor Beginn als `Proposed` vorstellen |
+| Aktiver Arbeitsauftrag | `SPK-002` – Native-AOT-/Cross-Plattform-Spike (`In Progress`) |
+| Nächste menschliche Aktion | Nach den Linux-/macOS-CI-Läufen die konkrete Abnahmecheckliste für `SPK-002` prüfen |
+| Nächster Paketkandidat danach | `SPK-003` – Jira-Cloud-Boardorder- und Rank-Spike |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010` und `SPK-001` sind menschlich abgenommen und `Done`. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. |
@@ -28,6 +28,7 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
 - `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001` (menschlich abgenommen), das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) inhaltlich mit umsetzt; das Item bleibt zur Nachverfolgung offen.
+- `SPK-002` – Native-AOT-/Cross-Plattform-Spike – `In Progress`. Verantwortlich: Junie. JSON-DTO, temporäre manuelle SQLite-Schema-Migration, der sichere allowlistete Graph (`Microsoft.Data.Sqlite 10.0.10`, `SQLitePCLRaw.bundle_e_sqlite3 3.0.5`, `SQLite 3.53.4`), Inventar, Notices, `ADR-003`, vollständiger lokaler Release-Check und Windows-Native-AOT-Smoke sind grün. Der Eigentümer erlaubte am 30. Juli 2026 ausdrücklich einen ausschließlich für die Linux-/macOS-CI-Nachweise bestimmten Zwischencommit. Nächste konkrete Aktion: Zwischenstand versionieren, die passenden CI-Runs auswerten und bei Erfolg zur menschlichen Review wechseln. Exklusiver Schreibbereich: `plans/spk-002-native-aot-cross-platform.md`, `docs/adr/ADR-003-*`, `src/JiraBoard.App`, `tests/JiraBoard.AotSmokeTests`, zugehörige Tests, CI-Workflow sowie Status-, Lizenzinventar-, Allowlist-, Notice- und Readiness-Dokumente.
 ## Offene Blocker und Entscheidungen
 
 - `FND-005` (Architekturgrenzen testen) ist auf ausdrückliche menschliche Entscheidung vom 27. Juli 2026 zurückgestellt und auf `Blocked` mit neuer Abhängigkeit von `DOM-001` gesetzt; die Zurückstellung wurde am 27. Juli 2026 ausdrücklich abgenommen. Die Domain-Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt; Backlog, Readiness-G2 und der technische Handoff wurden entsprechend nachgezogen.
@@ -35,6 +36,7 @@ Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked
 - Der frühere DataGrid-Blocker ist durch die ausdrückliche Freigabe von `11.3.13` und die synchronisierte Vertragskorrektur aufgelöst.
 - `SkiaSharp.NativeAssets.* 2.88.9` und `HarfBuzzSharp.NativeAssets.* 8.3.1.1` wurden am 27. Juli 2026 für diesen Avalonia-/Native-AOT-Einsatz ausdrücklich freigegeben, verbunden mit der Pflicht, die Lizenz- und Attributionstexte vollständig mitzuliefern und in der Anwendung zu verankern. Die Freigabe erweitert die globale Lizenz-Allowlist nicht.
 - Der Produkteigentümer bestätigte für `UI-007` einen reinen `Avalonia.Headless`-/xUnit-v3-Host ohne `AvaloniaFact`, weil `Avalonia.Headless.XUnit 11.3.18` `xunit.core 2.4.0` fordert. Der exakte Graph des gewählten Pfads erfordert vor jeder Referenz weiterhin aktive Inventarisierung und Verwendungsfreigabe.
+- Die Eigentümerfreigabe vom 30. Juli 2026 erlaubt `SQLite 3.53.4` unter Public Domain ausschließlich als transitive native Codeabhängigkeit von `Microsoft.Data.Sqlite 10.0.10` mit `SQLitePCLRaw.bundle_e_sqlite3 3.0.5`; `ADR-003` hält Quelle, Verwendung und Grenzen fest. Diese Ausnahme erweitert die globale Lizenz-Allowlist nicht.
 
 ## Prüfstand
 
