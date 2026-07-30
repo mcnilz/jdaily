@@ -55,7 +55,7 @@ jobs:
 
       - name: Publish and run Linux Native-AOT smoke
         run: |
-          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true
+          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true --no-restore
           ./tests/JiraBoard.AotSmokeTests/bin/Release/net10.0/linux-x64/publish/JiraBoard.AotSmokeTests
 
       # Package/license gate: the forbidden assertion library must not appear
@@ -112,5 +112,5 @@ jobs:
 
       - name: Publish and run macOS Native-AOT smoke
         run: |
-          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true
+          dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true --no-restore
           ./tests/JiraBoard.AotSmokeTests/bin/Release/net10.0/osx-x64/publish/JiraBoard.AotSmokeTests
