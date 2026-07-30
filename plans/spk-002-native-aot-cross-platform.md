@@ -37,13 +37,13 @@ Status: Complete
 The tests prove explicit JSON DTO mapping, missing required input handling and idempotent temporary SQLite schema initialization. The Windows `win-x64` Native-AOT artifact starts successfully and executes both paths; only the known external `FSharp.Core` warnings `IL3053` and `IL2104` remain.
 
 ## Phase 3: Platform evidence and review
-Status: In progress
+Status: Complete
 
-- [x] Add matching Linux and macOS `osx-x64` AOT workflow steps; macOS runs on the Intel `macos-13` host.
-- [ ] Collect successful Linux and macOS CI runs from the versioned workflow on matching hosts.
+- [x] Add the Linux AOT workflow step; the matching macOS `osx-x64` smoke was removed from the mandatory workflow because its `macos-13` runner is unavailable and the owner explicitly deferred macOS evidence on 30 July 2026.
+- [x] Collect the successful Linux CI run from the versioned workflow; GitHub Actions run `30533492839` completed the build, policy and Linux Native-AOT smoke successfully. macOS evidence is explicitly deferred and must be planned separately.
 - [x] Run the complete Release validation and the Windows self-contained Native-AOT smoke.
 - [x] Self-review the final dependency graph, architecture boundaries, static registration and secret-free temporary database behavior.
-- [ ] Synchronize backlog, readiness evidence and active state, then present the ADR and platform evidence for human acceptance.
+- [x] Synchronize backlog, readiness evidence and active state, then present the ADR and platform evidence for human acceptance.
 
 ### Verification Plan
 - `dotnet restore JiraBoard.slnx`
@@ -52,10 +52,11 @@ Status: In progress
 - Native-AOT publish and start smokes on each configured matching platform host.
 
 ### Phase Summary
-The local validation, review and workflow configuration are complete. The only remaining evidence is the actual Linux/macOS execution in GitHub Actions, which cannot run against the uncommitted package.
+The local validation, review and workflow configuration are complete. GitHub Actions run `30533492839` supplies the Linux evidence after the Git-LFS checkout repair. The macOS evidence is explicitly deferred because the required runner is unavailable; it is not part of this spike's mandatory CI gate.
 
 ## Final Recap
-_(write when all phases complete: summary of the entire piece of work)_
+The spike establishes an AOT-safe, explicit JSON and SQLite baseline with a reviewed, locked dependency graph. Windows and Linux Native-AOT evidence is green; macOS evidence is explicitly deferred because GitHub cannot allocate the required runner, and its visible workflow job is skipped so it cannot block development.
 
 ## Deployment Plan
-_(write when all phases complete: step-by-step deployment instructions)_
+- Obtain explicit human acceptance for the `SPK-002` review package.
+- Synchronize the accepted state to `Done`, then commit exactly the accepted package and allow CI to confirm the skipped macOS job does not block the Linux gate.

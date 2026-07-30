@@ -16,8 +16,8 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 |---|---|
 | Stand | 30. Juli 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | `SPK-002` – Native-AOT-/Cross-Plattform-Spike (`In Progress`) |
-| Nächste menschliche Aktion | Nach dem Linux-/macOS-CI-Lauf die konkrete Abnahmecheckliste für `SPK-002` prüfen |
+| Aktiver Arbeitsauftrag | keiner – `SPK-002` ist menschlich abgenommen und `Done` |
+| Nächste menschliche Aktion | Den Vorschlag für den nächsten zulässigen Paketkandidaten prüfen |
 | Nächster Paketkandidat danach | `SPK-003` – Jira-Cloud-Boardorder- und Rank-Spike |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
@@ -28,7 +28,6 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 Hier stehen ausschließlich `Proposed`, `In Progress`, `In Review` oder `Blocked` geführte Positionen:
 
 - `FND-005` – Architekturgrenzen testen – `Blocked`. Blocker: Vor dem ersten Domainprojekt existiert keine Domainassembly, die eine Grenzprüfung schützen könnte. Benötigte Abhängigkeit: `DOM-001` (menschlich abgenommen), das die Grenzprüfung (keine Domainreferenzen auf UI, Jira-Transport, HTTP, SQLite und Credential-Implementierungen) inhaltlich mit umsetzt; das Item bleibt zur Nachverfolgung offen.
-- `SPK-002` – Native-AOT-/Cross-Plattform-Spike – `In Progress`. Verantwortlich: Junie. JSON-DTO, temporäre manuelle SQLite-Schema-Migration, der sichere allowlistete Graph (`Microsoft.Data.Sqlite 10.0.10`, `SQLitePCLRaw.bundle_e_sqlite3 3.0.5`, `SQLite 3.53.4`), Inventar, Notices, `ADR-003`, vollständiger lokaler Release-Check und Windows-Native-AOT-Smoke sind grün. Der Eigentümer erlaubte am 30. Juli 2026 ausdrücklich einen ausschließlich für die Linux-/macOS-CI-Nachweise bestimmten Zwischencommit. Der Linux-Policy-Fehler wurde als fehlender Git-LFS-Abruf der acht TTF-Fontobjekte bestimmt; beide CI-Checkouts fordern nun LFS an. Nächste konkrete Aktion: die Korrektur versionieren, Linux-/macOS-Runs auswerten und bei Erfolg zur menschlichen Review wechseln. Exklusiver Schreibbereich: `plans/spk-002-native-aot-cross-platform.md`, `docs/adr/ADR-003-*`, `src/JiraBoard.App`, `tests/JiraBoard.AotSmokeTests`, zugehörige Tests, CI-Workflow sowie Status-, Lizenzinventar-, Allowlist-, Notice- und Readiness-Dokumente.
 ## Offene Blocker und Entscheidungen
 
 - `FND-005` (Architekturgrenzen testen) ist auf ausdrückliche menschliche Entscheidung vom 27. Juli 2026 zurückgestellt und auf `Blocked` mit neuer Abhängigkeit von `DOM-001` gesetzt; die Zurückstellung wurde am 27. Juli 2026 ausdrücklich abgenommen. Die Domain-Grenzprüfung wird zusammen mit dem ersten Domainprojekt in `DOM-001` eingeführt; Backlog, Readiness-G2 und der technische Handoff wurden entsprechend nachgezogen.

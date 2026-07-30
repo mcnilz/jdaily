@@ -97,8 +97,11 @@ jobs:
         shell: pwsh
         run: ./eng/tests/generate-third-party-notices.Tests.ps1
 
+  # The macOS Native-AOT smoke is explicitly deferred while macos-13 runners
+  # are unavailable. It is not a required CI gate for SPK-002.
   macos-native-aot-smoke:
     name: macOS Native-AOT smoke
+    if: ${{ false }}
     runs-on: macos-13
     steps:
       - name: Checkout (clean)
@@ -118,3 +121,5 @@ jobs:
         run: |
           dotnet publish tests/JiraBoard.AotSmokeTests/JiraBoard.AotSmokeTests.fsproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true --no-restore
           ./tests/JiraBoard.AotSmokeTests/bin/Release/net10.0/osx-x64/publish/JiraBoard.AotSmokeTests
+          # This command is retained for the explicitly deferred macOS evidence.
+
