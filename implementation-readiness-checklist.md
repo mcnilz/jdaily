@@ -205,17 +205,17 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 ### G5.4 Credential Stores
 
-- [ ] Port und Fehlerzustände für Windows, Linux und macOS definieren.
-- [ ] mindestens einen realen Credential-Store-Adapter implementieren und testen.
-- [ ] Verfügbarkeit oder klare Installationsvoraussetzung für die übrigen Zielsysteme prüfen.
-- [ ] nachweisen, dass Token weder in SQLite noch Konfiguration, Logs oder Crashdaten geschrieben wird.
+- [x] Port und Fehlerzustände für Windows, Linux und macOS definieren. Nachweis: `Credentials.fs` kapselt `Save`/`Read`/`Delete` und sichere Fehlerkategorien; nicht implementierte Zielsysteme melden `StoreUnavailable`.
+- [x] mindestens einen realen Credential-Store-Adapter implementieren und testen. Nachweis: `CredentialsTests` führt unter Windows einen eindeutigen `CredWriteW`-/`CredReadW`-/`CredDeleteW`-Roundtrip mit garantiertem Cleanup aus.
+- [x] Verfügbarkeit oder klare Installationsvoraussetzung für die übrigen Zielsysteme prüfen. Nachweis: [`ADR-005`](docs/adr/ADR-005-native-credential-store-spike.md) verlangt unter Linux eine Benutzer-D-Bus-Session mit entsperrtem Secret Service und unter macOS einen zugänglichen Benutzer-Keychain.
+- [x] nachweisen, dass Token weder in SQLite noch Konfiguration, Logs oder Crashdaten geschrieben wird. Teilnachweis: `CredentialsTests` stellt sicher, dass ein zurückgewiesener Save kein Token im Ergebnis formatiert; `Credentials.fs` verwendet nur den nativen Blob und gibt ausschließlich kategorisierte Fehler zurück. UI-, Logging- und Crash-Redaction bleiben für `JIR-001`, `JIR-002` und `SYN-008` offen.
 
 ### Nachweis
 
 - Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt als isolierter Katalog-Spike außerhalb der Produktoberfläche. Der `UI-007`-Messharness und die Ausgangsbaseline sind dokumentiert; ein Runtime-Frame-Time-Nachweis bleibt Voraussetzung für eine spätere Produktübernahme.
 - AOT-ADR: [`ADR-003`](docs/adr/ADR-003-native-aot-sqlite-spike.md); Windows-Native-AOT-Smoke und Linux-CI-Smoke aus [Lauf 30533492839](https://github.com/mcnilz/jdaily/actions/runs/30533492839) sind grün. Der macOS-Nachweis ist auf ausdrückliche Produktentscheidung zurückgestellt.
 - Jira-API-ADR: [`ADR-004`](docs/adr/ADR-004-jira-cloud-boardorder-and-rank-spike.md); der offizielle Agile-Board-/Konfigurationspfad, dynamische Ranks, Pagination und Multi-Sprint-Teilfolge sind mit dem am 2. August 2026 freigegebenen Ersatznachweis dokumentiert. Die Live-Vertragsfixture für die Rangrichtung bleibt Folgearbeit vor `JIR-007`.
-- Credential-Store-ADR: _offen_
+- Credential-Store-ADR: [`ADR-005`](docs/adr/ADR-005-native-credential-store-spike.md); Windows Credential Manager ist ohne neue Abhängigkeit real getestet, Linux Secret Service und macOS Keychain sind als klare Voraussetzungen für spätere Adapter dokumentiert.
 
 ## G6 – Test- und visuelle Referenzumgebung
 

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Credentials.fs" />
     <Compile Include="SnapshotJson.fs" />
     <Compile Include="SnapshotDatabase.fs" />
     <Compile Include="LicenseNotices.fs" />
