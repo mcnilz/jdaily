@@ -16,6 +16,7 @@
     <Compile Include="BoardEventOrderTests.fs" />
     <Compile Include="DomainBoundaryTests.fs" />
     <Compile Include="FixtureTests.fs" />
+    <Compile Include="BoardOrderSpikeTests.fs" />
     <Compile Include="DesignTokenTests.fs" />
     <Compile Include="BoardLayoutTests.fs" />
     <Compile Include="BoardComponentTests.fs" />

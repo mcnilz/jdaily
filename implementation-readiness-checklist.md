@@ -193,9 +193,9 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 - [ ] projektbezogene Boardermittlung für kein, ein und mehrere Scrum-Boards prüfen.
 - [ ] aktive Sprints eines Boards einschließlich paralleler Sprints laden und zukünftige/geschlossene Zustände ausschließen.
 - [ ] Sprint-Issues einzeln sowie für `Alle aktiven Sprints` laden, stabil über Issue-ID deduplizieren und als Teilfolge der globalen Jira-Boardreihenfolge projizieren.
-- [ ] offiziell unterstützten Jira-Cloud-Leseweg für die globale Boardreihenfolge verifizieren; JiraTui dient als Verhaltensreferenz, nicht als Freigabe undokumentierter Endpunkte.
-- [ ] Rank-Custom-Field pro Board dynamisch aus Konfiguration oder Jira-Feldmetadaten erkennen und die Sortierrichtung gegen eine anonymisierte reale Jira-/JiraTui-Fixture bestätigen.
-- [ ] nachweisen, dass Pagination, Antwortlatenz und Collection-Iteration die Reihenfolge nicht verändern und jede Antwortposition als stabiler `BoardOrdinal` erhalten bleibt.
+- [x] offiziell unterstützten Jira-Cloud-Leseweg für die globale Boardreihenfolge verifizieren; JiraTui dient als Verhaltensreferenz, nicht als Freigabe undokumentierter Endpunkte. Nachweis: `ADR-004` entscheidet sich für die dokumentierten Agile-Board- und Konfigurationsressourcen.
+- [x] Rank-Custom-Field pro Board dynamisch aus Konfiguration oder Jira-Feldmetadaten erkennen und die Sortierrichtung gegen eine anonymisierte reale Jira-/JiraTui-Fixture bestätigen. Abweichend freigegebener Ersatznachweis vom 2. August 2026: Atlassian-Dokumentation, Offline-Fixtures und öffentliches JiraTui-Quellverhalten; `ADR-004` hält die beobachtete absteigende JiraTui-Richtung und die vor `JIR-007` notwendige Live-Vertragsfixture fest.
+- [ ] nachweisen, dass Pagination, Antwortlatenz und Collection-Iteration die Reihenfolge nicht verändern und jede Antwortposition als stabiler `BoardOrdinal` erhalten bleibt. Teilnachweis: `BoardOrderSpikeTests.fs` sichert die Seitenfolge; `SprintProjectionTests.fs` sichert die globale stabile Teilfolge bei abweichender Eingabereihenfolge. Echte asynchrone Antwortlatenz folgt mit der Transportintegration in `JIR-007`.
 - [ ] letzten Projekt-/Board-/Sprintkontext lokal ohne Netzblockade wiederherstellen, offline beibehalten und nach erfolgreicher Jira-Antwort validieren.
 - [ ] Boardkonfiguration, Issues, Changelog, Kommentare, Transitionen und Status-Mappings gegen echte Antworten verifizieren.
 - [ ] Pagination, Rate Limits, Berechtigungsfehler und eingeschränkte Token-Scopes prüfen.
@@ -214,7 +214,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 
 - Animation-ADR: [`ADR-002`](docs/adr/ADR-002-board-surface-composition-spike.md); der Composition-Kandidat bleibt als isolierter Katalog-Spike außerhalb der Produktoberfläche. Der `UI-007`-Messharness und die Ausgangsbaseline sind dokumentiert; ein Runtime-Frame-Time-Nachweis bleibt Voraussetzung für eine spätere Produktübernahme.
 - AOT-ADR: [`ADR-003`](docs/adr/ADR-003-native-aot-sqlite-spike.md); Windows-Native-AOT-Smoke und Linux-CI-Smoke aus [Lauf 30533492839](https://github.com/mcnilz/jdaily/actions/runs/30533492839) sind grün. Der macOS-Nachweis ist auf ausdrückliche Produktentscheidung zurückgestellt.
-- Jira-API-ADR: _offen_
+- Jira-API-ADR: [`ADR-004`](docs/adr/ADR-004-jira-cloud-boardorder-and-rank-spike.md); der offizielle Agile-Board-/Konfigurationspfad, dynamische Ranks, Pagination und Multi-Sprint-Teilfolge sind mit dem am 2. August 2026 freigegebenen Ersatznachweis dokumentiert. Die Live-Vertragsfixture für die Rangrichtung bleibt Folgearbeit vor `JIR-007`.
 - Credential-Store-ADR: _offen_
 
 ## G6 – Test- und visuelle Referenzumgebung

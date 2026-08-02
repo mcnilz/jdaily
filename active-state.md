@@ -14,11 +14,11 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 30. Juli 2026 |
+| Stand | 2. August 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
-| Aktiver Arbeitsauftrag | keiner – `SPK-002` ist menschlich abgenommen und `Done` |
+| Aktiver Arbeitsauftrag | keiner – `SPK-003` ist menschlich abgenommen und `Done` |
 | Nächste menschliche Aktion | Den Vorschlag für den nächsten zulässigen Paketkandidaten prüfen |
-| Nächster Paketkandidat danach | `SPK-003` – Jira-Cloud-Boardorder- und Rank-Spike |
+| Nächster Paketkandidat danach | `SPK-004` – Native Credential Stores prüfen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010` und `SPK-001` sind menschlich abgenommen und `Done`. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. |

@@ -27,3 +27,13 @@ This manifest documents the source, structure, and anonymization of the JSON fix
 - **Team-managed Scrum:** Fixtures assume the project is a "next-gen" (team-managed) Scrum project.
 - **Rank Field:** Uses the standard Jira Agile `LexoRank` system, mapped via a dynamic custom field ID.
 - **Hierarchy:** Standard hierarchy level 0 (Standard Issues) and level -1 (Subtasks). Level 1 (Epics) are used for context.
+
+## SPK-003 Evidence
+
+The product owner approved this evidence set as the replacement for a live Jira
+capture on 2 August 2026. It proves the supported API surface and the reference
+behavior, not equality with a particular live Jira tenant.
+
+- Atlassian documents the supported [board issue endpoint](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-issue-get) and [board configuration endpoint](https://developer.atlassian.com/cloud/jira/software/rest/api-group-board/#api-rest-agile-1-0-board-boardid-configuration-get). The fixtures model their paginated issue responses, `expand=schema,names`, and the configuration-supplied `rankCustomFieldId`.
+- JiraTui is a behavioral reference only. Its [`BoardRenderSwimlaneBuilder`](https://github.com/mcnilz/JiraTui/blob/master/src/JiraTui.Tui/BoardRendering/BoardRenderSwimlaneBuilder.cs) contains `OrderByDescending(issue => issue.Rank ?? EmptyRankSortValue)` for issues in a column. Its [`JiraClient`](https://github.com/mcnilz/JiraTui/blob/master/src/JiraTui.Infrastructure/Services/JiraClient.cs) currently uses different `search/jql` and Software API paths, which are not adopted as the board-order proof for this client.
+- [`ADR-004`](../../../docs/adr/ADR-004-jira-cloud-boardorder-and-rank-spike.md) records the selected Agile API path, preserves API order as `BoardOrdinal`, and marks the observed descending JiraTui rank direction versus the current ascending domain contract as a product follow-up before `JIR-007`.
