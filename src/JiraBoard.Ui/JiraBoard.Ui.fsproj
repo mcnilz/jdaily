@@ -11,6 +11,7 @@
     <Compile Include="BoardLayout.fs" />
     <Compile Include="TicketCard.fs" />
     <Compile Include="BoardSurface.fs" />
+    <Compile Include="DragDropSpike.fs" />
     <Compile Include="CollapsedColumnCell.fs" />
     <Compile Include="SwimlaneHeader.fs" />
     <Compile Include="ReviewTrack.fs" />

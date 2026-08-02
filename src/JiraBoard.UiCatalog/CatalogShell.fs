@@ -80,7 +80,16 @@ module CatalogScenarios =
             Area = "BoardSurface" }
           { Id = "Board.Surface.ReducedMotion"
             Name = "BoardSurface · Reduced Motion"
-            Area = "BoardSurface" } ]
+            Area = "BoardSurface" }
+          { Id = "DragDrop.Active"
+            Name = "Drag-and-drop · Ghost und Ziel"
+            Area = "Drag-and-drop" }
+          { Id = "DragDrop.ReducedMotion"
+            Name = "Drag-and-drop · Reduced Motion"
+            Area = "Drag-and-drop" }
+          { Id = "DragDrop.Rollback"
+            Name = "Drag-and-drop · Abbruch"
+            Area = "Drag-and-drop" } ]
 
 type CatalogShellState =
     { Viewport: ViewportPreset

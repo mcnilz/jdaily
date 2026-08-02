@@ -249,6 +249,9 @@ module ComponentCatalogView =
     let private boardSurface scale boardWidth title model =
         section scale title [ BoardSurface.viewAt scale boardWidth model ]
 
+    let private dragDropProbe scale title state =
+        section scale title [ DragDropSpike.viewAt scale ComponentCatalogFixtures.boardSurface.Columns state ]
+
     let view appZoomPercent fontZoomPercent boardWidth animationProgress reducedMotion scenarioId keyboard dispatch =
         let scale = DisplayScale.create appZoomPercent fontZoomPercent
         let surface = ComponentCatalogFixtures.boardSurface
@@ -316,6 +319,15 @@ module ComponentCatalogView =
                                     boardWidth
                                     "BoardSurface · Reduced Motion"
                                     { replay with ReducedMotion = true }
+                            | "DragDrop.Active" ->
+                                ComponentCatalogFixtures.dragDropActive
+                                |> dragDropProbe scale "Drag-and-drop · Ghost und gültiges Ziel"
+                            | "DragDrop.ReducedMotion" ->
+                                ComponentCatalogFixtures.dragDropReducedMotion
+                                |> dragDropProbe scale "Drag-and-drop · Reduced Motion"
+                            | "DragDrop.Rollback" ->
+                                ComponentCatalogFixtures.dragDropRollback
+                                |> dragDropProbe scale "Drag-and-drop · Abbruch und Fokus-Rückgabe"
                             | _ -> section scale "Unbekanntes Szenario" []
                         ) ]
               ) ]

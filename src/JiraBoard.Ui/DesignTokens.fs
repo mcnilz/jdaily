@@ -93,6 +93,12 @@ module Colors =
     /// Bright inner top edge of metallic surfaces: white at 70 % opacity.
     let metalHighlight = { Base = color "#FFFFFF"; Opacity = 0.70 }
 
+/// Opacity tokens for transient overlays.
+[<RequireQualifiedAccess>]
+module Opacity =
+    /// Dragged-card preview over a valid target.
+    let dragGhost = 0.70
+
 /// Typography tokens (ui-design-specification.md, section "Typografie"). Two
 /// optically related Iosevka builds are used: `Iosevka Aile` for UI text and
 /// `Iosevka Fixed` for issue keys and technical ids.

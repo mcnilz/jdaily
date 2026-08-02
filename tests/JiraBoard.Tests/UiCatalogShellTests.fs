@@ -86,7 +86,10 @@ let ``catalog registers every UI-005 production component scenario`` () =
           "Board.Surface.SwimlaneReplay"
           "Board.Surface.SubtaskReplay"
           "Board.Surface.Aborted"
-          "Board.Surface.ReducedMotion" ]
+          "Board.Surface.ReducedMotion"
+          "DragDrop.Active"
+          "DragDrop.ReducedMotion"
+          "DragDrop.Rollback" ]
 
     for scenarioId in required do
         Assert.Contains(scenarioId, scenarioIds)

@@ -42,6 +42,18 @@ module ComponentCatalogFixtures =
           Progress = 0.0
           ReducedMotion = false }
 
+    let private dragCard = List.head boardSurface.Cards
+
+    let private dragTarget =
+        { DragDropTarget.SwimlaneKey = dragCard.SwimlaneKey
+          Column = "In Progress" }
+
+    let dragDropActive = DragDropSpike.start dragCard |> DragDropSpike.over dragTarget
+
+    let dragDropReducedMotion = dragDropActive |> DragDropSpike.withReducedMotion
+
+    let dragDropRollback = DragDropSpike.start dragCard |> DragDropSpike.cancel
+
     let ticketCards =
         [ TicketCardState.Normal
           TicketCardState.PointerHover

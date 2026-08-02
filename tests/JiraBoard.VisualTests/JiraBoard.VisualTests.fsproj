@@ -11,6 +11,7 @@
     <Compile Include="HeadlessTestHost.fs" />
     <Compile Include="HeadlessTestHostTests.fs" />
     <Compile Include="BoardSurfaceRenderTests.fs" />
+    <Compile Include="DragDropSpikeRenderTests.fs" />
     <Compile Include="BaselineProtection.fs" />
     <Compile Include="BaselineProtectionTests.fs" />
     <Compile Include="BoardSurfaceGoldenMasterTests.fs" />

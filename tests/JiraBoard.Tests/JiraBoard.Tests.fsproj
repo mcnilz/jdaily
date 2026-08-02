@@ -21,6 +21,7 @@
     <Compile Include="BoardLayoutTests.fs" />
     <Compile Include="BoardComponentTests.fs" />
     <Compile Include="BoardSurfaceTests.fs" />
+    <Compile Include="DragDropSpikeTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
     <Compile Include="AotSmokeRunnerTests.fs" />
     <Compile Include="SnapshotJsonTests.fs" />
