@@ -14,14 +14,14 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 2. August 2026 |
+| Stand | 3. August 2026 |
 | Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
 | Aktiver Arbeitsauftrag | keiner |
 | Nächste menschliche Aktion | Nächstes zulässiges Paket vorschlagen und Bestätigung abwarten |
 | Nächster Paketkandidat danach | `SPK-006` – Development Information Capability prüfen |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004` und `SPK-005` sind menschlich abgenommen und `Done`. `SPK-005` hält die isolierte, test-first Drag-Lifecycle-Probe und `ADR-006` fest. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. `SPK-004` hält den dependency-freien Windows-Credential-Manager-Nachweis sowie die Plattformvoraussetzungen in `ADR-005` fest. |
+| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004`, `SPK-005` und `WFL-001` sind menschlich abgenommen und `Done`. `WFL-001` ersetzt die pauschale Volllektüre durch phasen- und änderungsspezifisches Kontext-Routing mit Messnachweisen. `SPK-005` hält die isolierte, test-first Drag-Lifecycle-Probe und `ADR-006` fest. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. `SPK-004` hält den dependency-freien Windows-Credential-Manager-Nachweis sowie die Plattformvoraussetzungen in `ADR-005` fest. |
 
 ## Aktive Arbeitspositionen
 

@@ -2,17 +2,9 @@
 
 ## Read first
 
-Before implementation, read:
+Before work, read this file and the compact [Active state](active-state.md) through `eng/active-state.ps1`. Then follow the phase- and change-specific minimum context in [Agent context routing](docs/agent-context-routing.md). It names the exact authoritative sections to read fully for proposal, implementation, validation and review; do not load unrelated complete specifications by default.
 
-1. [Active state](active-state.md)
-2. [Technical handover](avalonia-fsharp-funcui-stack-handoff.md)
-3. [DDD glossary](domain-glossary.md)
-4. [License and Avalonia Free policy](license-policy.md)
-5. [Implementation readiness](implementation-readiness-checklist.md)
-6. [UI design specification](ui-design-specification.md)
-7. [Product backlog](product-backlog.md)
-
-The active-state file is the operational re-entry point, but it is not a specification or second backlog. The following five files are authoritative for product, domain language, licensing, architecture and design. The product backlog defines execution order and must be corrected if it conflicts with them. If a product decision is missing, stop and ask instead of guessing.
+The active-state file is the operational re-entry point, but it is not a specification or second backlog. The technical handover, DDD glossary, license policy, implementation-readiness checklist and UI design specification remain authoritative for product, domain language, licensing, architecture and design. The product backlog defines execution order and must be corrected if it conflicts with them. If a product decision is missing, a required routing reference is absent, or the applicable authoritative sources conflict, stop and ask instead of guessing.
 
 ## Project state
 
