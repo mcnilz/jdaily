@@ -38,6 +38,8 @@ The baseline on 2 August 2026 was 313,668 characters across `AGENTS.md`, Active 
 
 The following measurements use the current line-bounded routing sets, the compact Active-State output rather than the complete state file, and the same 3.2–4.0 characters-per-token estimate. They include this routing policy, the selected backlog item and direct dependencies, but exclude source code, test output and images.
 
+`WFL-002` reduced the global `AGENTS.md` context from 11,154 to 4,724 characters (about 58%, or roughly 1,600–2,000 input tokens) while preserving the global lifecycle, technology, license, security, TDD, ordering, UiCatalog and validation invariants below.
+
 | Example item class | Before: complete mandatory document set | After: selected routing set | Reduction | Selected authorities |
 |---|---:|---:|---:|---|
 | Domain/order (`DOM-004`-like) | 313,668 characters, 78,000–98,000 tokens | about 51,000 characters, 12,800–15,900 tokens | about 84% | Global rules and Active State; item/dependencies; glossary identity, hierarchy and board-order sections; handover target architecture, state model and ordering sections; G2/G4 rows. |
@@ -52,3 +54,17 @@ For every completed work package, the handoff records:
 - any deliberate whole-document read and its reason.
 
 This measurement is evidence for workflow improvement, not a reason to omit required tests, reviews, approvals or authoritative contracts.
+
+## WFL-002 rule-preservation checklist
+
+The following checks confirm that shortening `AGENTS.md` did not relax a global rule. Each item must remain explicit in `AGENTS.md` and traceable to its authoritative source:
+
+| Negative check | Required retained rule | Authoritative detail |
+|---|---|---|
+| No premature completion or commit | Only standalone human `Abgenommen` permits `Done`, staging and commit. | Handover: `Verbindlicher Agent-Mensch-Arbeitsflow` |
+| No non-Free Avalonia or unreviewed component | Avalonia Free, allowlist, inventory, notices and marker scans remain mandatory. | License policy; readiness G1/G7 |
+| No FluentAssertions introduction | Direct, transitive, source, alias and wrapper uses remain forbidden. | License policy; readiness `Absolute Projektregel: kein FluentAssertions` |
+| No AOT/trimming regression by shortcut | Reflection/dynamic loading stay forbidden; applicable AOT smoke checks remain mandatory. | Handover: `AOT-Regeln für Abhängigkeiten` |
+| No Jira token persistence | Tokens remain native-credential-store-only. | Handover: `Authentifizierung` |
+| No local board-order rewrite | `BoardOrdinal`, dynamic rank and stable multi-sprint projection remain mandatory. | Handover: `Verbindliche Jira-Boardreihenfolge`; glossary: `Boardprojektion und Reihenfolge` |
+| No app-first or duplicate UI implementation | UiCatalog-first and shared production views remain mandatory. | Handover: `Storybook-first mit dem nativen UiCatalog`; UI specification |
