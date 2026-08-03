@@ -1,0 +1,18 @@
+{
+  "cases": [
+    {
+      "name": "provided",
+      "capability": "JiraProvided",
+      "supportedTypes": ["Commit", "Branch", "PullRequest"]
+    },
+    {
+      "name": "unavailable",
+      "capability": "Unavailable"
+    },
+    {
+      "name": "forbidden",
+      "httpStatus": 403,
+      "capability": "Unavailable"
+    }
+  ]
+}

@@ -157,7 +157,7 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 - [x] gleiche Zeitstempel, unterschiedliche Zeitzonen-Offsets und stabile Jira-History-Ranks; Nachweis: `issue-changelog.json`.
 - [x] Pagination und Deduplizierung über mehrere Antworten; Nachweis: Paginierungs-Fixtures.
 - [x] `401`, `403`, `404`, `429`, Timeout, Offline und partiell unvollständige Historie; Nachweis: `errors.json`.
-- [ ] Development Information verfügbar, nicht verfügbar und nicht berechtigt; Zurückgestellt bis `SPK-006`.
+- [x] Development Information verfügbar, nicht verfügbar und nicht berechtigt; Nachweis: `development-information-capability.json`, `DevelopmentInformationTests`, `FixtureTests` und [`ADR-007`](docs/adr/ADR-007-development-information-capability-spike.md) normalisieren nicht verfügbar sowie HTTP `403` zu `Unavailable` ohne Rohdaten oder Credentials.
 
 ### Nachweis
 
@@ -200,8 +200,8 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 - [ ] Boardkonfiguration, Issues, Changelog, Kommentare, Transitionen und Status-Mappings gegen echte Antworten verifizieren.
 - [ ] Pagination, Rate Limits, Berechtigungsfehler und eingeschränkte Token-Scopes prüfen.
 - [ ] mehrdeutige beziehungsweise feldpflichtige Transitionen praktisch erfassen.
-- [ ] offiziell dokumentierten Leseweg für Development Information prüfen und andernfalls `Unavailable` bestätigen.
-- [ ] keine internen `dev-status`-Endpunkte, Browserautomation oder HTML-Scraping verwenden.
+- [x] offiziell dokumentierten Leseweg für Development Information prüfen und andernfalls `Unavailable` bestätigen. Nachweis: [`ADR-007`](docs/adr/ADR-007-development-information-capability-spike.md) hält die am 3. August 2026 geprüfte offizielle API-Gruppe und Platform-OpenAPI ohne dokumentierten tokenbasierten Leseweg fest.
+- [x] keine internen `dev-status`-Endpunkte, Browserautomation oder HTML-Scraping verwenden. Nachweis: `ADR-007` verwirft diese Wege; der Spike enthält keinen Jira-HTTP-Client.
 
 ### G5.4 Credential Stores
 
@@ -222,6 +222,7 @@ Jeder Spike endet mit einer kurzen ADR: Fragestellung, Versuchsaufbau, Ergebnis,
 - Jira-API-ADR: [`ADR-004`](docs/adr/ADR-004-jira-cloud-boardorder-and-rank-spike.md); der offizielle Agile-Board-/Konfigurationspfad, dynamische Ranks, Pagination und Multi-Sprint-Teilfolge sind mit dem am 2. August 2026 freigegebenen Ersatznachweis dokumentiert. Die Live-Vertragsfixture für die Rangrichtung bleibt Folgearbeit vor `JIR-007`.
 - Credential-Store-ADR: [`ADR-005`](docs/adr/ADR-005-native-credential-store-spike.md); Windows Credential Manager ist ohne neue Abhängigkeit real getestet, Linux Secret Service und macOS Keychain sind als klare Voraussetzungen für spätere Adapter dokumentiert.
 - Drag-and-drop-ADR: [`ADR-006`](docs/adr/ADR-006-drag-and-drop-spike.md); die reine UiCatalog-Probe dokumentiert den bestätigten Zustand, Ghost/Overlay, Abbruch, Fokus-Rückgabe und die Übergabe an `TRN-002`/`TRN-003`.
+- Development-Information-ADR: [`ADR-007`](docs/adr/ADR-007-development-information-capability-spike.md); kein offizieller tokenbasierter Leseweg wurde belegt, daher ist `Unavailable` die normale MVP-Entscheidung und eine Produktintegration bleibt aus.
 
 ## G6 – Test- und visuelle Referenzumgebung
 

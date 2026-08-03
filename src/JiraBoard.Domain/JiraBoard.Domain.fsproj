@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <Compile Include="Identifiers.fs" />
+    <Compile Include="DevelopmentInformation.fs" />
     <Compile Include="IssueHierarchy.fs" />
     <Compile Include="BoardOrder.fs" />
     <Compile Include="Board.fs" />

@@ -21,12 +21,14 @@ This manifest documents the source, structure, and anonymization of the JSON fix
 | `issues-pagination-p2.json` | `/rest/agile/1.0/board/{id}/issue?startAt=50` | Second page of paginated issues. |
 | `issue-changelog.json` | `/rest/api/3/issue/{key}/changelog` | Historical events for replay. |
 | `errors.json` | N/A | Simulated API error responses (401, 403, 404, 429). |
+| `development-information-capability.json` | Normalized `DevelopmentInfoCapability` contract | Offline cases for Jira-provided, unavailable, and HTTP 403 capability results; the official Jira path is verified by SPK-006 before a transport adapter is added. |
 
 ## API Assumptions
 
 - **Team-managed Scrum:** Fixtures assume the project is a "next-gen" (team-managed) Scrum project.
 - **Rank Field:** Uses the standard Jira Agile `LexoRank` system, mapped via a dynamic custom field ID.
 - **Hierarchy:** Standard hierarchy level 0 (Standard Issues) and level -1 (Subtasks). Level 1 (Epics) are used for context.
+- **Development Information:** This fixture is a transport-free contract fixture. It uses no raw Jira Development Information payload and records the product rule that unavailable access, including HTTP 403, is a normal `Unavailable` result.
 
 ## SPK-003 Evidence
 

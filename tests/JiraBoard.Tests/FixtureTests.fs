@@ -60,6 +60,7 @@ module FixtureTests =
         "issues-pagination-p2.json"
         "issue-changelog.json"
         "errors.json"
+        "development-information-capability.json"
     ]
 
     [<Fact>]
@@ -158,3 +159,19 @@ module FixtureTests =
             let eventId = BoardEventId eventIdStr
             let (BoardEventId actualValue) = eventId
             Assert.Equal(eventIdStr, actualValue)
+
+    [<Fact>]
+    let ``Development information fixture covers provided unavailable and forbidden capability states`` () =
+        let content = Fixture.readResource "development-information-capability.json"
+        use doc = JsonDocument.Parse(content)
+
+        let cases = doc.RootElement.GetProperty("cases").EnumerateArray() |> Seq.toList
+        let provided = cases |> List.find (fun case -> case.GetProperty("name").GetString() = "provided")
+        let unavailable = cases |> List.find (fun case -> case.GetProperty("name").GetString() = "unavailable")
+        let forbidden = cases |> List.find (fun case -> case.GetProperty("name").GetString() = "forbidden")
+
+        Assert.Equal("JiraProvided", provided.GetProperty("capability").GetString())
+        Assert.Equal(3, provided.GetProperty("supportedTypes").GetArrayLength())
+        Assert.Equal("Unavailable", unavailable.GetProperty("capability").GetString())
+        Assert.Equal("Unavailable", forbidden.GetProperty("capability").GetString())
+        Assert.Equal(403, forbidden.GetProperty("httpStatus").GetInt32())
