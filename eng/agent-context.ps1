@@ -31,6 +31,7 @@ $class = switch -Regex ($Item) {
     '^(UI|SPK)-' { 'UI'; break }
     '^FND-' { 'Dependency'; break }
     '^WFL-' { 'Workflow'; break }
+    '^VS-' { 'VerticalSlice'; break }
     default { Fail "Unknown item class: $Item" }
 }
 $routing = @{
@@ -38,6 +39,7 @@ $routing = @{
     UI = @{ Gates = 'G3, G6, G8'; Sections = 'UI: Tokens, Boardgeometrie, Komponentenvertrag, Zustände; Handover: UiCatalog, Visualtests'; Profile = 'UI' }
     Dependency = @{ Gates = 'G1, G7'; Sections = 'License policy vollständig; Handover: Technologie, Paketkonfiguration, AOT'; Profile = 'Dependency' }
     Workflow = @{ Gates = 'G2'; Sections = 'AGENTS; Handover: Agent-Mensch-Arbeitsflow; Backlog: Status, Ready, Done; Agent Context Routing'; Profile = 'Workflow' }
+    VerticalSlice = @{ Gates = 'G2, G3, G4, G5, G6, G8'; Sections = 'DDD: Identität, Issues, Boardprojektion, Ereignisse; UI: Tokens, Boardgeometrie, Komponentenvertrag, Zustände, Accessibility, Visuelle Validierung; Handover: Zielarchitektur, Zustandsmodell, Projekt- und Sprintauswahl, Boardreihenfolge, UiCatalog, Visualtests'; Profile = 'UI' }
 }[$class]
 
 [Console]::WriteLine('# Agent Context')

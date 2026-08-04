@@ -38,11 +38,13 @@ try {
 | DOM-901 | P2 | Ready | domain | evidence | DEP-001 |
 | UI-901 | P2 | Ready | ui | evidence | – |
 | FND-901 | P2 | Ready | dependency | evidence | – |
+| VS-901 | P2 | Ready | vertical slice | evidence | DEP-001 |
 "@
 
     Assert-Output -Item "DOM-901" -ExpectedClass "Domain" -ExpectedProfile "Domain"
     Assert-Output -Item "UI-901" -ExpectedClass "UI" -ExpectedProfile "UI"
     Assert-Output -Item "FND-901" -ExpectedClass "Dependency" -ExpectedProfile "Dependency"
+    Assert-Output -Item "VS-901" -ExpectedClass "VerticalSlice" -ExpectedProfile "UI"
 
     Add-Content -LiteralPath (Join-Path $fixture "product-backlog.md") -Value "`n| DOM-901 | P2 | Ready | duplicate | evidence | – |" -Encoding utf8
     $duplicate = & pwsh -NoProfile -File $script -Item "DOM-901" -Phase Implement -Root $fixture 2>&1 | Out-String
