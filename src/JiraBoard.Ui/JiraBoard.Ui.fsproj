@@ -15,6 +15,9 @@
     <Compile Include="CollapsedColumnCell.fs" />
     <Compile Include="SwimlaneHeader.fs" />
     <Compile Include="ReviewTrack.fs" />
+    <Compile Include="ContextHeader.fs" />
+    <Compile Include="ProjectSelectionModal.fs" />
+    <Compile Include="SprintMenu.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,5 +28,9 @@
     <PackageReference Include="Avalonia" />
     <PackageReference Include="Avalonia.Controls.DataGrid" />
     <PackageReference Include="Avalonia.FuncUI" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JiraBoard.Domain\JiraBoard.Domain.fsproj" />
   </ItemGroup>
 </Project>

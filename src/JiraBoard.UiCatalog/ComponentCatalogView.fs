@@ -8,6 +8,7 @@ open Avalonia.FuncUI.Types
 open Avalonia.Input
 open Avalonia.Layout
 open Avalonia.Media
+open JiraBoard.Domain
 open JiraBoard.Ui
 
 [<RequireQualifiedAccess>]
@@ -252,6 +253,51 @@ module ComponentCatalogView =
     let private dragDropProbe scale title state =
         section scale title [ DragDropSpike.viewAt scale ComponentCatalogFixtures.boardSurface.Columns state ]
 
+    let private navigationContextRestore scale =
+        match ContextHeader.fromModel ComponentCatalogFixtures.navigationContextRestoreModel with
+        | Some header ->
+            section
+                scale
+                "Navigation · letzter Kontext öffnet ohne Modal"
+                [ ContextHeader.viewAt scale header ]
+        | None -> section scale "Navigation · letzter Kontext öffnet ohne Modal" []
+
+    let private navigationProjectSelectionFirstStart scale =
+        let model =
+            ProjectSelectionModal.firstStart
+                ComponentCatalogFixtures.navigationSiteId
+                ComponentCatalogFixtures.navigationRowFor
+                ComponentCatalogFixtures.navigationFirstStartModel.Data.Projects
+                ignore
+                ignore
+                ignore
+                ignore
+
+        section scale "Navigation · Projektauswahl ohne gespeicherten Kontext" [ ProjectSelectionModal.viewAt scale model ]
+
+    let private navigationProjectSelectionRestoreFailed scale =
+        match ComponentCatalogFixtures.navigationRestoreFailedModel.State with
+        | RestoreFailed(failedContext, projects) ->
+            let model =
+                ProjectSelectionModal.restoreFailed
+                    ComponentCatalogFixtures.navigationRowFor
+                    failedContext
+                    projects
+                    ignore
+                    ignore
+                    ignore
+                    ignore
+
+            section
+                scale
+                "Navigation · Projektauswahl nach fehlgeschlagener Wiederherstellung"
+                [ ProjectSelectionModal.viewAt scale model ]
+        | _ ->
+            section scale "Navigation · Projektauswahl nach fehlgeschlagener Wiederherstellung" []
+
+    let private navigationSprintMenu scale title model =
+        section scale title [ SprintMenu.viewAt scale model ]
+
     let view appZoomPercent fontZoomPercent boardWidth animationProgress reducedMotion scenarioId keyboard dispatch =
         let scale = DisplayScale.create appZoomPercent fontZoomPercent
         let surface = ComponentCatalogFixtures.boardSurface
@@ -328,6 +374,17 @@ module ComponentCatalogView =
                             | "DragDrop.Rollback" ->
                                 ComponentCatalogFixtures.dragDropRollback
                                 |> dragDropProbe scale "Drag-and-drop · Abbruch und Fokus-Rückgabe"
+                            | "Navigation.ContextRestore.Startup" -> navigationContextRestore scale
+                            | "Navigation.ProjectSelection.FirstStart" ->
+                                navigationProjectSelectionFirstStart scale
+                            | "Navigation.ProjectSelection.RestoreFailed" ->
+                                navigationProjectSelectionRestoreFailed scale
+                            | "Navigation.SprintMenu.AllActive" ->
+                                ComponentCatalogFixtures.navigationSprintMenuAllActive
+                                |> navigationSprintMenu scale "Navigation · Sprint-Menü · alle aktiven Sprints"
+                            | "Navigation.SprintMenu.Single" ->
+                                ComponentCatalogFixtures.navigationSprintMenuSingle
+                                |> navigationSprintMenu scale "Navigation · Sprint-Menü · ein aktiver Sprint"
                             | _ -> section scale "Unbekanntes Szenario" []
                         ) ]
               ) ]

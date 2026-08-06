@@ -1,5 +1,6 @@
 namespace JiraBoard.UiCatalog
 
+open JiraBoard.Domain
 open JiraBoard.Ui
 
 type NamedTicketCardFixture =
@@ -283,3 +284,70 @@ module ComponentCatalogFixtures =
                   CodeReviewCards = [] } }
           { Name = "Fehlerhafte Daten"
             Model = reviewInvalid } ]
+
+    // VS-001: canonical, statically typed navigation fixture. Identities are
+    // deliberately anonymized and distinct from Jira-Ordering fixtures above;
+    // no JSON, no reflection.
+    let navigationSiteId = SiteId "catalog-site"
+    let navigationProjectId = ProjectId "10000"
+    let navigationBoardId = BoardId 1L
+    let navigationSprint1Id = SprintId 11L
+    let navigationSprint2Id = SprintId 12L
+
+    let navigationProject: Project =
+        { ProjectId = navigationProjectId
+          Name = "Demo Projekt" }
+
+    let navigationBoard: Board =
+        { BoardId = navigationBoardId
+          Name = "Demo Board" }
+
+    let navigationSprint1: ActiveSprint =
+        { SprintId = navigationSprint1Id
+          Name = "Sprint 1" }
+
+    let navigationSprint2: ActiveSprint =
+        { SprintId = navigationSprint2Id
+          Name = "Sprint 2" }
+
+    let navigationOfflineData: OfflineNavData =
+        { SiteId = navigationSiteId
+          Projects = [ navigationProject ]
+          Boards = Map.ofList [ (navigationProjectId, [ navigationBoard ]) ]
+          ActiveSprints = Map.ofList [ (navigationBoardId, [ navigationSprint1; navigationSprint2 ]) ] }
+
+    /// UI-specific enrichment: the domain `Project` has no key or project
+    /// type, so the canonical catalog fixture adds them here while still
+    /// taking `ProjectId`/`Name` from the domain project.
+    let navigationRowFor (project: Project) : ProjectRow =
+        { ProjectId = project.ProjectId
+          Name = project.Name
+          Key = "DEMO"
+          TypeLabel = "Team-managed Scrum"
+          IsLastUsed = false }
+
+    let navigationContextRestoreModel =
+        Navigation.init
+            (Some
+                { SiteId = navigationSiteId
+                  ProjectId = navigationProjectId
+                  BoardId = navigationBoardId
+                  SprintScope = AllActiveSprints })
+            navigationOfflineData
+
+    let navigationFirstStartModel = Navigation.init None navigationOfflineData
+
+    let navigationRestoreFailedModel =
+        Navigation.init
+            (Some
+                { SiteId = navigationSiteId
+                  ProjectId = navigationProjectId
+                  BoardId = BoardId 999L
+                  SprintScope = AllActiveSprints })
+            navigationOfflineData
+
+    let navigationSprintMenuAllActive =
+        SprintMenu.build [ navigationSprint1; navigationSprint2 ] AllActiveSprints ignore
+
+    let navigationSprintMenuSingle =
+        SprintMenu.build [ navigationSprint1; navigationSprint2 ] (ActiveSprint navigationSprint2Id) ignore

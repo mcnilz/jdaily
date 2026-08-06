@@ -1,6 +1,7 @@
 module JiraBoard.Tests.UiCatalogShellTests
 
 open Xunit
+open JiraBoard.Domain
 open JiraBoard.Ui
 open JiraBoard.UiCatalog
 
@@ -247,3 +248,53 @@ let ``ticket cards describe key title assignee and warning for tooltip and autom
         "APP-142 · Daily Replay im Board nachvollziehbar machen · Mara · Hohe Priorität",
         TicketCard.accessibleName highPriority
     )
+
+[<Fact>]
+let ``catalog registers every VS-001 navigation scenario`` () =
+    let scenarioIds = CatalogScenarios.all |> List.map _.Id
+
+    let required =
+        [ "Navigation.ContextRestore.Startup"
+          "Navigation.ProjectSelection.FirstStart"
+          "Navigation.ProjectSelection.RestoreFailed"
+          "Navigation.SprintMenu.AllActive"
+          "Navigation.SprintMenu.Single" ]
+
+    for scenarioId in required do
+        Assert.Contains(scenarioId, scenarioIds)
+
+[<Fact>]
+let ``catalog exposes the canonical VS-001 navigation fixture identities`` () =
+    Assert.Equal(SiteId "catalog-site", ComponentCatalogFixtures.navigationSiteId)
+    Assert.Equal(ProjectId "10000", ComponentCatalogFixtures.navigationProjectId)
+    Assert.Equal(BoardId 1L, ComponentCatalogFixtures.navigationBoardId)
+    Assert.Equal(SprintId 11L, ComponentCatalogFixtures.navigationSprint1.SprintId)
+    Assert.Equal(SprintId 12L, ComponentCatalogFixtures.navigationSprint2.SprintId)
+
+    Assert.Equal<ActiveSprint list>(
+        [ ComponentCatalogFixtures.navigationSprint1
+          ComponentCatalogFixtures.navigationSprint2 ],
+        ComponentCatalogFixtures.navigationOfflineData.ActiveSprints
+        |> Map.find ComponentCatalogFixtures.navigationBoardId
+    )
+
+    Assert.Equal<Project list>(
+        [ ComponentCatalogFixtures.navigationProject ],
+        ComponentCatalogFixtures.navigationOfflineData.Projects
+    )
+
+[<Fact>]
+let ``catalog navigation scenarios are selectable through the ordinary scenario message`` () =
+    let scenarioIds =
+        [ "Navigation.ContextRestore.Startup"
+          "Navigation.ProjectSelection.FirstStart"
+          "Navigation.ProjectSelection.RestoreFailed"
+          "Navigation.SprintMenu.AllActive"
+          "Navigation.SprintMenu.Single" ]
+
+    for scenarioId in scenarioIds do
+        let state =
+            CatalogShell.init ()
+            |> CatalogShell.update (SelectScenario scenarioId)
+
+        Assert.Equal(scenarioId, state.SelectedScenarioId)

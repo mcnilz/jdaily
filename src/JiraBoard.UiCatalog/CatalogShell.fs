@@ -89,7 +89,22 @@ module CatalogScenarios =
             Area = "Drag-and-drop" }
           { Id = "DragDrop.Rollback"
             Name = "Drag-and-drop · Abbruch"
-            Area = "Drag-and-drop" } ]
+            Area = "Drag-and-drop" }
+          { Id = "Navigation.ContextRestore.Startup"
+            Name = "Navigation · Wiederherstellung ohne Modal"
+            Area = "Navigation" }
+          { Id = "Navigation.ProjectSelection.FirstStart"
+            Name = "Navigation · Projektauswahl ohne Kontext"
+            Area = "Navigation" }
+          { Id = "Navigation.ProjectSelection.RestoreFailed"
+            Name = "Navigation · Projektauswahl nach fehlgeschlagener Wiederherstellung"
+            Area = "Navigation" }
+          { Id = "Navigation.SprintMenu.AllActive"
+            Name = "Navigation · Sprint-Menü · alle aktiven Sprints"
+            Area = "Navigation" }
+          { Id = "Navigation.SprintMenu.Single"
+            Name = "Navigation · Sprint-Menü · ein aktiver Sprint"
+            Area = "Navigation" } ]
 
 type CatalogShellState =
     { Viewport: ViewportPreset

@@ -162,12 +162,19 @@
         "resolved": "0.21.3",
         "contentHash": "hDwB8WsQoyALQKqIbwzS68UKdlnafDm4T/DkO/JrA/YIneP/rKv96SxYPVXeh3FP4i/SXfShrYftKLtciJAIlw=="
       },
+      "jiraboard.domain": {
+        "type": "Project",
+        "dependencies": {
+          "FSharp.Core": "[6.0.0, )"
+        }
+      },
       "jiraboard.ui": {
         "type": "Project",
         "dependencies": {
           "Avalonia": "[11.3.18, )",
           "Avalonia.Controls.DataGrid": "[11.3.13, )",
-          "Avalonia.FuncUI": "[1.6.0, )"
+          "Avalonia.FuncUI": "[1.6.0, )",
+          "JiraBoard.Domain": "[1.0.0, )"
         }
       },
       "Avalonia": {

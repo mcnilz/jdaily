@@ -9,6 +9,7 @@
     <Compile Include="IssueHierarchy.fs" />
     <Compile Include="BoardOrder.fs" />
     <Compile Include="Board.fs" />
+    <Compile Include="NavigationContext.fs" />
     <Compile Include="SprintProjection.fs" />
     <Compile Include="BoardEvents.fs" />
     <PackageReference Include="FSharp.Core" />

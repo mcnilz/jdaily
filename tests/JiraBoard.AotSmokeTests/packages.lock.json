@@ -197,7 +197,8 @@
         "dependencies": {
           "Avalonia": "[11.3.18, )",
           "Avalonia.Controls.DataGrid": "[11.3.13, )",
-          "Avalonia.FuncUI": "[1.6.0, )"
+          "Avalonia.FuncUI": "[1.6.0, )",
+          "JiraBoard.Domain": "[1.0.0, )"
         }
       },
       "Avalonia": {

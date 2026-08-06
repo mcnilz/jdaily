@@ -105,7 +105,7 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 - [x] deterministische Fixtures und eine benannte Szenarioregistrierung bereitstellen; Nachweis: [`CatalogShell.fs`](src/JiraBoard.UiCatalog/CatalogShell.fs) registriert `Shell.Overview` sowie die Zustands-, Datenvarianten-, Swimlane- und ReviewTrack-Szenarien aus `UI-005`, abgesichert durch [`UiCatalogShellTests.fs`](tests/JiraBoard.Tests/UiCatalogShellTests.fs).
 - [ ] Katalogregler für Viewport, App-Zoom, Schriftzoom, Theme, Reduced Motion und Animationsfortschritt vorsehen. Teilnachweis aus `UI-003`: Viewport, beide Zooms, Motion, Reduced Motion und die fünf deterministischen Fortschrittswerte sind sichtbar und per Zustands-/Windows-Automationstest bedienbar; ein Theme-Regler bleibt mangels freigegebenem Dark-Theme-Vertrag offen.
 - [x] mindestens `TicketCard`, eine Standard-Issue-Swimlane, Subtasks und zusammengeklappte Spalten zuerst im UiCatalog darstellen; Nachweis: dieselben Produktionsviews aus [`JiraBoard.Ui`](src/JiraBoard.Ui/JiraBoard.Ui.fsproj) werden mit deterministischen Fixtures in [`ComponentCatalogView.fs`](src/JiraBoard.UiCatalog/ComponentCatalogView.fs) dargestellt und durch [`BoardComponentTests.fs`](tests/JiraBoard.Tests/BoardComponentTests.fs) abgesichert.
-- [ ] `ProjectSelectionModal` und `SprintMenu` mit stabilen IDs, mehreren aktiven Sprints, gleichen Namen, mehreren Boards und leerem Zustand zuerst im UiCatalog darstellen.
+- [ ] `ProjectSelectionModal` und `SprintMenu` mit stabilen IDs, mehreren aktiven Sprints, gleichen Namen, mehreren Boards und leerem Zustand zuerst im UiCatalog darstellen. Teilnachweis aus `VS-001`: die Produktionsviews zeigen Projektsuche/-auswahl sowie `AllActiveSprints` und zwei aktive Sprints mit stabilen IDs in fünf benannten Navigationsszenarien; gleiche Namen, mehrere Boards und leerer Zustand bleiben offen.
 - [ ] festlegen, dass eine Komponente erst nach Katalogszenario, Unit-/Headless-Tests und Designabnahme in `JiraBoard.App` integriert werden darf.
 - [x] automatisierte Tests für IdentityRail, normale/eingeklappte Spalten, 1,33-/80-/20-Reviewgeometrie und Mindest-Hit-Targets anlegen; Nachweis: [`BoardLayoutTests.fs`](tests/JiraBoard.Tests/BoardLayoutTests.fs) aus `UI-004` sowie der Hit-Target-Nachweis in [`DesignTokenTests.fs`](tests/JiraBoard.Tests/DesignTokenTests.fs).
 - [ ] nachweisen, dass generierte Konzeptbilder nicht als Pixelquelle oder Golden Master verwendet werden; Baselines entstehen ausschließlich aus den implementierten Produktionskomponenten.
@@ -118,8 +118,8 @@ Aus einer Fixture mit einem Parent-Level-Issue, einem Standard-Issue und zwei Su
 - [x] kompakter Subtask in zusammengeklappter Spalte; Nachweis: menschlich abgenommene Zustands- und Datenvarianten von `CollapsedColumnCell` aus `UI-005`.
 - [ ] Reduced Motion;
 - [ ] Loading, Empty, Offline und Error.
-- [ ] automatische Wiederherstellung des letzten gültigen Projekt-/Board-/Sprintkontexts, Projektauswahl bei Erststart oder ungültigem Kontext, erneute Auswahl über Menü, mehrere Boards und neutraler Abbruchzustand;
-- [ ] Sprint-Menü mit allen aktiven Sprints, Einzelauswahl, geschlossenem gespeicherten Sprint und keinem aktiven Sprint.
+- [ ] automatische Wiederherstellung des letzten gültigen Projekt-/Board-/Sprintkontexts, Projektauswahl bei Erststart oder ungültigem Kontext, erneute Auswahl über Menü, mehrere Boards und neutraler Abbruchzustand; Teilnachweis aus `VS-001`: Wiederherstellung, Erststart, Restore-Fehler und stabile Projektwahl sind als Produktionsviews im UiCatalog und Headless-Harness belegt; mehrere Boards und der neutrale Abbruchzustand bleiben offen.
+- [ ] Sprint-Menü mit allen aktiven Sprints, Einzelauswahl, geschlossenem gespeicherten Sprint und keinem aktiven Sprint. Teilnachweis aus `VS-001`: `AllActiveSprints`, Einzelsprint und Domainfallback eines inaktiven gespeicherten Sprints sind getestet; die sichtbaren Katalogzustände für geschlossen/keine aktiven Sprints bleiben offen.
 
 ### Nachweis
 
@@ -302,11 +302,11 @@ Jira-Fixture
 
 ### Enthalten
 
-- [ ] automatischer Start mit dem zuletzt bestätigten gültigen Projekt, Board und Sprintscope;
-- [ ] Projektauswahl bei Erststart sowie Fallback mit Hinweis bei nicht mehr zugänglichem Projekt oder Board;
-- [ ] ein Projekt mit einem Scrum-Board und zwei gleichzeitig aktiven Sprints;
-- [ ] Sprint-Menü mit `Alle aktiven Sprints` und genau einem Sprint;
-- [ ] deterministische Umschaltung, Issue-Deduplizierung und Abbruch alter Kontextgenerationen;
+- [x] automatischer Start mit dem zuletzt bestätigten gültigen Projekt, Board und Sprintscope; Nachweis: `NavigationContextTests`, `Navigation.ContextRestore.Startup` und `NavigationVisualTests` aus `VS-001`, menschlich abgenommen am 6. August 2026.
+- [x] Projektauswahl bei Erststart sowie Fallback mit Hinweis bei nicht mehr zugänglichem Projekt oder Board; Nachweis: `Navigation.ProjectSelection.FirstStart`, `Navigation.ProjectSelection.RestoreFailed` sowie Unit- und Headless-Tests aus `VS-001`, menschlich abgenommen am 6. August 2026.
+- [x] ein Projekt mit einem Scrum-Board und zwei gleichzeitig aktiven Sprints; Nachweis: die typisierte `VS-001`-Katalogfixture verwendet `ProjectId 10000`, `BoardId 1` und `SprintId 11`/`12` aus den anonymisierten Vertragsfixtures.
+- [x] Sprint-Menü mit `Alle aktiven Sprints` und genau einem Sprint; Nachweis: `Navigation.SprintMenu.AllActive` und `Navigation.SprintMenu.Single` verwenden dieselbe Produktionsview und sind headless getestet.
+- [ ] deterministische Umschaltung, Issue-Deduplizierung und Abbruch alter Kontextgenerationen; Teilnachweis aus `VS-001`: Projekt-/Board-/Sprintwechsel und monotone Kontextgeneration sind getestet, Issue-Deduplizierung und der Abbruch asynchroner alter Generationen folgen in den vorgesehenen Board-/Replay-Slices.
 - [ ] exakte Jira-Boardreihenfolge der Swimmlanes und Subtasks einschließlich zweier aktiver Sprints, Pagination und fehlendem Rank;
 - [ ] ein Parent/Epic als ausschließlich modaler Kontext;
 - [ ] ein Standard-Issue als Swimlane;
@@ -332,7 +332,7 @@ Nach Abnahme wird derselbe Slice an den read-only Jira-Adapter angeschlossen. Er
 
 - Slice-Feature-Notiz: _offen_
 - Tests: _offen_
-- UiCatalog-Szenario und Designabnahme: _offen_
+- UiCatalog-Szenario und Designabnahme: Navigationsanteil aus `VS-001` mit fünf Produktionsview-Szenarien am 6. August 2026 menschlich abgenommen; vollständiger G8-Slice bleibt offen.
 
 ## Definition of Ready für die breite Umsetzung
 
@@ -366,4 +366,4 @@ Diese Punkte blockieren den Entwicklungsstart nicht:
 
 | Datum | Gate/ADR | Entscheidung oder Nachweis | Verantwortlich |
 |---|---|---|---|
-| _offen_ | _offen_ | _offen_ | _offen_ |
+| 6. August 2026 | G8 / VS-001 | Offline-Projekt-/Sprintkontext mit fünf UiCatalog-Szenarien, 188/188 Tests und AOT-Smoke menschlich abgenommen; übriger G8-Slice bleibt offen. | Produkteigentümer / Junie |

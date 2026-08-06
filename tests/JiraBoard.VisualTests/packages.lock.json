@@ -333,12 +333,19 @@
           "xunit.v3.runner.common": "[3.2.2]"
         }
       },
+      "jiraboard.domain": {
+        "type": "Project",
+        "dependencies": {
+          "FSharp.Core": "[6.0.0, )"
+        }
+      },
       "jiraboard.ui": {
         "type": "Project",
         "dependencies": {
           "Avalonia": "[11.3.18, )",
           "Avalonia.Controls.DataGrid": "[11.3.13, )",
-          "Avalonia.FuncUI": "[1.6.0, )"
+          "Avalonia.FuncUI": "[1.6.0, )",
+          "JiraBoard.Domain": "[1.0.0, )"
         }
       },
       "jiraboard.uicatalog": {

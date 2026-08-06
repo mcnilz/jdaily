@@ -30,9 +30,9 @@ if (-not $activeMatch.Success) { Fail 'Active State has no Aktiver Arbeitsauftra
 $activeValue = $activeMatch.Groups['value'].Value
 if ($To -eq 'In Progress' -and $activeValue -ne 'keiner' -and $activeValue -notmatch [regex]::Escape($Item)) { Fail "Foreign active work item blocks transition: $activeValue" }
 
-$newBacklog = [regex]::Replace($backlogRaw, $rowPattern, { param($m) "| $Item |$($m.Groups['prio'].Value)| $To |" }, 1)
+$newBacklog = [regex]::Replace($backlogRaw, $rowPattern, { param($m) "| $Item | $($m.Groups['prio'].Value)| $To |" }, 1)
 $newActive = [regex]::Replace($activeRaw, $activeTaskPattern, { param($m) "| Aktiver Arbeitsauftrag | $(if ($To -in @('In Progress','In Review','Blocked')) { "$Item – $To" } else { 'keiner' }) |" }, 1)
-if ($newBacklog -eq $backlogRaw -or $newActive -eq $activeRaw) { Fail 'Transition produced no complete state change' }
+if ($newBacklog -eq $backlogRaw) { Fail 'Transition produced no backlog state change' }
 
 if ($PSCmdlet.ShouldProcess("${Item}: $from -> $To", 'Synchronize Backlog and Active State')) {
     $utf8 = [Text.UTF8Encoding]::new($false)

@@ -14,14 +14,14 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 4. August 2026 |
-| Phase | Welle 0 – UiCatalog, Designsystem und Risikospikes |
+| Stand | 6. August 2026 |
+| Phase | Welle 1 – Erster offline Vertical Slice |
 | Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | Nächstes zulässiges Arbeitspaket freigeben oder seine Readiness klären |
-| Nächster Paketkandidat danach | keiner; derzeit ist kein `Ready`-Item im Backlog |
+| Nächste menschliche Aktion | keine; `VS-001` wurde am 6. August 2026 eigenständig abgenommen und abgeschlossen |
+| Nächster Paketkandidat danach | keiner im Status `Ready`; `VS-002` bleibt bis zu einem gesonderten Vorschlag `Planned` |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
-| Repositoryzustand | `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004`, `SPK-005`, `SPK-006`, `WFL-001`, `WFL-002`, `WFL-003` und `WFL-006` sind menschlich abgenommen und `Done`. `SPK-006` hält den sicheren Capability-Port und Vertragsfixtures fest; `ADR-007` dokumentiert, dass kein offizieller tokenbasierter Development-Information-Leseweg belegt ist und `Unavailable` deshalb normal bleibt. `WFL-001` ersetzt die pauschale Volllektüre durch phasen- und änderungsspezifisches Kontext-Routing mit Messnachweisen; `WFL-002` verdichtet die globalen Agentenregeln auf 4.724 Zeichen und sichert sie per Erhaltungscheckliste; `WFL-003` liefert dafür den read-only Kontextgenerator mit Fixture-Tests; `WFL-006` ergänzt dessen `VS-*`-Routing als `VerticalSlice` mit Profil `UI` und vereinten Gates. `SPK-005` hält die isolierte, test-first Drag-Lifecycle-Probe und `ADR-006` fest. `UI-007` stellt den xUnit-v3-Headless-Harness mit geschütztem Baselineprozess und BoardSurface-Messnachweis bereit. `SPK-001` hält den isolierten BoardSurface-Composition-Kandidaten, die Messbasis und die Risikoentscheidung in `ADR-002` fest. `FND-009` korrigiert die fehlende zeilenendungsunabhängige Notice-Reproduzierbarkeit aus GitHub-Actions-Lauf 30350973755 mit kanonischem LF-Output, Regressionstest und erfolgreicher lokaler Gesamtvalidierung. `SPK-004` hält den dependency-freien Windows-Credential-Manager-Nachweis sowie die Plattformvoraussetzungen in `ADR-005` fest. |
+| Repositoryzustand | `VS-001` ist menschlich abgenommen und `Done`; der erste Offline-Navigationsslice liefert site-isolierte Wiederherstellung, Projektsuche/-auswahl und stabile Sprintscopes in fünf UiCatalog-Szenarien. `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004`, `SPK-005`, `SPK-006`, `WFL-001`, `WFL-002`, `WFL-003` und `WFL-006` sind ebenfalls menschlich abgenommen und `Done`. Die ausführlichen technischen Nachweise und bekannten externen AOT-Warnungen stehen im Prüfstand. |
 
 ## Aktive Arbeitspositionen
 

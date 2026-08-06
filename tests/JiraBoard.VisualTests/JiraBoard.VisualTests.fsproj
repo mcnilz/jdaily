@@ -10,6 +10,7 @@
     <Compile Include="GoldenMasterEnvironmentTests.fs" />
     <Compile Include="HeadlessTestHost.fs" />
     <Compile Include="HeadlessTestHostTests.fs" />
+    <Compile Include="NavigationVisualTests.fs" />
     <Compile Include="BoardSurfaceRenderTests.fs" />
     <Compile Include="DragDropSpikeRenderTests.fs" />
     <Compile Include="BaselineProtection.fs" />

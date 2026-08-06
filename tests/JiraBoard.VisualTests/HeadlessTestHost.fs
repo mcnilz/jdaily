@@ -43,7 +43,7 @@ module HeadlessTestHost =
 
                         window.Width <- float width
                         window.Height <- float height
-                        window.Content <- ViewContent.Single(Some(createView ()))
+                        (window :> IViewHost).Update(Some(createView ()))
                         window.Show()
 
                         let frame = window.CaptureRenderedFrame()
@@ -74,7 +74,7 @@ module HeadlessTestHost =
 
                         window.Width <- float width
                         window.Height <- float height
-                        window.Content <- ViewContent.Single(Some(createView ()))
+                        (window :> IViewHost).Update(Some(createView ()))
                         window.Show()
 
                         let visualTreeNodeCount = window.GetVisualDescendants() |> Seq.length
@@ -98,3 +98,26 @@ module HeadlessTestHost =
                   VisualTreeNodeCount = visualTreeNodeCount }
 
             png.ToArray(), measurements)
+
+    let run width height (createView: unit -> IView) (assertion: HostWindow -> unit) =
+        lock sessionGate (fun () ->
+            use session = HeadlessUnitTestSession.StartNew(typeof<HeadlessTestApplication>)
+
+            let runTask =
+                session.Dispatch(
+                    (fun () ->
+                        let window = HostWindow()
+
+                        try
+                            window.Width <- float width
+                            window.Height <- float height
+                            (window :> IViewHost).Update(Some(createView ()))
+                            window.Show()
+
+                            assertion window
+                        finally
+                            window.Close()),
+                    CancellationToken.None
+                )
+
+            runTask.GetAwaiter().GetResult())

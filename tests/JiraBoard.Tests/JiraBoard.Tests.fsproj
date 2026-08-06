@@ -9,6 +9,7 @@
     <Compile Include="TestSupport.fs" />
     <Compile Include="HarnessTests.fs" />
     <Compile Include="DomainIdentityTests.fs" />
+    <Compile Include="NavigationContextTests.fs" />
     <Compile Include="IssueHierarchyTests.fs" />
     <Compile Include="BoardOrderTests.fs" />
     <Compile Include="SprintProjectionTests.fs" />
@@ -23,6 +24,7 @@
     <Compile Include="BoardComponentTests.fs" />
     <Compile Include="BoardSurfaceTests.fs" />
     <Compile Include="DragDropSpikeTests.fs" />
+    <Compile Include="NavigationViewTests.fs" />
     <Compile Include="UiCatalogShellTests.fs" />
     <Compile Include="AotSmokeRunnerTests.fs" />
     <Compile Include="SnapshotJsonTests.fs" />
