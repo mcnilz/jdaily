@@ -30,7 +30,17 @@ Read a named section in full, including subordinate headings, rather than relyin
 | Workflow, backlog, Active State or agent tooling | `AGENTS.md`; handover: `Verbindlicher Agent-Mensch-Arbeitsflow`, `Arbeitsregeln für den Codex-Agenten`; product backlog: `Prioritäten und Status`, `Definition of Ready für ein Backlog-Item`, `Globale Definition of Done` and the affected item; readiness rows named by the item | A before/after example, deterministic script tests when automation changes, and preservation of explicit human acceptance. |
 | Documentation only | Affected document section; backlog item and Active State if their status/evidence changes | Link integrity, Markdown/diff check and confirmation that no executable behavior changed. |
 
-If a change belongs to more than one class, load the union of the named sections. For a new or unclear class, the agent must propose the required context explicitly and obtain a decision before implementation.
+Choose classes from the confirmed substep and expected or actually changed files, not from the broadest possible backlog-item label. If a change genuinely belongs to more than one class, load their union; a vertical slice does not by itself require every Domain, UI, Jira and persistence contract. Treat `eng/agent-context.ps1` output as a safe routing inventory and load additional listed sections only when a concrete dependency or encountered contract makes them relevant. For a new or unclear class, the agent must propose the required context explicitly and obtain a decision before implementation.
+
+## Lean end-to-end flow
+
+1. Read `AGENTS.md` and the compact Active State, then select or confirm the concrete item and substep.
+2. Load the exact item plus the smallest routed authoritative sections; add context only when the work reaches another contract.
+3. Keep lifecycle status in the Backlog and mirror only active operational facts in Active State. Update readiness and `pruefstand.md` only when gate or historical evidence changes, rather than copying routine progress into every document.
+4. Use focused tests during Red-Green-Refactor and record the initial failure once in compact form.
+5. Review the coherent final diff once. Resolve findings with targeted checks instead of repeating unrelated full reviews.
+6. Choose the validation profile from the actual diff and run the complete applicable closure once before handoff. Reuse still-valid evidence from the same unchanged diff; do not rerun Self-contained or Native-AOT checks unless their triggering area changed.
+7. Report only meaningful turning points during work, then provide one compact handoff with evidence, warnings, acceptance checks and retrospective.
 
 ## Context budget and evidence
 
@@ -46,14 +56,7 @@ The following measurements use the current line-bounded routing sets, the compac
 | UI interaction (`UI-` or `SPK-005`-like) | 313,668 characters, 78,000–98,000 tokens | about 60,000 characters, 15,000–18,800 tokens | about 81% | Global rules and Active State; item/dependencies; affected UI component, geometry, interaction, accessibility and visual-validation sections; handover UiCatalog, interaction and visual-test sections; G3/G6/G8 rows. |
 | Dependency/AOT (`FND-`-like) | 313,668 characters, 78,000–98,000 tokens | about 55,000 characters, 13,800–17,200 tokens | about 82% | Global rules and Active State; item/dependencies; complete license policy; handover stack, package and AOT sections; G1/G7 rows. |
 
-For every completed work package, the handoff records:
-
-- phase and change class or classes;
-- documents and exact headings read;
-- approximate input size before and after routing, using character count divided by 3.2–4.0 as a range;
-- any deliberate whole-document read and its reason.
-
-This measurement is evidence for workflow improvement, not a reason to omit required tests, reviews, approvals or authoritative contracts.
+Routine handoffs name the applied change class and any exceptional whole-document read only when that information helps review. Character counts and token estimates are collected for explicit workflow experiments such as `WFL-*`, not recalculated for every product package. Measurement is never a reason to omit required tests, reviews, approvals or authoritative contracts.
 
 ## WFL-002 rule-preservation checklist
 

@@ -2,7 +2,7 @@
 
 ## Status und Verwendung
 
-Dieses Dokument übersetzt den [technischen Handover](avalonia-fsharp-funcui-stack-handoff.md), das [DDD-Glossar](domain-glossary.md), die [Lizenz- und Avalonia-Free-Policy](license-policy.md), die [Implementation-Readiness-Checkliste](implementation-readiness-checklist.md) und die [UI-Design-Spezifikation](ui-design-specification.md) in eine priorisierte Lieferreihenfolge. Der kompakte [Active State](active-state.md) zeigt nur vorgeschlagene, laufende, zur Abnahme stehende oder blockierte Positionen und den nächsten Kandidaten; er ersetzt keinen Status und keine Anforderung dieses Backlogs.
+Dieses Dokument übersetzt den [technischen Handover](avalonia-fsharp-funcui-stack-handoff.md), das [DDD-Glossar](domain-glossary.md), die [Lizenz- und Avalonia-Free-Policy](license-policy.md), die [Implementation-Readiness-Checkliste](implementation-readiness-checklist.md) und die [UI-Design-Spezifikation](ui-design-specification.md) in eine priorisierte Lieferreihenfolge und ist die einzige Autorität für den Lifecycle-Status. Der kompakte [Active State](active-state.md) zeigt nur vorgeschlagene, laufende, zur Abnahme stehende oder blockierte Positionen und den nächsten Kandidaten; er ist eine operative Projektion und ersetzt keinen Status und keine Anforderung dieses Backlogs.
 
 Die fünf genannten Dokumente bleiben für Produkt, Fachsprache, Lizenzierung, Architektur und Design maßgeblich. Dieses Backlog entscheidet keine abweichenden Anforderungen. Bei einem Konflikt wird das Backlog korrigiert; die Umsetzung rät nicht. Neue Produktentscheidungen werden zuerst in den maßgeblichen Dokumenten festgehalten.
 
@@ -91,8 +91,8 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 - UI-Komponenten wurden zuerst als Produktionsview im UiCatalog umgesetzt und abgenommen.
 - Tastatur, Automation und Reduced Motion sind bei UI-Änderungen berücksichtigt.
 - Jira-Reihenfolge bleibt bei Pagination, Filterung, Sprint-Merge und Snapshot-Restore erhalten.
-- `dotnet restore`, `dotnet build -c Release` und `dotnet test -c Release --no-build` sind für den Change grün.
-- Relevante Self-contained- und Native-AOT-Smoke-Checks sind bei Dependency-, Mapping-, Persistenz- oder Wiring-Änderungen grün.
+- Für ausführbare Änderungen ist das aus dem tatsächlichen Diff gewählte Abschlussprofil grün; normalerweise umfasst es einmalig `dotnet restore`, `dotnet build -c Release` und `dotnet test -c Release --no-build`. Reine Dokumentationsänderungen verwenden nur das `Docs`-Profil.
+- Relevante Self-contained- und Native-AOT-Smoke-Checks sind bei Abhängigkeits-, Serialisierungs-, Persistenz-, App-Wiring-, Packaging- oder Publishing-Änderungen grün und werden bei unverändertem Triggerbereich nicht wiederholt.
 - Keine Golden Masters wurden automatisch aktualisiert.
 - Dokumentation, Glossar und ADRs wurden angepasst, wenn sich ein öffentlicher Vertrag geändert hat.
 - Der Agent hat Ergebnis, Prüfungen, Einschränkungen, konkrete Abnahmepunkte und Retrospektive vorgestellt; `Done` wurde erst nach ausdrücklicher menschlicher Abnahme gesetzt.

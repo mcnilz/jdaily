@@ -2,14 +2,14 @@
 
 ## Context and authority
 
-At every start or resume, read this file and the compact [Active State](active-state.md) with `pwsh eng/active-state.ps1`. Then apply [Agent Context Routing](docs/agent-context-routing.md): read the named authoritative sections in full for the phase and change class; do not load unrelated specifications by default.
+At every start or resume, read this file and the compact [Active State](active-state.md) with `pwsh eng/active-state.ps1`. Then apply [Agent Context Routing](docs/agent-context-routing.md): derive the smallest change class from the confirmed scope and current substep, read its named authoritative sections in full, and expand the context only when a concrete dependency, changed file or encountered contract requires it. A generated manifest is a routing aid, not a requirement to load every possible vertical-slice contract up front.
 
 The technical handover, DDD glossary, license policy, readiness checklist and UI specification are authoritative for their subjects. The product backlog is authoritative for sequence, status and acceptance criteria. Active State is only the operational projection. Stop and ask when a decision, routing reference or required source is missing or conflicts.
 
 ## Work-package lifecycle
 
 - Select the next eligible `Ready` item, set it to `Proposed`, and present goal, scope/non-goals, risks, validation, affected areas and human acceptance points. A direct instruction to implement a concrete scope is its confirmation.
-- After confirmation, set `In Progress` and record owner, current substep, next action and exclusive write area in Active State. Synchronize Active State, Backlog and affected readiness evidence after coherent results, on block, and before handoff.
+- After confirmation, set `In Progress` and record owner, current substep, next action and exclusive write area in Active State. The Backlog is the single lifecycle-status authority; update its status and the Active-State projection together only on a real transition, block or handoff, and update readiness or historical evidence only when that evidence actually changes.
 - Move completed, tested and reviewed work to `In Review` with behavior, evidence, warnings, a concrete acceptance checklist and a brief retrospective. Feedback returns to `In Progress`; material scope changes return to `Proposed`.
 - Only a standalone human `Abgenommen` for the current `In Review` package permits `Done`. Then synchronize evidence, stage and commit exactly that accepted package. Never pre-commit, infer acceptance or start the next package without confirmation.
 
@@ -31,7 +31,7 @@ The technical handover, DDD glossary, license policy, readiness checklist and UI
 
 ## Validation and handoff
 
-After each coherent change run the applicable checks, normally:
+During implementation run the smallest targeted check that can disprove the current change. Before handoff, select the applicable profile from [the validation matrix](docs/validation-matrix.md) from the actual diff, combine profiles only for genuinely mixed changes, and run that closure once. Executable changes normally include:
 
 ```sh
 dotnet restore JiraBoard.slnx
@@ -39,6 +39,6 @@ dotnet build JiraBoard.slnx -c Release
 dotnet test JiraBoard.slnx -c Release --no-build
 ```
 
-For UI changes run relevant headless visual tests; for dependency, serialization, persistence, wiring or publishing changes run relevant self-contained and Native-AOT smoke checks. Never update Golden Masters automatically. If sandboxed NuGet access to the user configuration or global lock is denied, rerun the identical command with the required escalation; do not delete locks, rewrite user configuration or create a repository workaround.
+For UI changes run relevant headless visual tests; for dependency, serialization, persistence, wiring or publishing changes run relevant self-contained and Native-AOT smoke checks. Do not repeat unchanged publish or full-suite checks after every local correction; review the coherent final diff once and recheck only findings after review fixes. Documentation-only changes use the `Docs` profile and need no executable build. Never update Golden Masters automatically. If sandboxed NuGet access to the user configuration or global lock is denied, rerun the identical command with the required escalation; do not delete locks, rewrite user configuration or create a repository workaround.
 
-Before every handoff, Active State reflects the real remainder. Report changed behavior, commands and results, warnings, deferred decisions, exact acceptance checks and a short retrospective.
+Keep Red-Green evidence compact: name the reproducing test and observed failure once. Report progress only at a cause, completed scope chunk, validation result, changed direction or block. Before every handoff, Active State reflects the real remainder; report changed behavior, commands and results, warnings, deferred decisions, exact acceptance checks and a short retrospective.

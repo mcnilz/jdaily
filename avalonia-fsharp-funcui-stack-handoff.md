@@ -1640,6 +1640,12 @@ stateDiagram-v2
     Done --> [*]
 ```
 
+### Schlanker Standardablauf
+
+Der normale Paketfluss lautet: kompakter Wiedereinstieg → konkretes Item und aktuellen Teilschritt bestätigen → kleinste passende Vertragsabschnitte laden → gezielte Red-Green-Refactor-Schleifen → kohärenten Gesamtdiff einmal reviewen → genau ein diff-basiertes Abschlussprofil ausführen → kompakte Übergabe und menschliche Abnahme. Weitere Verträge werden erst geladen, wenn eine konkrete Abhängigkeit, eine tatsächlich geänderte Datei oder ein während der Arbeit erreichter Vertrag sie benötigt; die bloße Bezeichnung als Vertical Slice rechtfertigt keine pauschale Volllektüre aller möglichen Schichten.
+
+Das Backlog ist die einzige Autorität für den Lifecycle-Status. Active State projiziert nur laufende operative Fakten; Readiness und Prüfstand werden nur bei geänderter Gate- beziehungsweise historischer Evidenz aktualisiert. Routinefortschritt wird nicht parallel in mehreren Dokumenten nacherzählt. Statusmeldungen erfolgen nur bei gefundener Ursache, abgeschlossenem Scope-Teil, Validierungsergebnis, Richtungswechsel oder Blockade.
+
 ### 1. Arbeitspaket vorschlagen und bestätigen lassen
 
 Der Agent bestimmt anhand von [Active State](active-state.md), [Product Backlog](product-backlog.md), Abhängigkeiten und Readiness-Gates das nächste sinnvolle `Ready`-Item. Er setzt es auf `Proposed` und legt dem Menschen vor:
@@ -1656,11 +1662,11 @@ Ohne ausdrückliche Bestätigung bleibt das Paket `Proposed`; erlaubt sind nur w
 
 ### 2. Umsetzung, Tests und Review organisieren
 
-Nach Bestätigung setzt der Agent das Paket auf `In Progress`, aktualisiert den Active State und organisiert die Umsetzung innerhalb des bestätigten Scopes. Er bleibt für das Gesamtergebnis verantwortlich, auch wenn er klar getrennte Unteraufgaben an weitere Agenten delegiert.
+Nach Bestätigung setzt der Agent das Paket im Backlog auf `In Progress`, aktualisiert die operative Projektion im Active State und organisiert die Umsetzung innerhalb des bestätigten Scopes. Er bleibt für das Gesamtergebnis verantwortlich, auch wenn er klar getrennte Unteraufgaben an weitere Agenten delegiert.
 
 - Produktionsänderungen folgen Red-Green-Refactor; Bugfixes beginnen mit einem Reproduktionstest.
-- Der Agent führt die zum Risiko passenden Unit-, Architektur-, Integrations-, Visual-, Self-contained- und AOT-Prüfungen aus.
-- Jede Änderung erhält mindestens einen bewussten Self-Review; bei komplexen oder riskanten Änderungen organisiert der Agent nach Möglichkeit einen unabhängigen Review mit überschneidungsfreiem Schreibbereich.
+- Während der Umsetzung führt der Agent die kleinsten betroffenen Tests aus; vor der Übergabe läuft einmal das aus dem tatsächlichen Diff abgeleitete Abschlussprofil mit den zum Risiko passenden Unit-, Architektur-, Integrations-, Visual-, Self-contained- und AOT-Prüfungen.
+- Jede Änderung erhält mindestens einen bewussten Self-Review des kohärenten Gesamtdiffs; bei komplexen oder riskanten Änderungen organisiert der Agent nach Möglichkeit einen unabhängigen Review mit überschneidungsfreiem Schreibbereich. Korrekturen aus dem Review benötigen nur eine gezielte Nachprüfung der Befunde, solange sie keinen weiteren Vertrag berühren.
 - Reviews prüfen Verhalten, Architekturgrenzen, Lizenzpolicy, FluentAssertions-Sperre, AOT-/Trimming-Fähigkeit, Security, Accessibility und Designverträge – nicht nur Formatierung.
 - Neue Probleme außerhalb des bestätigten Scopes werden sichtbar gemacht, aber nicht stillschweigend mitimplementiert.
 
@@ -1697,8 +1703,8 @@ Der Agent vermeidet eine pauschale Bitte wie „Bitte prüfen“. Die Abnahmehin
 7. Hochfrequenten Pointer-/Animationszustand lokal in der BoardSurface halten.
 8. Keine Preview-Pakete hinzufügen.
 9. Keine Avalonia-Hauptversion ändern.
-10. Nach jeder kohärenten Änderung `dotnet build` ausführen.
-11. Regelmäßig Self-contained und Native AOT publishen.
+10. Während der Umsetzung die kleinsten betroffenen Tests ausführen und das vollständige diff-basierte Validierungsprofil genau einmal vor der Übergabe schließen.
+11. Self-contained und Native AOT nur bei Änderungen an Abhängigkeiten, Serialisierung, Persistenz, Wiring, Packaging oder Publishing sowie vor einem dafür vorgesehenen Release-Gate ausführen.
 12. Trimming- und AOT-Warnungen nicht pauschal unterdrücken.
 13. Neue Abhängigkeiten nur mit klarer Begründung einführen.
 14. Jira-Schreiboperationen nicht blind wiederholen.
@@ -1796,9 +1802,9 @@ Der Agent vermeidet eine pauschale Bitte wie „Bitte prüfen“. Die Abnahmehin
 106. API-Reihenfolge über Pagination als `BoardOrdinal` erhalten, Jira-Rank pro Board dynamisch erkennen und fehlenden beziehungsweise gleichen Rank stabil über den Ordinal auflösen.
 107. Swimmlanes und Subtasks niemals lokal nach Issue-Key, Titel, Status, Sprint, Erstellungsdatum oder Assignee neu sortieren; Filter, Collapse, Review-Track, Replay und Snapshot müssen die Jira-Reihenfolge erhalten.
 108. Projekt-, Board- oder Sprintwechsel muss Replay und alte Kontextgenerationen abbrechen, Pending-Projektion neu bilden und Daten anderer Kontexte erhalten.
-109. Den kompakten [Active State](active-state.md) bei Vorschlag, Arbeitsstart, nach kohärenten Zwischenergebnissen und vor jedem Kontextwechsel oder Handover aktualisieren.
-110. Backlog-Status, Readiness-Checkboxen und Active State synchron halten: `Proposed`, `In Progress`, `In Review` und `Blocked` erscheinen im Active State; `Done` benötigt überprüfbare Nachweise und ausdrückliche menschliche Abnahme.
-111. Im Active State keine Anforderungen duplizieren, sondern nur Backlog-ID, Verantwortlichen, aktuellen Teilschritt, nächste konkrete Aktion, exklusiven Schreibbereich, Blockade und letzten Prüfstand festhalten.
+109. Den kompakten [Active State](active-state.md) nur bei Vorschlag, Arbeitsstart, realem Statusübergang, Blockade, geändertem nächsten Schritt oder Handover aktualisieren; Routinefortschritt nicht duplizieren.
+110. Den Lifecycle-Status ausschließlich im Backlog führen und `Proposed`, `In Progress`, `In Review` und `Blocked` als operative Projektion im Active State spiegeln; Readiness-Checkboxen nur bei tatsächlich geänderter Gate-Evidenz anfassen. `Done` benötigt überprüfbare Nachweise und ausdrückliche menschliche Abnahme.
+111. Im Active State keine Anforderungen oder historischen Prüflisten duplizieren, sondern nur Backlog-ID, Verantwortlichen, aktuellen Teilschritt, nächste konkrete Aktion, exklusiven Schreibbereich und Blockade festhalten; ausführliche abgeschlossene Evidenz gehört einmalig in den Prüfstand.
 112. Das nächste `Ready`-Paket mit Ziel, Scope, Risiken, Prüfplan und späteren Abnahmepunkten vorschlagen und vor der Umsetzung ausdrücklich bestätigen lassen.
 113. Nach Umsetzung, Tests und Review das Paket auf `In Review` setzen und dem Menschen eine konkrete Abnahmecheckliste sowie eine kurze Agentenretrospektive vorlegen.
 114. Kein Paket selbst auf `Done` setzen; bei ausbleibender Abnahme in `In Review` warten, bei Feedback nach `In Progress` zurückkehren und den Zyklus erneut durchlaufen.
