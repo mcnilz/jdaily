@@ -14,6 +14,7 @@
     <Compile Include="DragDropSpike.fs" />
     <Compile Include="CollapsedColumnCell.fs" />
     <Compile Include="SwimlaneHeader.fs" />
+    <Compile Include="BoardProjection.fs" />
     <Compile Include="ReviewTrack.fs" />
     <Compile Include="ContextHeader.fs" />
     <Compile Include="ProjectSelectionModal.fs" />

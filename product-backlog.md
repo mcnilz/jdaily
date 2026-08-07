@@ -185,7 +185,7 @@ Zusätzlich zu den item-spezifischen Kriterien gilt:
 | ID | Prio | Status | Item | Akzeptanzkriterien | Abhängigkeit |
 |---|---|---|---|---|---|
 | VS-001 | P0 | Done | Offline-Projekt- und Sprintkontext darstellen | Fixture bietet Projektauswahl, zwei aktive Sprints, `AllActiveSprints`, Einzelsprint und Wiederherstellung letzter Auswahl. Menschlich abgenommen am 6. August 2026. | DOM-001, DOM-004, UI-003 |
-| VS-002 | P0 | Planned | Statisches Board aus Domainprojektion rendern | Ein Parent bleibt modal, ein Standard-Issue bildet eine Swimlane, zwei Subtasks liegen in ihren Statusspalten. | DOM-002–004, UI-004–005 |
+| VS-002 | P0 | Done | Statisches Board aus Domainprojektion rendern | Ein Parent bleibt modal, ein Standard-Issue bildet eine Swimlane, zwei Subtasks liegen in ihren Statusspalten. Menschlich abgenommen am 7. August 2026; Nachweis: `BoardProjectionTests`, `BoardProjectionRenderTests`, UiCatalog-Szenario `Board.StaticDomainProjection`, Release-Build und 195/195 Unit-/Visualtests. | DOM-002–004, UI-004–005 |
 | VS-003 | P0 | Planned | Jira-Reihenfolge im Slice beweisen | Multi-Sprint, Pagination, gleicher/fehlender Rank und Filter verändern die erwartete relative Reihenfolge nicht. | DOM-003–004, DOM-008, VS-002 |
 | VS-004 | P0 | Planned | Deterministisches Offline-Replay integrieren | Eine Swimlane und ein Subtask besitzen je einen Loop-Button; drei Statusereignisse und ein gefilterter Bounce laufen über steuerbare Keyframes. | DOM-005–007, SPK-001, VS-002 |
 | VS-005 | P0 | Planned | Reduced Motion und Abbruch integrieren | Stop, Hover-/Fokusverlust und Reduced Motion kehren zum aktuellen Zustand zurück; verspätete Callbacks bleiben wirkungslos. | VS-004, UI-006 |

@@ -22,6 +22,7 @@
     <Compile Include="DesignTokenTests.fs" />
     <Compile Include="BoardLayoutTests.fs" />
     <Compile Include="BoardComponentTests.fs" />
+    <Compile Include="BoardProjectionTests.fs" />
     <Compile Include="BoardSurfaceTests.fs" />
     <Compile Include="DragDropSpikeTests.fs" />
     <Compile Include="NavigationViewTests.fs" />

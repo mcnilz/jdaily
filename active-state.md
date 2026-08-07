@@ -14,11 +14,11 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 
 | Feld | Aktueller Stand |
 |---|---|
-| Stand | 6. August 2026 |
+| Stand | 7. August 2026 |
 | Phase | Welle 1 – Erster offline Vertical Slice |
 | Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | keine; `VS-001` wurde am 6. August 2026 eigenständig abgenommen und abgeschlossen |
-| Nächster Paketkandidat danach | keiner im Status `Ready`; `VS-002` bleibt bis zu einem gesonderten Vorschlag `Planned` |
+| Nächste menschliche Aktion | keine; `VS-002` wurde am 7. August 2026 menschlich abgenommen und abgeschlossen |
+| Nächster Paketkandidat danach | keiner im Status `Ready`; `VS-003` bleibt bis zu einem gesonderten Vorschlag `Planned` |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `VS-001` ist menschlich abgenommen und `Done`; der erste Offline-Navigationsslice liefert site-isolierte Wiederherstellung, Projektsuche/-auswahl und stabile Sprintscopes in fünf UiCatalog-Szenarien. `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004`, `SPK-005`, `SPK-006`, `WFL-001`, `WFL-002`, `WFL-003` und `WFL-006` sind ebenfalls menschlich abgenommen und `Done`. Die ausführlichen technischen Nachweise und bekannten externen AOT-Warnungen stehen im Prüfstand. |

@@ -27,6 +27,34 @@ type NamedBoardSurfaceFixture =
 module ComponentCatalogFixtures =
     let keyboardBoard = CatalogKeyboard.boardTargets
 
+    let staticBoard =
+        BoardProjection.project
+            [ "To Do"; "In Progress" ]
+            [ { Id = IssueId "catalog-parent"
+                Key = "DEMO-100"
+                Title = "Übergeordnetes Issue bleibt im Modal"
+                Level = ParentLevel
+                ParentIssueId = None
+                Column = "To Do" }
+              { Id = IssueId "catalog-standard"
+                Key = "DEMO-101"
+                Title = "Standard-Issue bildet die Swimlane"
+                Level = StandardLevel
+                ParentIssueId = None
+                Column = "To Do" }
+              { Id = IssueId "catalog-subtask-1"
+                Key = "DEMO-102"
+                Title = "Erster Subtask"
+                Level = SubtaskLevel
+                ParentIssueId = Some(IssueId "catalog-standard")
+                Column = "To Do" }
+              { Id = IssueId "catalog-subtask-2"
+                Key = "DEMO-103"
+                Title = "Zweiter Subtask"
+                Level = SubtaskLevel
+                ParentIssueId = Some(IssueId "catalog-standard")
+                Column = "In Progress" } ]
+
     let boardSurface =
         { Columns = [ "To Do"; "In Progress"; "Done" ]
           Cards =

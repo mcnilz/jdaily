@@ -250,6 +250,12 @@ module ComponentCatalogView =
     let private boardSurface scale boardWidth title model =
         section scale title [ BoardSurface.viewAt scale boardWidth model ]
 
+    let private staticBoard scale boardWidth =
+        section
+            scale
+            "Board · Parent modal, Standard-Issue-Swimlane und Subtasks nach Status"
+            [ BoardProjection.viewAt scale boardWidth ComponentCatalogFixtures.staticBoard ]
+
     let private dragDropProbe scale title state =
         section scale title [ DragDropSpike.viewAt scale ComponentCatalogFixtures.boardSurface.Columns state ]
 
@@ -334,6 +340,7 @@ module ComponentCatalogView =
                                     scale
                                     "Board.SwimlaneHover · genau ein Replaybutton"
                                     [ interactiveSwimlaneHover scale keyboard dispatch ]
+                            | "Board.StaticDomainProjection" -> staticBoard scale boardWidth
                             | "SwimlaneHeader.AllStates" -> swimlaneHeaders scale
                             | "SwimlaneHeader.DataVariants" ->
                                 swimlaneHeaderDataVariants scale
