@@ -19,6 +19,14 @@ type BoardProjectionIssue =
       ParentIssueId: IssueId option
       Column: string }
 
+/// A UI-ready issue together with the already normalized data required to
+/// project a selected sprint scope. The UI never interprets Jira ranks itself:
+/// the domain resolves the global order before this record reaches a view.
+type SprintScopedBoardProjectionIssue =
+    { Issue: BoardProjectionIssue
+      Position: BoardPosition
+      Sprints: Set<SprintId> }
+
 type ProjectedBoardCard =
     { IssueKey: string
       Title: string }
@@ -93,6 +101,30 @@ module BoardProjection =
 
         { Columns = columns
           Swimlanes = swimlanes }
+
+    /// Projects a sprint scope onto the domain's global board order and only
+    /// then creates the visible board. Pagination, rank ties, missing ranks
+    /// and scope filters can therefore remove issues but cannot reorder the
+    /// remaining swimlanes or cards.
+    let projectSprintScope columns scope (issues: SprintScopedBoardProjectionIssue list) =
+        let scopedIssues =
+            issues
+            |> List.map (fun issue ->
+                { IssueId = issue.Issue.Id
+                  Position = issue.Position
+                  Sprints = issue.Sprints })
+            |> SprintProjection.projectSprintScope scope
+
+        let orderedIssues =
+            scopedIssues
+            |> List.map (fun scopedIssue ->
+                issues
+                |> List.find (fun issue ->
+                    issue.Issue.Id = scopedIssue.IssueId
+                    && issue.Position = scopedIssue.Position)
+                |> fun issue -> issue.Issue)
+
+        project columns orderedIssues
 
     let private cardView scale columnWidth (card: ProjectedBoardCard): IView<Border> =
         TicketCard.viewAt

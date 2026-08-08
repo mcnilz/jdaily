@@ -256,6 +256,12 @@ module ComponentCatalogView =
             "Board · Parent modal, Standard-Issue-Swimlane und Subtasks nach Status"
             [ BoardProjection.viewAt scale boardWidth ComponentCatalogFixtures.staticBoard ]
 
+    let private jiraOrderBoard scale boardWidth =
+        section
+            scale
+            "Board · Jira-Reihenfolge über Pagination, gleiche/fehlende Ranks und Multi-Sprint"
+            [ BoardProjection.viewAt scale boardWidth ComponentCatalogFixtures.jiraOrderBoard ]
+
     let private dragDropProbe scale title state =
         section scale title [ DragDropSpike.viewAt scale ComponentCatalogFixtures.boardSurface.Columns state ]
 
@@ -341,6 +347,7 @@ module ComponentCatalogView =
                                     "Board.SwimlaneHover · genau ein Replaybutton"
                                     [ interactiveSwimlaneHover scale keyboard dispatch ]
                             | "Board.StaticDomainProjection" -> staticBoard scale boardWidth
+                            | "Board.JiraOrderProjection" -> jiraOrderBoard scale boardWidth
                             | "SwimlaneHeader.AllStates" -> swimlaneHeaders scale
                             | "SwimlaneHeader.DataVariants" ->
                                 swimlaneHeaderDataVariants scale

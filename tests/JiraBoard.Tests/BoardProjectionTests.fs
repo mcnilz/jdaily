@@ -84,3 +84,46 @@ let ``swimlane header uses the full available board width independently of its i
 [<Fact>]
 let ``status headers use the same lane inset as their status cells`` () =
     Assert.Equal(12.0, BoardProjection.statusHeaderInset, 3)
+
+[<Fact>]
+let ``sprint scoped board projection retains pagination rank ties missing ranks and filtering order`` () =
+    let issue id key level parent rank ordinal sprints =
+        { Issue =
+            { Id = IssueId id
+              Key = key
+              Title = key
+              Level = level
+              ParentIssueId = parent
+              Column = "To Do" }
+          Position =
+            { IssueKey = IssueKey key
+              JiraRank = rank
+              BoardOrdinal = BoardOrdinal ordinal }
+          Sprints = sprints |> List.map SprintId |> Set.ofList }
+
+    // The input retains two paginated response pages. Equal and absent ranks
+    // deliberately rely on their original cross-page BoardOrdinal.
+    let paginatedBoard =
+        [ issue "10" "TMS-10" StandardLevel None (Some(JiraRank "a")) 0L [ 1L ]
+          issue "11" "TMS-11" StandardLevel None (Some(JiraRank "a")) 1L [ 2L ]
+          issue "12" "TMS-12" StandardLevel None None 2L [ 1L; 2L ]
+          issue "13" "TMS-13" StandardLevel None None 3L [ 2L ] ]
+
+    let allActive =
+        BoardProjection.projectSprintScope [ "To Do" ] AllActiveSprints paginatedBoard
+
+    let singleSprint =
+        BoardProjection.projectSprintScope
+            [ "To Do" ]
+            (ActiveSprint(SprintId 2L))
+            paginatedBoard
+
+    Assert.Equal<string list>(
+        [ "TMS-10"; "TMS-11"; "TMS-12"; "TMS-13" ],
+        allActive.Swimlanes |> List.map _.Header.IssueKey
+    )
+
+    Assert.Equal<string list>(
+        [ "TMS-11"; "TMS-12"; "TMS-13" ],
+        singleSprint.Swimlanes |> List.map _.Header.IssueKey
+    )

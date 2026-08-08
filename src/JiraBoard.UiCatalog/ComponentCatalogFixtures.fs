@@ -55,6 +55,29 @@ module ComponentCatalogFixtures =
                 ParentIssueId = Some(IssueId "catalog-standard")
                 Column = "In Progress" } ]
 
+    let jiraOrderBoard =
+        let issue id key rank ordinal sprints =
+            { Issue =
+                { Id = IssueId id
+                  Key = key
+                  Title = $"Paginiertes Board-Issue {key}"
+                  Level = StandardLevel
+                  ParentIssueId = None
+                  Column = "To Do" }
+              Position =
+                { IssueKey = IssueKey key
+                  JiraRank = rank
+                  BoardOrdinal = BoardOrdinal ordinal }
+              Sprints = sprints |> List.map SprintId |> Set.ofList }
+
+        // Two pages in API order: equal and missing ranks preserve their
+        // cross-page BoardOrdinal. Sprint membership only filters this order.
+        [ issue "catalog-order-10" "TMS-10" (Some(JiraRank "a")) 0L [ 1L ]
+          issue "catalog-order-11" "TMS-11" (Some(JiraRank "a")) 1L [ 2L ]
+          issue "catalog-order-12" "TMS-12" None 2L [ 1L; 2L ]
+          issue "catalog-order-13" "TMS-13" None 3L [ 2L ] ]
+        |> BoardProjection.projectSprintScope [ "To Do" ] AllActiveSprints
+
     let boardSurface =
         { Columns = [ "To Do"; "In Progress"; "Done" ]
           Cards =

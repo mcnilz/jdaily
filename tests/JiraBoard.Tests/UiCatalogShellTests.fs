@@ -77,6 +77,7 @@ let ``catalog registers every UI-005 production component scenario`` () =
           "CollapsedCell.DataVariants"
           "Board.SwimlaneHover"
           "Board.StaticDomainProjection"
+          "Board.JiraOrderProjection"
           "SwimlaneHeader.AllStates"
           "SwimlaneHeader.DataVariants"
           "Board.ReviewTrack.Ready"
@@ -111,6 +112,7 @@ let ``catalog shares deterministic component fixtures with tests`` () =
     Assert.Equal(3, ComponentCatalogFixtures.boardSurface.Cards.Length)
     Assert.Equal(Some(SwimlaneScope "APP-400"), ComponentCatalogFixtures.boardSurface.Replay)
     Assert.Equal(1, ComponentCatalogFixtures.staticBoard.Swimlanes.Length)
+    Assert.Equal(4, ComponentCatalogFixtures.jiraOrderBoard.Swimlanes.Length)
 
     let unassigned =
         ComponentCatalogFixtures.collapsedCells
