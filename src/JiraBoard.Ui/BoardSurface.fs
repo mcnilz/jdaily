@@ -19,11 +19,20 @@ type BoardSurfaceReplayScope =
     | SwimlaneScope of string
     | SubtaskScope of string
 
+/// A deterministic, externally controlled replay interval. The UiCatalog
+/// selects its progress directly, so visual tests never depend on timers.
+type BoardSurfaceKeyframe =
+    { IssueKey: string
+      StartProgress: float
+      EndProgress: float
+      Offset: float }
+
 type BoardSurfaceModel =
     { Columns: string list
       Cards: BoardSurfaceCard list
       Replay: BoardSurfaceReplayScope option
       Progress: float
+      Keyframes: BoardSurfaceKeyframe list
       ReducedMotion: bool }
 
 type BoardSurfaceProjectedCard =
@@ -33,7 +42,8 @@ type BoardSurfaceProjectedCard =
 
 type BoardSurfaceProjection =
     { Columns: string list
-      Cards: BoardSurfaceProjectedCard list }
+      Cards: BoardSurfaceProjectedCard list
+      ActiveKeyframe: BoardSurfaceKeyframe option }
 
 [<RequireQualifiedAccess>]
 module BoardSurface =
@@ -42,20 +52,53 @@ module BoardSurface =
         | SwimlaneScope swimlaneKey -> card.SwimlaneKey = swimlaneKey
         | SubtaskScope issueKey -> card.IssueKey = issueKey
 
+    let private activeKeyframe progress (keyframes: BoardSurfaceKeyframe list) =
+        keyframes
+        |> List.tryFind (fun keyframe ->
+            progress >= keyframe.StartProgress && progress <= keyframe.EndProgress)
+
+    let private keyframeOffset startOffset progress (keyframe: BoardSurfaceKeyframe) =
+        let duration = keyframe.EndProgress - keyframe.StartProgress
+
+        if duration <= 0.0 then
+            keyframe.Offset
+        else
+            let completed = (progress - keyframe.StartProgress) / duration
+            startOffset + (keyframe.Offset - startOffset) * max 0.0 (min 1.0 completed)
+
+    let private completedOffset issueKey progress (keyframes: BoardSurfaceKeyframe list) =
+        keyframes
+        |> List.filter (fun keyframe -> keyframe.IssueKey = issueKey && keyframe.EndProgress <= progress)
+        |> List.sortBy _.EndProgress
+        |> List.tryLast
+        |> Option.map _.Offset
+        |> Option.defaultValue 0.0
+
+    let private keyframeStartOffset (keyframe: BoardSurfaceKeyframe) keyframes =
+        completedOffset keyframe.IssueKey keyframe.StartProgress keyframes
+
     let project (model: BoardSurfaceModel): BoardSurfaceProjection =
+        let activeKeyframe = activeKeyframe model.Progress model.Keyframes
+
         { Columns = model.Columns
+          ActiveKeyframe = activeKeyframe
           Cards =
             model.Cards
             |> List.map (fun card ->
                 let isReplayActive = model.Replay |> Option.exists (fun scope -> isInScope scope card)
 
+                let offset =
+                    match activeKeyframe with
+                    | Some keyframe when keyframe.IssueKey = card.IssueKey && not model.ReducedMotion ->
+                        keyframeOffset
+                            (keyframeStartOffset keyframe model.Keyframes)
+                            model.Progress
+                            keyframe
+                    | _ -> completedOffset card.IssueKey model.Progress model.Keyframes
+
                 { IssueKey = card.IssueKey
                   IsReplayActive = isReplayActive
-                  Offset =
-                    if isReplayActive && not model.ReducedMotion then
-                        model.Progress
-                    else
-                        0.0 }) }
+                  Offset = offset }) }
 
     let startOffsetAnimation (visual: Visual) offset duration =
         let compositionVisual = ElementComposition.GetElementVisual visual

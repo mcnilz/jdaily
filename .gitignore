@@ -4,3 +4,5 @@
 .tmp/
 .junie/plans/
 JiraBoard.sln.DotSettings.user
+/.serena/
+/.ai/mcp/mcp.json

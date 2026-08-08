@@ -6,6 +6,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Types
+open Avalonia.Interactivity
 open Avalonia.VisualTree
 open JiraBoard.Domain
 open JiraBoard.Ui
@@ -51,6 +52,18 @@ module NavigationVisualTests =
             | :? Button as b -> Some b
             | _ -> None)
         |> Seq.tryFind (fun b -> AutomationProperties.GetName b = name)
+
+    let private findButtonWithText (window: HostWindow) (text: string) =
+        allControls window
+        |> Seq.choose (function
+            | :? Button as button -> Some button
+            | _ -> None)
+        |> Seq.tryFind (fun button ->
+            button.GetVisualDescendants()
+            |> Seq.choose (function
+                | :? TextBlock as textBlock -> Some textBlock.Text
+                | _ -> None)
+            |> Seq.exists ((=) text))
 
     [<Fact>]
     let ``Navigation.ContextRestore.Startup renders context label and no modal`` () =
@@ -162,4 +175,23 @@ module NavigationVisualTests =
             Assert.True(findText window "✓", "Checkmark not found")
             for item in model.Items do
                 Assert.True(findText window item.Label, $"Item label '{item.Label}' not found")
+        )
+
+    [<Fact>]
+    let ``filtered catalog scenario button selects its own preview after controls are reused`` () =
+        let mutable state = CatalogShell.init ()
+
+        HeadlessTestHost.run 1280 800 (fun () -> CatalogView.view state ignore) (fun window ->
+            let rec dispatch message =
+                state <- CatalogShell.update message state
+                (window :> IViewHost).Update(Some(CatalogView.view state dispatch))
+                window.UpdateLayout()
+
+            dispatch (SetScenarioFilter "Repla")
+
+            match findButtonWithText window "BoardSurface · Subtask-Replay" with
+            | Some button -> button.RaiseEvent(RoutedEventArgs(Button.ClickEvent))
+            | None -> Assert.Fail "The filtered Subtask-Replay scenario button was not rendered"
+
+            Assert.Equal("Board.Surface.SubtaskReplay", state.SelectedScenarioId)
         )

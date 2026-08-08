@@ -136,6 +136,18 @@ let ``catalog scenario navigation selects the production component preview`` () 
     Assert.Equal("TicketCard.AllStates", state.SelectedScenarioId)
 
 [<Fact>]
+let ``catalog scenario filter immediately selects a matching visible scenario`` () =
+    let state =
+        CatalogShell.init ()
+        |> CatalogShell.update (SelectScenario "Board.Surface.SwimlaneReplay")
+        |> CatalogShell.update (SetScenarioFilter "subtask")
+
+    let filtered = CatalogShell.filteredScenarios state.ScenarioFilter
+
+    Assert.Equal("Board.Surface.SubtaskReplay", state.SelectedScenarioId)
+    Assert.Equal<string list>([ "Board.Surface.SubtaskReplay" ], filtered |> List.map _.Id)
+
+[<Fact>]
 let ``repeated viewport actions advance from the current selection`` () =
     let state =
         CatalogShell.init ()
@@ -155,6 +167,10 @@ let ``catalog shell dimensions and animation stops match the specification`` () 
         [ 0.0; 0.25; 0.50; 0.75; 1.0 ],
         CatalogShell.animationProgressStops
     )
+
+[<Fact>]
+let ``catalog exposes a continuous replay progress step between reference keyframes`` () =
+    Assert.Equal(0.01, CatalogShell.animationProgressStep, 3)
 
 [<Fact>]
 let ``catalog allocates readable labels for long component state names`` () =

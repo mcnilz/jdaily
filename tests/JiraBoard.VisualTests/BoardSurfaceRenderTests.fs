@@ -9,6 +9,7 @@ let private boardSurface =
       Cards = []
       Replay = None
       Progress = 0.0
+      Keyframes = []
       ReducedMotion = false }
 
 [<Fact>]

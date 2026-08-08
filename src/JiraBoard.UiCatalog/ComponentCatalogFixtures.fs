@@ -78,6 +78,41 @@ module ComponentCatalogFixtures =
           issue "catalog-order-13" "TMS-13" None 3L [ 2L ] ]
         |> BoardProjection.projectSprintScope [ "To Do" ] AllActiveSprints
 
+    let private replayStatusEvent id issueId minute fromStatus toStatus =
+        { EventId = BoardEventId id
+          IssueId = IssueId issueId
+          OccurredAtUtc = System.DateTimeOffset(2026, 8, 8, 9, minute, 0, System.TimeSpan.Zero)
+          Source = JiraHistory 0
+          Kind = StatusChanged(StatusId fromStatus, StatusId toStatus) }
+
+    let private replayIssueKey (IssueId issueId) =
+        match issueId with
+        | "401" -> "APP-401"
+        | "402" -> "APP-402"
+        | _ -> "APP-403"
+
+    // The middle pair is an intentional short bounce. The production domain
+    // normalizer removes it before this deterministic UI fixture becomes three
+    // visible status keyframes.
+    let private boardSurfaceKeyframes =
+        [ replayStatusEvent "e1" "401" 0 "todo" "progress"
+          replayStatusEvent "e2" "401" 1 "progress" "review"
+          replayStatusEvent "e3" "401" 3 "review" "progress"
+          replayStatusEvent "e4" "402" 4 "todo" "progress"
+          replayStatusEvent "e5" "401" 6 "progress" "done" ]
+        |> normalizeForReplay { StatusBounceWindow = StatusBounceWindow.create 5 }
+        |> List.mapi (fun index event ->
+            let targetOffset =
+                match event.Kind with
+                | StatusChanged(_, StatusId "done") -> 2.0
+                | StatusChanged _ -> 1.0
+                | _ -> 0.0
+
+            { IssueKey = replayIssueKey event.IssueId
+              StartProgress = float index * 0.25
+              EndProgress = if index = 2 then 1.0 else (float index + 1.0) * 0.25
+              Offset = targetOffset })
+
     let boardSurface =
         { Columns = [ "To Do"; "In Progress"; "Done" ]
           Cards =
@@ -86,12 +121,13 @@ module ComponentCatalogFixtures =
                 Column = "To Do" }
               { IssueKey = "APP-402"
                 SwimlaneKey = "APP-400"
-                Column = "In Progress" }
+                Column = "To Do" }
               { IssueKey = "APP-403"
                 SwimlaneKey = "APP-403"
                 Column = "To Do" } ]
           Replay = Some(SwimlaneScope "APP-400")
           Progress = 0.0
+          Keyframes = boardSurfaceKeyframes
           ReducedMotion = false }
 
     let private dragCard = List.head boardSurface.Cards

@@ -1,5 +1,6 @@
 namespace JiraBoard.UiCatalog
 
+open System
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.Primitives
@@ -81,12 +82,17 @@ module CatalogView =
                               TextBlock.create
                                   [ TextBlock.margin (Thickness(Spacing.md, 0.0, Spacing.xs, 0.0))
                                     TextBlock.verticalAlignment VerticalAlignment.Center
-                                    TextBlock.text "Fortschritt" ]
-                              for progress in CatalogShell.animationProgressStops do
-                                  controlButton
-                                      $"{progress * 100.0:F0} %%"
-                                      (SetAnimationProgress progress)
-                                      dispatch ] ]) ]
+                                    TextBlock.text $"Fortschritt {state.AnimationProgress * 100.0:F0} %%" ]
+                              Slider.create
+                                  [ Slider.width 220.0
+                                    Slider.minimum 0.0
+                                    Slider.maximum 1.0
+                                    Slider.smallChange CatalogShell.animationProgressStep
+                                    Slider.largeChange 0.25
+                                    Slider.value state.AnimationProgress
+                                    Slider.onValueChanged (
+                                        fun value -> dispatch (SetAnimationProgress value)
+                                    ) ] ] ]) ]
 
     let private scenarioNavigation state dispatch =
         Border.create
@@ -104,13 +110,17 @@ module CatalogView =
                             StackPanel.create
                                 [ StackPanel.spacing Spacing.md
                                   StackPanel.children
-                                      [ TextBlock.create
+                                      [ yield TextBlock.create
                                             [ TextBlock.fontSize Typography.componentTitle.Size
                                               TextBlock.fontWeight (FontWeight.SemiBold)
                                               TextBlock.foreground (brush Colors.textPrimary)
                                               TextBlock.text "Szenarien" ]
-                                        for scenario in CatalogScenarios.all do
-                                            Button.create
+                                        yield TextBox.create
+                                            [ TextBox.watermark "Szenarien suchen …"
+                                              TextBox.text state.ScenarioFilter
+                                              TextBox.onTextChanged (fun text -> dispatch (SetScenarioFilter text)) ]
+                                        for scenario in CatalogShell.filteredScenarios state.ScenarioFilter do
+                                            yield (Button.create
                                                 [ Button.horizontalContentAlignment HorizontalAlignment.Stretch
                                                   Button.background (
                                                       if scenario.Id = state.SelectedScenarioId then
@@ -146,7 +156,8 @@ module CatalogView =
                                                                                 TextWrapping.NoWrap
                                                                         )
                                                                         TextBlock.text scenario.Id ] ] ]
-                                                  ) ] ] ]
+                                                  ) ]
+                                                |> View.withKey scenario.Id) ] ]
                         ) ]
               ) ]
 

@@ -120,6 +120,7 @@ type CatalogShellState =
       ReducedMotion: bool
       AnimationProgress: float
       SelectedScenarioId: string
+      ScenarioFilter: string
       Keyboard: CatalogKeyboardState }
 
 type CatalogShellMessage =
@@ -135,6 +136,7 @@ type CatalogShellMessage =
     | SetReducedMotion of bool
     | ToggleReducedMotion
     | SetAnimationProgress of float
+    | SetScenarioFilter of string
     | HandleKeyboard of CatalogKeyboardKey
 
 [<RequireQualifiedAccess>]
@@ -157,6 +159,7 @@ module CatalogShell =
     let fontZoomLevels = [ 80; 90; 100; 110; 125; 150; 175; 200 ]
     let motionPresets = [ Motion.Calm; Motion.Normal; Motion.Fast ]
     let animationProgressStops = [ 0.0; 0.25; 0.50; 0.75; 1.0 ]
+    let animationProgressStep = 0.01
 
     let layout =
         { MenuHeight = 32.0
@@ -174,6 +177,13 @@ module CatalogShell =
         let index = items |> List.findIndex ((=) current)
         items |> List.item ((index + 1) % List.length items)
 
+    let filteredScenarios filter =
+        CatalogScenarios.all
+        |> List.filter (fun scenario ->
+            System.String.IsNullOrWhiteSpace filter
+            || scenario.Name.Contains(filter, System.StringComparison.OrdinalIgnoreCase)
+            || scenario.Id.Contains(filter, System.StringComparison.OrdinalIgnoreCase))
+
     let init () =
         { Viewport = List.head viewportPresets
           AppZoomPercent = 100
@@ -182,6 +192,7 @@ module CatalogShell =
           ReducedMotion = false
           AnimationProgress = 0.0
           SelectedScenarioId = CatalogScenarios.all.Head.Id
+          ScenarioFilter = ""
           Keyboard = CatalogKeyboard.init CatalogKeyboard.boardTargets }
 
     let update message state =
@@ -210,6 +221,21 @@ module CatalogShell =
             { state with
                 ReducedMotion = not state.ReducedMotion }
         | SetAnimationProgress progress -> { state with AnimationProgress = progress }
+        | SetScenarioFilter filter ->
+            let matches = filteredScenarios filter
+
+            let selectedScenarioId =
+                if matches |> List.exists (fun scenario -> scenario.Id = state.SelectedScenarioId) then
+                    state.SelectedScenarioId
+                else
+                    matches
+                    |> List.tryHead
+                    |> Option.map _.Id
+                    |> Option.defaultValue state.SelectedScenarioId
+
+            { state with
+                ScenarioFilter = filter
+                SelectedScenarioId = selectedScenarioId }
         | HandleKeyboard key ->
             { state with
                 Keyboard = CatalogKeyboard.handle key state.Keyboard }
