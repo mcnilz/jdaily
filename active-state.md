@@ -17,8 +17,8 @@ Bei Widersprüchen gelten in dieser Reihenfolge:
 | Stand | 8. August 2026 |
 | Phase | Welle 1 – Erster offline Vertical Slice |
 | Aktiver Arbeitsauftrag | keiner |
-| Nächste menschliche Aktion | keine; `VS-003` wurde am 8. August 2026 menschlich abgenommen und abgeschlossen |
-| Nächster Paketkandidat danach | `VS-004` bleibt `Planned` bis zu einem gesonderten Vorschlag |
+| Nächste menschliche Aktion | keine; `DOM-007` wurde am 8. August 2026 menschlich abgenommen und abgeschlossen |
+| Nächster Paketkandidat danach | `VS-004` kann als nächstes Arbeitspaket vorgeschlagen werden |
 | Aktuelles Readiness-Gate | G1–G8 offen; in G2 sind DDD-Glossar und Agent-Mensch-Arbeitsflow abgeschlossen |
 | Feature-Grenze | keine breite Featureimplementierung vor Abschluss von `VS-007` |
 | Repositoryzustand | `VS-001`, `VS-002` und `VS-003` sind menschlich abgenommen und `Done`; der Offline-Slice stellt Projekt-/Sprintkontext wieder her, rendert die Domainprojektion und bewahrt die globale Jira-Reihenfolge über Pagination, Rank-Fallbacks und Sprintfilter. `UI-002`, `UI-006`, `UI-007`, `FND-008`, `FND-009`, `FND-010`, `SPK-001`, `SPK-003`, `SPK-004`, `SPK-005`, `SPK-006`, `WFL-001`, `WFL-002`, `WFL-003` und `WFL-006` sind ebenfalls menschlich abgenommen und `Done`. Die ausführlichen technischen Nachweise und bekannten externen AOT-Warnungen stehen im Prüfstand. |

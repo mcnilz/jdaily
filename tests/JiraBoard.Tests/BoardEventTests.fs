@@ -99,3 +99,98 @@ let ``events with different ids are different and equal ids are equal`` () =
 
     Assert.NotEqual(first.EventId, second.EventId)
     Assert.Equal(first.EventId, firstAgain.EventId)
+
+let private eventAt id issueId minute kind =
+    { EventId = BoardEventId id
+      IssueId = IssueId issueId
+      OccurredAtUtc = System.DateTimeOffset(2026, 7, 27, 9, minute, 0, System.TimeSpan.Zero)
+      Source = JiraHistory 0
+      Kind = kind }
+
+let private status fromStatus toStatus =
+    StatusChanged(StatusId fromStatus, StatusId toStatus)
+
+[<Fact>]
+let ``replay normalization removes an inverse status pair within its enabled window`` () =
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          eventAt "e2" "10001" 4 (status "progress" "todo") ]
+
+    let normalized =
+        normalizeForReplay
+            { StatusBounceWindow = StatusBounceWindow.create 5 }
+            events
+
+    Assert.Empty normalized
+
+[<Fact>]
+let ``replay normalization keeps an inverse status pair just beyond its enabled window`` () =
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          eventAt "e2" "10001" 6 (status "progress" "todo") ]
+
+    let normalized =
+        normalizeForReplay
+            { StatusBounceWindow = StatusBounceWindow.create 5 }
+            events
+
+    Assert.Equal<BoardEvent list>(events, normalized)
+
+[<Fact>]
+let ``replay normalization includes the exact bounce window boundary`` () =
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          eventAt "e2" "10001" 5 (status "progress" "todo") ]
+
+    let normalized =
+        normalizeForReplay
+            { StatusBounceWindow = StatusBounceWindow.create 5 }
+            events
+
+    Assert.Empty normalized
+
+[<Fact>]
+let ``replay normalization preserves non-status events between an inverse status pair`` () =
+    let comment = eventAt "comment" "10001" 2 CommentAdded
+
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          comment
+          eventAt "e2" "10001" 4 (status "progress" "todo") ]
+
+    let normalized =
+        normalizeForReplay
+            { StatusBounceWindow = StatusBounceWindow.create 5 }
+            events
+
+    Assert.Equal<BoardEvent list>([ comment ], normalized)
+
+[<Fact>]
+let ``replay normalization keeps status changes when another status intervenes`` () =
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          eventAt "e2" "10001" 1 (status "progress" "review")
+          eventAt "e3" "10001" 2 (status "review" "todo") ]
+
+    let normalized =
+        normalizeForReplay
+            { StatusBounceWindow = StatusBounceWindow.create 5 }
+            events
+
+    Assert.Equal<BoardEvent list>(events, normalized)
+
+[<Fact>]
+let ``disabled replay normalization preserves status bounces`` () =
+    let events =
+        [ eventAt "e1" "10001" 0 (status "todo" "progress")
+          eventAt "e2" "10001" 1 (status "progress" "todo") ]
+
+    let normalized =
+        normalizeForReplay { StatusBounceWindow = Disabled } events
+
+    Assert.Equal<BoardEvent list>(events, normalized)
+
+[<Fact>]
+let ``invalid bounce window values fall back to the deterministic default`` () =
+    Assert.Equal(Enabled 5, StatusBounceWindow.create 0)
+    Assert.Equal(Enabled 5, StatusBounceWindow.create 31)

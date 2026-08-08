@@ -96,3 +96,70 @@ module BoardEventOrder =
     /// (`JiraHistory` item index first), and finally the `BoardEventId`.
     let orderBoardEvents (ordinalOf: IssueId -> BoardOrdinal option) (events: BoardEvent list) : BoardEvent list =
         events |> List.sortBy (orderKey ordinalOf)
+
+/// Configures whether inverse status transitions are suppressed from a replay.
+/// `Enabled` values are created through `StatusBounceWindow.create`; the
+/// normalization function nevertheless treats malformed values as the default.
+type StatusBounceWindow =
+    | Disabled
+    | Enabled of minutes: int
+
+[<RequireQualifiedAccess>]
+module StatusBounceWindow =
+    let defaultValue = Enabled 5
+
+    let create minutes =
+        if minutes >= 1 && minutes <= 30 then
+            Enabled minutes
+        else
+            defaultValue
+
+    let minutes window =
+        match window with
+        | Disabled -> None
+        | Enabled value when value >= 1 && value <= 30 -> Some value
+        | Enabled _ -> Some 5
+
+/// Immutable replay-start snapshot of the noise policy for one run.
+type ReplayNoisePolicy = { StatusBounceWindow: StatusBounceWindow }
+
+/// Pure replay-only projection. It never mutates or rewrites canonical events.
+/// Input must already have the deterministic replay order from `orderBoardEvents`.
+[<AutoOpen>]
+module ReplayNormalization =
+    let private areInverseStatusChanges first second =
+        match first.Kind, second.Kind with
+        | StatusChanged(firstFrom, firstTo), StatusChanged(secondFrom, secondTo) ->
+            firstFrom = secondTo && firstTo = secondFrom
+        | _ -> false
+
+    let private isBounceWithin minutes first second =
+        let elapsed = second.OccurredAtUtc - first.OccurredAtUtc
+        elapsed >= System.TimeSpan.Zero && elapsed <= System.TimeSpan.FromMinutes(float minutes)
+
+    let private bouncedEventIds minutes events =
+        let rec collect statusEvents =
+            match statusEvents with
+            | first :: second :: remaining when areInverseStatusChanges first second && isBounceWithin minutes first second ->
+                first.EventId :: second.EventId :: collect remaining
+            | _ :: remaining -> collect remaining
+            | [] -> []
+
+        events
+        |> List.choose (fun event ->
+            match event.Kind with
+            | StatusChanged _ -> Some event
+            | _ -> None)
+        |> List.groupBy (fun event -> event.IssueId)
+        |> List.collect (fun (_, statusEvents) -> collect statusEvents)
+        |> Set.ofList
+
+    /// Removes only adjacent inverse status transitions for the same issue that
+    /// fall within the configured inclusive window. Non-status events remain in
+    /// the projected stream, including those between the two transitions.
+    let normalizeForReplay (policy: ReplayNoisePolicy) (events: BoardEvent list) : BoardEvent list =
+        match StatusBounceWindow.minutes policy.StatusBounceWindow with
+        | None -> events
+        | Some minutes ->
+            let suppressed = bouncedEventIds minutes events
+            events |> List.filter (fun event -> not (Set.contains event.EventId suppressed))
